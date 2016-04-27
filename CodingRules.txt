@@ -1,0 +1,24 @@
+Coding rules
+
+-öll breytu nöfn og föll verða camel case. byrja á litlum staf og stór stafur þegar nýtt orð kemur t.d. double totalAmount, DoSomething().
+
+allir klasar verða pascal case. það er eins og camel case nema það byrjar á stórum staf 
+t.d. SomeClass.
+
+-meðlimabreytur klasa í öðrum klösum verða camel case.
+
+-slaufusvigar verða í næstu línu eftir föll t.d. 
+DoSomething()
+{
+	//code
+}
+
+-comments. single line comment = //somecomment
+		   multi-line comment = /*
+		   						 *comment
+		   						 *comment
+		   						 *comment
+		   						 */
+
+
+-indent er 4 bil eða tabs sem nemur sömu lengd
