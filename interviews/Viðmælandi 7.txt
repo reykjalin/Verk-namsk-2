@@ -1,0 +1,29 @@
+Viðmælandi 7
+Aldur 
+	24
+kyn
+	Annað
+menntun
+	Stúdentspróf
+tölvuhæfni
+	Góð
+hversu vel þekkiru mooshak
+	Bara, bara vel.
+hvað finnst þér um viðmót mooshak
+	Sæmilegt
+hvað finnst þér verst um mooshark
+	leiðinlegt að skoða gömulverkefni
+	óskýrt að sjá villur
+
+finnst þér eitthvað gott við mooshak
+	fínt að geta látið tölvu fara yfir verkefni
+hverju myndiru breyta
+	fullkomna compilerinn
+hvernig finnst þér útlitð vera?
+	ljótt
+tenging a milli myschool og mooshak
+	það er alveg sniðugt, það er þreytt ef maður skilar seint inn
+	á mooshak að maður þarf að fara líka inn á myschool til að 
+	skila
+
+"ég fýla mooshak ekkert voðalega mikið, mér er eiginlega sama"
