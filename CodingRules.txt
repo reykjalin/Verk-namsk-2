@@ -19,6 +19,14 @@ DoSomething()
 		   						 *comment
 		   						 *comment
 		   						 */
+			documentation comment = /// comment
+									/// áframhald
+									/// bla
+									/// búið
 
 
 -indent er 4 bil eða tabs sem nemur sömu lengd
+
+
+- öll föll/klasar eiga að vera documentuð/aðir 
+  (nota /// comment fyrir ofan viðkomandi fall/klasa)
