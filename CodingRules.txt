@@ -39,3 +39,15 @@ DoSomething()
 	  for(int i = 0; i < 3; i++) {}
 	  if(x < 3) {}
 	  else if(x > 3) {}
+	  
+	  
+- Langar línur af kóða skal brjóta upp í nokkrar línur
+	dæmi:
+		from name in studentTable where name == "jón" || name == "siddi" || name == "stefán" orderby name ascending select name;
+		verður:
+		from name in studentTable
+		where name == "jón" ||
+		name == "siddi" ||
+		name == "stefán"
+		orderby name ascending
+		select name;
