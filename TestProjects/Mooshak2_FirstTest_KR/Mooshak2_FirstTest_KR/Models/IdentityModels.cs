@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Mooshak2_FirstTest_KR.Entities;
 
 namespace Mooshak2_FirstTest_KR.Models
 {
@@ -20,6 +21,11 @@ namespace Mooshak2_FirstTest_KR.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        // Entity variables for DB connection
+        public DbSet<Assignment> assignments;
+        public DbSet<AssignmentPart> assignmentParts;
+        public DbSet<Course> courses;
+
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {

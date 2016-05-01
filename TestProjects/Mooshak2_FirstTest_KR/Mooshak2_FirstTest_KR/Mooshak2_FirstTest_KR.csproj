@@ -171,6 +171,8 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Entities\Assignment.cs" />
+    <Compile Include="Entities\AssignmentPart.cs" />
+    <Compile Include="Entities\Course.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

@@ -6,15 +6,15 @@ using System.Web;
 namespace Mooshak2_FirstTest_KR.Entities
 {
     /// <summary>
-    /// An Assignment object contains information about some assignment
-    /// made by a teacher for a specific course
+    /// Each Assignment object should have a list of AssignmentPart objects
+    /// that describe each part of the assignment
     /// </summary>
-    public class Assignment
+    public class AssignmentPart
     {
         public uint assignmentId { get; set; }
         public uint courseId { get; set; }
         public string title { get; set; }
         public string description { get; set; }
-        public uint weight { get; set; }
+        public uint weightInAssignment { get; set; }
     }
 }
