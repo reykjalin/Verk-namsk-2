@@ -13,6 +13,7 @@ namespace Mooshak2_FirstTest_KR.Controllers
 
         public AssignmentController() { service = new AssignmentService(); }
 
+        [HttpGet]
         public ActionResult create() { return View(); }
 
         public ActionResult edit() { return View(); }

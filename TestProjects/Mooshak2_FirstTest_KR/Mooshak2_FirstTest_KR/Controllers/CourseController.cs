@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Mooshak2_FirstTest_KR.Models.ViewModels;
 using Mooshak2_FirstTest_KR.Services;
 
 namespace Mooshak2_FirstTest_KR.Controllers
@@ -13,9 +14,19 @@ namespace Mooshak2_FirstTest_KR.Controllers
 
         public CourseController() { service = new CourseService(); }
 
-        public ActionResult create() { return View(); }
+        [HttpGet]
+        public ActionResult create()
+        {
+            // Data should be of type CourseViewModel
+            var data = service.getCourseById(1);
+            return View(data);
+        }
 
-        public ActionResult edit() { return View(); }
+        public ActionResult edit()
+        {
+            var model = service.getCourseById(1);
+            return View(model);
+        }
 
         public ActionResult remove() { return View(); }
 
