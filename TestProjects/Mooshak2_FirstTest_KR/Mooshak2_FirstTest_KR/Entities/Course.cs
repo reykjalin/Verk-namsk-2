@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -13,6 +14,7 @@ namespace Mooshak2_FirstTest_KR.Entities
     /// </summary>
     public class Course
     {
+        [Key]
         public uint courseId { get; set; }
         public string title { get; set; }
         public string description { get; set; }
