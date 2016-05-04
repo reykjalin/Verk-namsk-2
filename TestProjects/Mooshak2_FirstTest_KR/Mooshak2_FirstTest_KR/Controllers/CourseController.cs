@@ -30,7 +30,7 @@ namespace Mooshak2_FirstTest_KR.Controllers
         [HttpGet]
         public ActionResult edit(int? id)
         {
-            if(id != null)
+            if(id.HasValue)
             {
                 var model = service.getCourseById(id);
                 if(model != null)
@@ -39,13 +39,29 @@ namespace Mooshak2_FirstTest_KR.Controllers
             return RedirectToAction("Error");
         }
 
+        [HttpPost]
+        public ActionResult edit(CourseViewModel course)
+        {
+            // Athuga hvort input sé valid
+            if(ModelState.IsValid)
+            {
+                // Uppfæra upplýsingar í course
+                if(service.updateCourse(course))
+                {
+                    return RedirectToAction("List");
+                }
+            }
+            // Ef input ekki valid, sýna view aftur
+            return View(course);
+        }
+
         /// <summary>
         /// Removes course with ID 'id' from database.
         /// </summary>
         /// <returns></returns>
         public ActionResult remove(int? id)
         {
-            if(id != null)
+            if(id.HasValue)
             {
                 // TODO: Implement
                 return View();
@@ -55,7 +71,7 @@ namespace Mooshak2_FirstTest_KR.Controllers
 
         public ActionResult details(int? id)
         {
-            if(id != null)
+            if(id.HasValue)
             {
                 var model = service.getCourseById(id);
                 if(model != null)
