@@ -15,7 +15,6 @@ namespace Mooshak2_FirstTest_KR.DAL
             Assignments = new HashSet<Assignment>();
         }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int id { get; set; }
 
         [Required]

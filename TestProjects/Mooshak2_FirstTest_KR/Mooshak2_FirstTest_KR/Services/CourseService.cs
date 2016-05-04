@@ -14,6 +14,12 @@ namespace Mooshak2_FirstTest_KR.Services
 
         public CourseService() { contextDb = new DatabaseDataContext(); }
 
+        /// <summary>
+        /// Returns a list of all courses in database
+        /// </summary>
+        /// <returns>
+        /// List
+        /// </returns>
         public List<CourseViewModel> getAllCourses()
         {
             // Sæki öll course úr DB
@@ -55,6 +61,13 @@ namespace Mooshak2_FirstTest_KR.Services
             return model;
         }
 
+        /// <summary>
+        /// Updates course with same ID as 'newData' with data from 'newData'
+        /// </summary>
+        /// <param name="newData"></param>
+        /// <returns>
+        /// bool
+        /// </returns>
         public bool updateCourse(CourseViewModel newData)
         {
             // Passa að það séu gögn í ViewModelinu sem er sent í fallið
@@ -77,6 +90,18 @@ namespace Mooshak2_FirstTest_KR.Services
                 }
             }
             return false;
+        }
+
+        public bool addCourse(CourseViewModel newCourseModel)
+        {
+            // newCourse er athugað í controller, veit því að það er valid
+            Course newCourse = new Course();
+            newCourse.title = newCourseModel.title;
+            newCourse.description = newCourseModel.description;
+
+            contextDb.courses.Add(newCourse);
+            contextDb.SaveChanges();
+            return true;
         }
     }
 }

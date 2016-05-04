@@ -14,12 +14,41 @@ namespace Mooshak2_FirstTest_KR.Controllers
 
         public CourseController() { service = new CourseService(); }
 
+        /// <summary>
+        /// Returns the view of the course list.
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Index() { return RedirectToAction("List"); }
 
+        /// <summary>
+        /// Shows view for creating a course
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public ActionResult create()
         {
             return View();
+        }
+
+        /// <summary>
+        /// Adds 'newCourse' to the database
+        /// </summary>
+        /// <param name="newCourse"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult create(CourseViewModel newCourse)
+        {
+            // TODO: Er meira elegant leið til að hundsa id validation?
+            // Hunsa villur sem koma til vegna invalid id, DB sér um að generate-a id
+            ModelState["id"].Errors.Clear();
+            if(ModelState.IsValid)
+            {
+                // Bæta newCourse við DB ef input er valid
+                if(service.addCourse(newCourse))
+                    return RedirectToAction("List");
+            }
+            // Ef input er invalid, sýna sama view með villuskilaboðum
+            return View(newCourse);
         }
         
 
@@ -39,6 +68,11 @@ namespace Mooshak2_FirstTest_KR.Controllers
             return RedirectToAction("Error");
         }
 
+        /// <summary>
+        /// Edits course in DB with same ID as 'course' using data from 'course'
+        /// </summary>
+        /// <param name="course"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult edit(CourseViewModel course)
         {
@@ -47,9 +81,7 @@ namespace Mooshak2_FirstTest_KR.Controllers
             {
                 // Uppfæra upplýsingar í course
                 if(service.updateCourse(course))
-                {
                     return RedirectToAction("List");
-                }
             }
             // Ef input ekki valid, sýna view aftur
             return View(course);
@@ -69,6 +101,11 @@ namespace Mooshak2_FirstTest_KR.Controllers
             return RedirectToAction("Error");
         }
 
+        /// <summary>
+        /// Show detail page of course with ID 'id'
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public ActionResult details(int? id)
         {
             if(id.HasValue)

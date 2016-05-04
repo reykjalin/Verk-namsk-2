@@ -8,15 +8,15 @@ namespace Mooshak2_FirstTest_KR.DAL
     public partial class DatabaseDataContext : DbContext
     {
         public DatabaseDataContext()
-            : base("name=DatabaseDataContext1")
+            : base("name=DatabaseDataContext3")
         {
         }
 
-        public virtual DbSet<C__MigrationHistory> C__MigrationHistory { get; set; }
-        public virtual DbSet<AspNetRole> roles { get; set; }
+        public virtual DbSet<C__MigrationHistory> c__MigrationHistory { get; set; }
+        public virtual DbSet<AspNetRole> aspNetRoles { get; set; }
         public virtual DbSet<AspNetUserClaim> aspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogin> aspNetUserLogins { get; set; }
-        public virtual DbSet<AspNetUser> users { get; set; }
+        public virtual DbSet<AspNetUser> aspNetUsers { get; set; }
         public virtual DbSet<Assignment> assignments { get; set; }
         public virtual DbSet<AssignmentPart> assignmentParts { get; set; }
         public virtual DbSet<Course> courses { get; set; }
@@ -52,6 +52,7 @@ namespace Mooshak2_FirstTest_KR.DAL
             modelBuilder.Entity<Assignment>()
                 .HasMany(e => e.AssignmentParts)
                 .WithRequired(e => e.Assignment)
+                .HasForeignKey(e => e.partNr)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<AssignmentPart>()

@@ -9,15 +9,16 @@ namespace Mooshak2_FirstTest_KR.DAL
     [Table("AssignmentPart")]
     public partial class AssignmentPart
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int id { get; set; }
 
-        public int assignmentId { get; set; }
+        public int partNr { get; set; }
 
         [Required]
         public string description { get; set; }
 
         public int weight { get; set; }
+
+        public int assignmentId { get; set; }
 
         public virtual Assignment Assignment { get; set; }
     }
