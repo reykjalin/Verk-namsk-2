@@ -213,7 +213,6 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\homePage.css" />
     <Content Include="Content\Image\backhome.jpg" />
-    <Content Include="Content\Image\homepage.jpg" />
     <Content Include="Content\Image\hrlogo.png" />
     <Content Include="Content\Image\hrlototrans.png" />
     <Content Include="favicon.ico" />
