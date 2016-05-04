@@ -15,24 +15,40 @@ namespace Mooshak2_FirstTest_KR.Services
 
         public CourseService() { database = new ApplicationDbContext(); }
 
-        public List<CourseViewModel> getAllCourses() { return new List<CourseViewModel>(); }
+        public List<CourseViewModel> getAllCourses()
+        {
+            var courseList = (from clist in contextDb.courses
+                             select clist).ToList();
+            var courseModelList = new List<CourseViewModel>();
+            foreach(var course in courseList)
+            {
+                var viewModel = new CourseViewModel();
+                viewModel.title = course.title;
+                viewModel.description = course.description;
+                viewModel.id = course.id;
+
+                courseModelList.Add(viewModel);
+            }
+            return courseModelList;
+        }
 
         public CourseViewModel getCourseById(int? courseId)
         {
-            if(courseId == null)
+            if(courseId != null)
             {
-                return null;
-            }
-            var course = (from c in contextDb.courses
-                         where c.id == courseId
-                         select c).FirstOrDefault();
+                var course = (from c in contextDb.courses
+                              where c.id == courseId
+                              select c).FirstOrDefault();
 
-            if(course != null)
-            {
-                var model = new CourseViewModel();
-                model.title = course.title;
-                model.description = course.description;
-                return model;
+                if(course != null)
+                {
+                    var model = new CourseViewModel();
+                    model.title = course.title;
+                    model.description = course.description;
+                    model.id = course.id;
+
+                    return model;
+                }
             }
             return null;
         }

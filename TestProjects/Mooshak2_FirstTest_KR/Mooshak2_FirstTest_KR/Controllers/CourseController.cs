@@ -14,28 +14,66 @@ namespace Mooshak2_FirstTest_KR.Controllers
 
         public CourseController() { service = new CourseService(); }
 
+        public ActionResult Index() { return RedirectToAction("List"); }
+
         [HttpGet]
         public ActionResult create()
         {
-            // Data should be of type CourseViewModel
-            var data = service.getCourseById(1);
-            return View(data);
+            return View();
+        }
+        
+
+        /// <summary>
+        /// Edit course with ID 'id'. Shows the edit view
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult edit(int? id)
+        {
+            if(id != null)
+            {
+                var model = service.getCourseById(id);
+                if(model != null)
+                    return View(model);
+            }
+            return RedirectToAction("Error");
         }
 
-        public ActionResult edit()
+        /// <summary>
+        /// Removes course with ID 'id' from database.
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult remove(int? id)
         {
-            var model = service.getCourseById(1);
+            if(id != null)
+            {
+                // TODO: Implement
+                return View();
+            }
+            return RedirectToAction("Error");
+        }
+
+        public ActionResult details(int? id)
+        {
+            if(id != null)
+            {
+                var model = service.getCourseById(id);
+                if(model != null)
+                    return View(model);
+            }
+            return RedirectToAction("Error");
+        }
+
+        /// <summary>
+        /// Shows a page with a list of courses available in the database.
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult list()
+        {
+            var model = service.getAllCourses();
             return View(model);
         }
 
-        public ActionResult remove() { return View(); }
-
-        public ActionResult details(int id) { return View(); }
-
-        public ActionResult courseList()
-        {
-            var model = service.getAllCourses();
-            return View();
-        }
+        public ActionResult error() { return View(); }
     }
 }

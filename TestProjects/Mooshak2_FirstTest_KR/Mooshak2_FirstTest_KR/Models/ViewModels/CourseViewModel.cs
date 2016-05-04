@@ -8,6 +8,7 @@ namespace Mooshak2_FirstTest_KR.Models.ViewModels
 {
     public class CourseViewModel
     {
+        public int id { get; set; }
         public string title { get; set; }
         public string description { get; set; }
     }
