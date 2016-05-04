@@ -6,15 +6,14 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{4C8FF1BD-0A8F-4EDA-9FA6-DD0E0FCC8D86}</ProjectGuid>
+    <ProjectGuid>{64E65183-13C2-482D-8948-23C0B58884E3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Mooshak2_FirstTest_KR.Tests</RootNamespace>
-    <AssemblyName>Mooshak2_FirstTest_KR.Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <RootNamespace>Spaghetti.Tests</RootNamespace>
+    <AssemblyName>Spaghetti.Tests</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -93,9 +92,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Mooshak2_FirstTest_KR\Mooshak2_FirstTest_KR.csproj">
-      <Project>{04DB1561-1BFF-40E7-A635-8A784AAD37A6}</Project>
-      <Name>Mooshak2_FirstTest_KR</Name>
+    <ProjectReference Include="..\Spaghetti\Spaghetti.csproj">
+      <Project>{45109C91-6404-4914-827F-1034E62629A6}</Project>
+      <Name>Spaghetti</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
