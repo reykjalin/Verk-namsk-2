@@ -23,8 +23,8 @@ namespace Mooshak2_FirstTest_KR.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         // Entity variables for DB connection
-        public DbSet<Assignment> assignments;
-        public DbSet<AssignmentPart> assignmentParts;
+        //public DbSet<Assignment> assignments;
+        //public DbSet<AssignmentPart> assignmentParts;
         public DbSet<Course> courses;
 
         public ApplicationDbContext()
