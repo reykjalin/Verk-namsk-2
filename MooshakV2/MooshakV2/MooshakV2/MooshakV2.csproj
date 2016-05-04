@@ -251,6 +251,12 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Course\courseForm.cshtml" />
+    <Content Include="Views\Course\create.cshtml" />
+    <Content Include="Views\Course\edit.cshtml" />
+    <Content Include="Views\Course\remove.cshtml" />
+    <Content Include="Views\Course\details.cshtml" />
+    <Content Include="Views\Course\list.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
