@@ -52,6 +52,8 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -170,6 +172,18 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="DAL\Entities\AspNetRole.cs" />
+    <Compile Include="DAL\Entities\AspNetUser.cs" />
+    <Compile Include="DAL\Entities\AspNetUserClaim.cs" />
+    <Compile Include="DAL\Entities\AspNetUserLogin.cs" />
+    <Compile Include="DAL\Entities\Assignment.cs" />
+    <Compile Include="DAL\Entities\AssignmentPart.cs" />
+    <Compile Include="DAL\Entities\Course.cs" />
+    <Compile Include="DAL\Entities\CourseStudent.cs" />
+    <Compile Include="DAL\Entities\CourseTA.cs" />
+    <Compile Include="DAL\Entities\CourseTeacher.cs" />
+    <Compile Include="DAL\Entities\C__MigrationHistory.cs" />
+    <Compile Include="DAL\DatabaseDataContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
