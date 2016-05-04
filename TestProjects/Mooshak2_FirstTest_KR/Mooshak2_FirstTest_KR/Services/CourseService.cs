@@ -103,5 +103,15 @@ namespace Mooshak2_FirstTest_KR.Services
             contextDb.SaveChanges();
             return true;
         }
+
+        public bool removeCourse(int id)
+        {
+            // toRemove eytt úr DB, veit að id er valid út af GET fyrirspurn í controller
+            contextDb.courses.Remove((from course in contextDb.courses
+                                      where course.id == id
+                                      select course).SingleOrDefault());
+            contextDb.SaveChanges();
+            return true;
+        }
     }
 }

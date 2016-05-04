@@ -25,10 +25,7 @@ namespace Mooshak2_FirstTest_KR.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult create()
-        {
-            return View();
-        }
+        public ActionResult create() { return View(); }
 
         /// <summary>
         /// Adds 'newCourse' to the database
@@ -87,17 +84,29 @@ namespace Mooshak2_FirstTest_KR.Controllers
             return View(course);
         }
 
-        /// <summary>
-        /// Removes course with ID 'id' from database.
-        /// </summary>
-        /// <returns></returns>
+        [HttpGet]
         public ActionResult remove(int? id)
         {
             if(id.HasValue)
             {
-                // TODO: Implement
-                return View();
+                var toRemove = service.getCourseById(id);
+                if(toRemove != null)
+                    return View(toRemove);
             }
+            return RedirectToAction("Error");
+        }
+
+        /// <summary>
+        /// Removes course with ID 'id' from database.
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult remove(CourseViewModel toRemove)
+        {
+            // toRemove eytt úr DB
+            if(service.removeCourse(toRemove.id))
+                return RedirectToAction("List");
+
             return RedirectToAction("Error");
         }
 
