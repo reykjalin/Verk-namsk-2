@@ -11,7 +11,7 @@ namespace MooshakV2.ViewModels
         [Required(ErrorMessage="You must specify a name")]
         private string title { get; set; }
         private string description { get; set; }
-        private int weight { get; set; };
+        private int weight { get; set; }
         //private List<AssignmentPartViewModel> assignmentParts;
     }
 }
