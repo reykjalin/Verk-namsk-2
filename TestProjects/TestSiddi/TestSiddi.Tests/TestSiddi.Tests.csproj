@@ -6,7 +6,7 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{309FAFB4-B97D-499C-9CC8-D16DDE295625}</ProjectGuid>
+    <ProjectGuid>{155265EB-F94A-44B8-9AAC-162720B84281}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>TestSiddi.Tests</RootNamespace>
@@ -93,7 +93,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TestSiddi\TestSiddi.csproj">
-      <Project>{00FCD62C-83BC-4222-92D7-1946363CCC66}</Project>
+      <Project>{115B4D58-F700-4D42-A75B-BD56C7EC69EB}</Project>
       <Name>TestSiddi</Name>
     </ProjectReference>
   </ItemGroup>
