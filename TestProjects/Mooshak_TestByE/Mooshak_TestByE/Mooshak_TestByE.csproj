@@ -9,12 +9,12 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{DA8B8A78-7B74-476C-9818-E8DBE4292C14}</ProjectGuid>
+    <ProjectGuid>{240ABDAD-93B0-4009-B766-5F3D5F14135A}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>JT_TestProject</RootNamespace>
-    <AssemblyName>JT_TestProject</AssemblyName>
+    <RootNamespace>Mooshak_TestByE</RootNamespace>
+    <AssemblyName>Mooshak_TestByE</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
@@ -80,6 +80,8 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -196,28 +198,43 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AssignmentController.cs" />
+    <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="DAL\Entities\AspNetRole.cs" />
+    <Compile Include="DAL\Entities\AspNetUser.cs" />
+    <Compile Include="DAL\Entities\Assignment.cs" />
+    <Compile Include="DAL\Entities\AssignmentPart.cs" />
+    <Compile Include="DAL\Entities\Course.cs" />
+    <Compile Include="DAL\Entities\CourseStudent.cs" />
+    <Compile Include="DAL\Entities\CourseTA.cs" />
+    <Compile Include="DAL\Entities\CourseTeacher.cs" />
+    <Compile Include="DAL\DatabaseDataContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\Course.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\ViewModel\AssignmentPartViewModel.cs" />
+    <Compile Include="Models\ViewModel\AssignmentViewModel.cs" />
+    <Compile Include="Models\ViewModel\CourseViewModel.cs" />
+    <Compile Include="Models\ViewModel\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\AssignmentService.cs" />
+    <Compile Include="Services\CourseService.cs" />
+    <Compile Include="Services\UserService.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\homePage.css" />
-    <Content Include="Content\Image\backhome.jpg" />
-    <Content Include="Content\Image\hrlogo.png" />
-    <Content Include="Content\Image\hrlototrans.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Content\Site.css" />
     <Content Include="Scripts\ai.0.15.0-build58334.js" />
     <Content Include="Scripts\ai.0.15.0-build58334.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -274,6 +291,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Assignment\" />
+    <Folder Include="Views\Course\" />
+    <Folder Include="Views\User\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -299,9 +319,9 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>40797</DevelopmentServerPort>
+          <DevelopmentServerPort>13285</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:40797/</IISUrl>
+          <IISUrl>http://localhost:13285/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
