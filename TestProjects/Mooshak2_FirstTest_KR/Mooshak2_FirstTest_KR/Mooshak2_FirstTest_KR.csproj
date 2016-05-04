@@ -174,8 +174,18 @@
     <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="DAL\Course.cs" />
-    <Compile Include="DAL\CourseDataContext.cs" />
+    <Compile Include="DAL\Entities\AspNetRole.cs" />
+    <Compile Include="DAL\Entities\AspNetUser.cs" />
+    <Compile Include="DAL\Entities\AspNetUserClaim.cs" />
+    <Compile Include="DAL\Entities\AspNetUserLogin.cs" />
+    <Compile Include="DAL\Entities\Assignment.cs" />
+    <Compile Include="DAL\Entities\AssignmentPart.cs" />
+    <Compile Include="DAL\Entities\Course.cs" />
+    <Compile Include="DAL\Entities\CourseStudent.cs" />
+    <Compile Include="DAL\Entities\CourseTA.cs" />
+    <Compile Include="DAL\Entities\CourseTeacher.cs" />
+    <Compile Include="DAL\Entities\C__MigrationHistory.cs" />
+    <Compile Include="DAL\DatabaseDataContext.cs" />
     <Compile Include="Entities\Assignment.cs" />
     <Compile Include="Entities\AssignmentPart.cs" />
     <Compile Include="Entities\Course.cs" />
@@ -249,6 +259,8 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Course\edit.cshtml" />
+    <Content Include="Views\Course\details.cshtml" />
+    <Content Include="Views\Course\list.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

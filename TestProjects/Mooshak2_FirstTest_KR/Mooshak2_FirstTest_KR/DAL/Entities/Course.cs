@@ -9,13 +9,22 @@ namespace Mooshak2_FirstTest_KR.DAL
     [Table("Course")]
     public partial class Course
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Course()
+        {
+            Assignments = new HashSet<Assignment>();
+        }
+
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int courseId { get; set; }
+        public int id { get; set; }
 
         [Required]
         public string title { get; set; }
 
         [Required]
         public string description { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Assignment> Assignments { get; set; }
     }
 }
