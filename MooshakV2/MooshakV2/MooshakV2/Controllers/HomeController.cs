@@ -10,7 +10,8 @@ namespace MooshakV2.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            //return View();
+            return RedirectToAction("List", "Course");
         }
 
         public ActionResult About()
