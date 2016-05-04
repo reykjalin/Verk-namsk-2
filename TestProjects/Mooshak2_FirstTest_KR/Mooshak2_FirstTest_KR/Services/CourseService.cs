@@ -11,7 +11,7 @@ namespace Mooshak2_FirstTest_KR.Services
     public class CourseService
     {
         private ApplicationDbContext database = new ApplicationDbContext();
-        private CourseDataContext contextDb = new CourseDataContext();
+        private DatabaseDataContext contextDb = new DatabaseDataContext();
 
         public CourseService() { database = new ApplicationDbContext(); }
 
@@ -24,7 +24,7 @@ namespace Mooshak2_FirstTest_KR.Services
                 return null;
             }
             var course = (from c in contextDb.courses
-                         where c.courseId == courseId
+                         where c.id == courseId
                          select c).FirstOrDefault();
 
             if(course != null)

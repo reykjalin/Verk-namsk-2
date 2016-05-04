@@ -174,8 +174,13 @@
     <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="DAL\Assignment.cs" />
+    <Compile Include="DAL\AssignmentPart.cs" />
     <Compile Include="DAL\Course.cs" />
-    <Compile Include="DAL\CourseDataContext.cs" />
+    <Compile Include="DAL\CourseStudent.cs" />
+    <Compile Include="DAL\CourseTA.cs" />
+    <Compile Include="DAL\CourseTeacher.cs" />
+    <Compile Include="DAL\DatabaseDataContext.cs" />
     <Compile Include="Entities\Assignment.cs" />
     <Compile Include="Entities\AssignmentPart.cs" />
     <Compile Include="Entities\Course.cs" />

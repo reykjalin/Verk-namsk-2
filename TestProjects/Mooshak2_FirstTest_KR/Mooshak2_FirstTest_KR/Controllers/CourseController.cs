@@ -32,6 +32,10 @@ namespace Mooshak2_FirstTest_KR.Controllers
 
         public ActionResult details(int id) { return View(); }
 
-        public ActionResult courseList() { return View(); }
+        public ActionResult courseList()
+        {
+            var model = service.getAllCourses();
+            return View();
+        }
     }
 }

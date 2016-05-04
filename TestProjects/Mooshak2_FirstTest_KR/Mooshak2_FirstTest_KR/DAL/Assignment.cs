@@ -6,25 +6,30 @@ namespace Mooshak2_FirstTest_KR.DAL
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("Course")]
-    public partial class Course
+    [Table("Assignment")]
+    public partial class Assignment
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Course()
+        public Assignment()
         {
-            Assignments = new HashSet<Assignment>();
+            AssignmentParts = new HashSet<AssignmentPart>();
         }
 
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int id { get; set; }
 
+        public int courseId { get; set; }
+
         [Required]
         public string title { get; set; }
 
-        [Required]
         public string description { get; set; }
 
+        public int weight { get; set; }
+
+        public virtual Course Course { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Assignment> Assignments { get; set; }
+        public virtual ICollection<AssignmentPart> AssignmentParts { get; set; }
     }
 }
