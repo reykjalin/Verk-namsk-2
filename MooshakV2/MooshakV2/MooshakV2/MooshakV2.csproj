@@ -196,6 +196,7 @@
     <Compile Include="Services\AssignmentService.cs" />
     <Compile Include="Services\CourseService.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\AssignmentCourseViewModel.cs" />
     <Compile Include="ViewModels\AssignmentPartViewModel.cs" />
     <Compile Include="ViewModels\AssignmentViewModel.cs" />
     <Compile Include="ViewModels\CourseViewModel.cs" />
