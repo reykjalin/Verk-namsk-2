@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<MooshakV2.ViewModels.CourseViewModel>
 
 @{
-    ViewBag.Title = "list";
+    ViewBag.Title = "List";
 }
 
-<h2>list</h2>
+<h2>List</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -12,10 +12,10 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.title)
+            Title
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.description)
+            Description
         </th>
         <th></th>
     </tr>
