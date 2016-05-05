@@ -186,9 +186,6 @@
     <Compile Include="DAL\Entities\CourseTeacher.cs" />
     <Compile Include="DAL\Entities\C__MigrationHistory.cs" />
     <Compile Include="DAL\DatabaseDataContext.cs" />
-    <Compile Include="Entities\Assignment.cs" />
-    <Compile Include="Entities\AssignmentPart.cs" />
-    <Compile Include="Entities\Course.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -258,9 +255,12 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Course\edit.cshtml" />
     <Content Include="Views\Course\details.cshtml" />
     <Content Include="Views\Course\list.cshtml" />
+    <Content Include="Views\Course\CourseForm.cshtml" />
+    <Content Include="Views\Course\edit.cshtml" />
+    <Content Include="Views\Course\create.cshtml" />
+    <Content Include="Views\Course\remove.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
