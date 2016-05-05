@@ -17,6 +17,8 @@ namespace MooshakV2.Controllers
 
         public ActionResult create() { return RedirectToAction("Register", "Account"); }
 
+        public ActionResult edit() { return RedirectToAction("")}
+
         public ActionResult list()
         {
             var model = service.getAllUsers();
