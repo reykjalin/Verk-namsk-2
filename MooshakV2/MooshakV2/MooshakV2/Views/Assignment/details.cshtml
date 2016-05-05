@@ -1,17 +1,16 @@
 ﻿@model MooshakV2.ViewModels.AssignmentViewModel
 
 @{
-    ViewBag.Title = "details";
+    ViewBag.Title = "Details";
 }
 
-<h2>details</h2>
+<h2>Details</h2>
 
 <div>
-    <h4>AssignmentViewModel</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.title)
+            Title
         </dt>
 
         <dd>
@@ -19,7 +18,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.description)
+            Description
         </dt>
 
         <dd>
@@ -27,7 +26,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.weight)
+            Weight
         </dt>
 
         <dd>
@@ -35,16 +34,23 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.courseId)
+            Course Id
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.courseId)
         </dd>
 
+        <dt>
+
+        </dt>
+        <dd>
+            <br />
+            @Html.ActionLink("Edit", "Edit", new { id = Model.id }, new { @class = "btn btn-default" })
+            <a href="@Url.Action("Index")" class="btn btn-default">
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                Back to List
+            </a>
+        </dd>
     </dl>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

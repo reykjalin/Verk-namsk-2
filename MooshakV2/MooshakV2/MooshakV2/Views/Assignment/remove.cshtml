@@ -1,18 +1,17 @@
 ﻿@model MooshakV2.ViewModels.AssignmentViewModel
 
 @{
-    ViewBag.Title = "remove";
+    ViewBag.Title = "Remove";
 }
 
-<h2>remove</h2>
+<h2>Remove</h2>
 
 <h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>AssignmentViewModel</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.title)
+            Title
         </dt>
 
         <dd>
@@ -20,7 +19,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.description)
+            Description
         </dt>
 
         <dd>
@@ -28,7 +27,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.weight)
+            Weight
         </dt>
 
         <dd>
@@ -36,7 +35,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.courseId)
+            Course ID
         </dt>
 
         <dd>
@@ -49,8 +48,11 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <input type="submit" value="Delete" class="btn btn-default" /> 
+            <a href="@Url.Action("Index")" class="btn btn-default">
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                Back to List
+            </a>
         </div>
     }
 </div>
