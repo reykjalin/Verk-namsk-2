@@ -198,6 +198,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\AssignmentPartViewModel.cs" />
     <Compile Include="ViewModels\AssignmentViewModel.cs" />
+    <Compile Include="ViewModels\CourseDetailViewModel.cs" />
     <Compile Include="ViewModels\CourseViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -259,13 +260,13 @@
     <Content Include="Views\Course\AdminTeacherViews\create.cshtml" />
     <Content Include="Views\Course\AdminTeacherViews\edit.cshtml" />
     <Content Include="Views\Course\AdminTeacherViews\remove.cshtml" />
-    <Content Include="Views\Course\AdminTeacherViews\details.cshtml" />
     <Content Include="Views\Course\AdminTeacherViews\list.cshtml" />
     <Content Include="Views\Assignment\create.cshtml" />
     <Content Include="Views\Assignment\list.cshtml" />
     <Content Include="Views\Assignment\AssignmentForm.cshtml" />
-    <Content Include="Views\Course\StudentViews\details.cshtml" />
     <Content Include="Views\Course\StudentViews\list.cshtml" />
+    <Content Include="Views\Course\StudentViews\details.cshtml" />
+    <Content Include="Views\Course\AdminTeacherViews\details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
