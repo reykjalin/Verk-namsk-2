@@ -24,6 +24,12 @@ namespace MooshakV2.Controllers
         [HttpGet]
         public ActionResult create()
         {
+            prepareDropdown();
+            return View();
+        }
+
+        private void prepareDropdown()
+        {
             var courseList = courseService.getAllCourses();
             List<SelectListItem> courseDropDown = new List<SelectListItem>();
 
@@ -31,7 +37,6 @@ namespace MooshakV2.Controllers
                 courseDropDown.Add(new SelectListItem { Text = item.title, Value = item.id.ToString() });
 
             ViewData["Courselist"] = courseDropDown;
-            return View();
         }
 
         [HttpPost]
@@ -66,7 +71,11 @@ namespace MooshakV2.Controllers
                 var model = service.getAssignmentById(id);
 
                 if (model != null)
+                {
+                    prepareDropdown();
                     return View(model);
+                }
+            
             }
             return RedirectToAction("Error");
         }
