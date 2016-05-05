@@ -15,7 +15,6 @@ namespace MooshakV2.Services
     public class UserService
     {
         private DatabaseDataContext contextDb;
-        private RoleManager<IdentityRole> roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext()));
 
         public UserService() { contextDb = new DatabaseDataContext(); }
 

@@ -61,6 +61,7 @@ namespace MooshakV2.Controllers
 
         private void prepareDropDown()
         {
+            // Búa til drop-down lista með role-um fyrir edit view
             var roleList = service.getRoles();
             List<SelectListItem> roleDropDown = new List<SelectListItem>();
 
