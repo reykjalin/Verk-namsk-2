@@ -1,40 +1,47 @@
-﻿@model MooshakV2.ViewModels.CourseViewModel
+﻿@model MooshakV2.ViewModels.CourseDetailViewModel
 
-@{
+    @{
     ViewBag.Title = "Details";
-}
+    }
 
-<h2>Details</h2>
+    <h2>Details</h2>
 
 <div>
+    <h4>CourseDetailViewModel</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            Title
-        </dt>
+</div>
 
-        <dd>
-            @Html.DisplayFor(model => model.title)
-        </dd>
+<table class="table">
+    <thead>
+    <th>
+        @Model.course.title
+    </th>
+    <th></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>@Model.course.description</td>
+        </tr>
+        <tr>
+            <td>Assignments:</td>
+        </tr>
 
-        <dt>
-            Description
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.description)
-        </dd>
-        <dt>
-
-        </dt>
-        <dd>
-            <br />
-            @Html.ActionLink("Edit", "Edit", new { id = Model.id }, new { @class = "btn btn-default" })
-            <a href="@Url.Action("Index")" class="btn btn-default">
-                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                Back to List
-            </a>
-        </dd>
-    </dl>
+        @foreach (var item in Model.assignmentList)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.title);
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+       <p>
+           @Html.ActionLink("Edit", "Edit", new { id = Model.id }, new { @class = "btn btn-default" })
+           <a href="@Url.Action(" Index")" class="btn btn-default">
+               <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+               Back to List
+           </a>
+        </p>
 </div>
 
