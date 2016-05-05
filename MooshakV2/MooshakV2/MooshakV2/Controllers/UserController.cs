@@ -18,7 +18,11 @@ namespace MooshakV2.Controllers
 
         public ActionResult index() { return RedirectToAction("List"); }
 
-        public ActionResult create() { return RedirectToAction("Register", "Account"); }
+        public ActionResult create()
+        {
+            prepareDropDown();
+            return RedirectToAction("Register", "Account");
+        }
 
         [HttpGet]
         public ActionResult edit(string userName)
@@ -28,7 +32,10 @@ namespace MooshakV2.Controllers
                 var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
                 var model = service.getUserByUserName(userName, userManager);
                 if(model != null)
+                {
+                    prepareDropDown();
                     return View(model);
+                }
             }
             return View("Error");
         }
@@ -54,7 +61,13 @@ namespace MooshakV2.Controllers
 
         private void prepareDropDown()
         {
-            
+            var roleList = service.getRoles();
+            List<SelectListItem> roleDropDown = new List<SelectListItem>();
+
+            foreach (var item in roleList)
+                roleDropDown.Add(new SelectListItem { Text = item.Name, Value = item.Id });
+
+            ViewData["roleList"] = roleDropDown;
         }
     }
 }

@@ -107,5 +107,11 @@ namespace MooshakV2.Services
             }
             return false;
         }
+
+        public List<AspNetRole> getRoles()
+        {
+            return (from roles in contextDb.aspNetRoles
+                    select roles).ToList();
+        }
     }
 }
