@@ -11,9 +11,12 @@ namespace MooshakV2.Controllers
     public class AssignmentController : Controller
     {
         private AssignmentService service;
+        private CourseService courseService;
+             
         public AssignmentController()
         {
             service = new AssignmentService();
+            courseService = new CourseService();
         }
 
         public ActionResult Index()
@@ -24,6 +27,13 @@ namespace MooshakV2.Controllers
         [HttpGet]
         public ActionResult create()
         {
+            var courseList = courseService.getAllCourses();
+            List<SelectListItem> courseDropDown = new List<SelectListItem>();
+
+            foreach (var item in courseList)
+                courseDropDown.Add(new SelectListItem { Text = item.title, Value = item.id.ToString() });
+
+            ViewData["Courselist"] = courseDropDown;
             return View();
         }
 
@@ -33,6 +43,8 @@ namespace MooshakV2.Controllers
             ModelState["id"].Errors.Clear();
             if (ModelState.IsValid)
             {
+                AssignmentViewModel assignment = new AssignmentViewModel();
+                assignment.courseId = newAssignment.courseId;
                 if (service.addAssignment(newAssignment))
                     return RedirectToAction("List");
             }
