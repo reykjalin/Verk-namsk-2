@@ -17,7 +17,16 @@ namespace MooshakV2.Controllers
 
         public ActionResult create() { return RedirectToAction("Register", "Account"); }
 
-        public ActionResult edit() { return RedirectToAction("")}
+        [HttpGet]
+        public ActionResult edit(int? id)
+        {
+            if(id.HasValue)
+            {
+                
+            }
+
+            return View("Error");
+        }
 
         public ActionResult list()
         {

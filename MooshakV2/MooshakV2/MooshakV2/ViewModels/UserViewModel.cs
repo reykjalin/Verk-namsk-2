@@ -9,5 +9,6 @@ namespace MooshakV2.ViewModels
     {
         public string userName { get; set; }
         public string email { get; set; }
+        public int roleId { get; set; }
     }
 }
