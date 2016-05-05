@@ -1,4 +1,5 @@
 ﻿using MooshakV2.Services;
+using MooshakV2.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,10 +15,37 @@ namespace MooshakV2.Controllers
         {
             service = new AssignmentService();
         }
+
+        public ActionResult Index()
+        {
+            return RedirectToAction("List");
+        }
         // Create assignment
+        [HttpGet]
         public ActionResult create()
         {
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult create(AssignmentViewModel newAssignment)
+        {
+            ModelState["id"].Errors.Clear();
+            if (ModelState.IsValid)
+            {
+                if (service.addAssignment(newAssignment))
+                    return RedirectToAction("List");
+            }
+
+            return View(newAssignment);
+
+        }
+
+        [HttpGet]
+        public ActionResult list()
+        {
+            var model = service.getAllAssignments();
+            return View(model);
         }
         
         //Change assignment
