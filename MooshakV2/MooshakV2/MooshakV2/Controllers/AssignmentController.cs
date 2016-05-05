@@ -26,18 +26,7 @@ namespace MooshakV2.Controllers
         public ActionResult create()
         {
             prepareDropdown();
-            return View();
-        }
-
-        private void prepareDropdown()
-        {
-            var courseList = courseService.getAllCourses();
-            List<SelectListItem> courseDropDown = new List<SelectListItem>();
-
-            foreach (var item in courseList)
-                courseDropDown.Add(new SelectListItem { Text = item.title, Value = item.id.ToString() });
-
-            ViewData["Courselist"] = courseDropDown;
+            return View("AdminTeacherViews/create");
         }
 
         [HttpPost]
@@ -53,7 +42,7 @@ namespace MooshakV2.Controllers
                     return RedirectToAction("List");
             }
 
-            return View(newAssignment);
+            return View("AdminTeacherViews/create", newAssignment);
 
         }
 
@@ -62,7 +51,10 @@ namespace MooshakV2.Controllers
         public ActionResult list()
         {
             var model = service.getAllAssignments();
-            return View(model);
+            if(User.IsInRole("Student"))
+                return View("StudentViews/list", model);
+
+            return View("AdminTeacherViews/list", model);
         }
 
         //Change assignment
@@ -77,7 +69,7 @@ namespace MooshakV2.Controllers
                 if (model != null)
                 {
                     prepareDropdown();
-                    return View(model);
+                    return View("AdminTeacherViews/edit", model);
                 }
             
             }
@@ -94,7 +86,7 @@ namespace MooshakV2.Controllers
                     return RedirectToAction("List");
             }
 
-            return View(assignment);
+            return View("AdminTeacherViews/edit", assignment);
         }
 
         //Remove assignment
@@ -106,7 +98,7 @@ namespace MooshakV2.Controllers
             {
                 var toRemove = service.getAssignmentById(id);
                 if (toRemove != null)
-                    return View(toRemove);
+                    return View("AdminTeacherViews/remove", toRemove);
             }
             return RedirectToAction("Error");
         }
@@ -130,10 +122,15 @@ namespace MooshakV2.Controllers
             if(id.HasValue)
             {
                 var model = service.getAssignmentById(id);
-                return View(model);
+                if(User.IsInRole("Student"))
+                    return View("StudentViews/details", model);
+
+                return View("AdminTeacherViews/details", model);
             }
             return RedirectToAction("Error");
         }
+
+        public ActionResult error() { return View(); }
 
         //Get list of assignments in a course
         public ActionResult allCourseAssignments(int courseId)
@@ -153,6 +150,15 @@ namespace MooshakV2.Controllers
             return View();
         }
 
+        private void prepareDropdown()
+        {
+            var courseList = courseService.getAllCourses();
+            List<SelectListItem> courseDropDown = new List<SelectListItem>();
 
+            foreach (var item in courseList)
+                courseDropDown.Add(new SelectListItem { Text = item.title, Value = item.id.ToString() });
+
+            ViewData["Courselist"] = courseDropDown;
+        }
     }
 }

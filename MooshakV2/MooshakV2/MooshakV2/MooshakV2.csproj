@@ -265,19 +265,21 @@
     <Content Include="Views\Course\AdminTeacherViews\edit.cshtml" />
     <Content Include="Views\Course\AdminTeacherViews\remove.cshtml" />
     <Content Include="Views\Course\AdminTeacherViews\list.cshtml" />
-    <Content Include="Views\Assignment\create.cshtml" />
-    <Content Include="Views\Assignment\list.cshtml" />
+    <Content Include="Views\Assignment\AdminTeacherViews\create.cshtml" />
+    <Content Include="Views\Assignment\AdminTeacherViews\list.cshtml" />
     <Content Include="Views\Assignment\AssignmentForm.cshtml" />
     <Content Include="Views\Course\StudentViews\list.cshtml" />
     <Content Include="Views\Course\StudentViews\details.cshtml" />
     <Content Include="Views\Course\StudentViews\list.cshtml" />
-	<Content Include="Views\User\userForm.cshtml" />
+    <Content Include="Views\User\userForm.cshtml" />
     <Content Include="Views\User\list.cshtml" />
     <Content Include="Views\User\edit.cshtml" />
-	<Content Include="Views\Assignment\details.cshtml" />
-    <Content Include="Views\Assignment\remove.cshtml" />
-    <Content Include="Views\Assignment\edit.cshtml" />
+    <Content Include="Views\Assignment\AdminTeacherViews\details.cshtml" />
+    <Content Include="Views\Assignment\AdminTeacherViews\remove.cshtml" />
+    <Content Include="Views\Assignment\AdminTeacherViews\edit.cshtml" />
     <Content Include="Views\Course\AdminTeacherViews\details.cshtml" />
+    <Content Include="Views\Assignment\StudentViews\list.cshtml" />
+    <Content Include="Views\Assignment\StudentViews\details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -158,8 +158,8 @@ namespace MooshakV2.Controllers
                 {
                     if(User.IsInRole("Student"))
                         return View("StudentViews/details", model);
-                    else
-                        return View("AdminTeacherViews/details", model);
+
+                    return View("AdminTeacherViews/details", model);
                 }
             }
             return RedirectToAction("Error");
@@ -176,8 +176,8 @@ namespace MooshakV2.Controllers
             var model = service.getAllCourses();
             if(User.IsInRole("Student"))
                 return View("StudentViews/list", model);
-            else
-                return View("AdminTeacherViews/list", model);
+
+            return View("AdminTeacherViews/list", model);
         }
 
         /// <summary>

@@ -1,0 +1,55 @@
+﻿@model MooshakV2.ViewModels.AssignmentViewModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Title
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.title)
+        </dd>
+
+        <dt>
+            Description
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.description)
+        </dd>
+
+        <dt>
+            Weight
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.weight)
+        </dd>
+
+        <dt>
+            Course Id
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.courseId)
+        </dd>
+
+        <dt>
+
+        </dt>
+        <dd>
+            <br />
+            <a href="@Url.Action("Index")" class="btn btn-default">
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                Back to List
+            </a>
+        </dd>
+    </dl>
+</div>
