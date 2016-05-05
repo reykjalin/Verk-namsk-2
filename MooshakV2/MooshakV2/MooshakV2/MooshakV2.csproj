@@ -196,6 +196,7 @@
     <Compile Include="Services\AssignmentService.cs" />
     <Compile Include="Services\CourseService.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\AssignmentPartViewModel.cs" />
     <Compile Include="ViewModels\AssignmentViewModel.cs" />
     <Compile Include="ViewModels\CourseViewModel.cs" />
   </ItemGroup>
@@ -260,10 +261,12 @@
     <Content Include="Views\Course\remove.cshtml" />
     <Content Include="Views\Course\details.cshtml" />
     <Content Include="Views\Course\list.cshtml" />
+    <Content Include="Views\Assignment\create.cshtml" />
+    <Content Include="Views\Assignment\list.cshtml" />
+    <Content Include="Views\Assignment\AssignmentForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Assignment\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
