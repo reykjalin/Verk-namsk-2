@@ -25,7 +25,8 @@ namespace MooshakV2.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult create() { return View(); }
+        [Authorize(Roles = "Admin, Teacher")]
+        public ActionResult create() { return View("AdminTeacherViews/create"); }
 
         /// <summary>
         /// Bætir Course 'newCourse' við gagnagrunn.
@@ -33,6 +34,7 @@ namespace MooshakV2.Controllers
         /// <param name="newCourse"></param>
         /// <returns></returns>
         [HttpPost]
+        [Authorize(Roles = "Admin, Teacher")]
         public ActionResult create(CourseViewModel newCourse)
         {
             // TODO: Er meira elegant leið til að hundsa id validation?
@@ -45,7 +47,7 @@ namespace MooshakV2.Controllers
                     return RedirectToAction("List");
             }
             // Ef input er invalid, sýna sama view með villuskilaboðum
-            return View(newCourse);
+            return View("AdminTeacherViews/create", newCourse);
         }
 
 
@@ -54,6 +56,7 @@ namespace MooshakV2.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
+        [Authorize(Roles = "Admin, Teacher")]
         public ActionResult edit(int? id)
         {
             // Athuga hvort id sé null
@@ -64,7 +67,7 @@ namespace MooshakV2.Controllers
 
                 // Ef Course er til, senda model á View, annars error
                 if (model != null)
-                    return View(model);
+                    return View("AdminTeacherViews/edit", model);
             }
             return RedirectToAction("Error");
         }
@@ -75,6 +78,7 @@ namespace MooshakV2.Controllers
         /// <param name="course"></param>
         /// <returns></returns>
         [HttpPost]
+        [Authorize(Roles = "Admin, Teacher")]
         public ActionResult edit(CourseViewModel course)
         {
             // Athuga hvort input sé valid
@@ -85,7 +89,7 @@ namespace MooshakV2.Controllers
                     return RedirectToAction("List");
             }
             // Ef input ekki valid, sýna view aftur
-            return View(course);
+            return View("AdminTeacherViews/edit", course);
         }
 
         /// <summary>
@@ -95,6 +99,7 @@ namespace MooshakV2.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
+        [Authorize(Roles = "Admin, Teacher")]
         public ActionResult remove(int? id)
         {
             // Athuga hvort id sé null
@@ -105,7 +110,7 @@ namespace MooshakV2.Controllers
 
                 // Ef Course er til birta staðfestingar view, annars error.
                 if (toRemove != null)
-                    return View(toRemove);
+                    return View("AdminTeacherViews/remove", toRemove);
             }
             return RedirectToAction("Error");
         }
@@ -115,6 +120,7 @@ namespace MooshakV2.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
+        [Authorize(Roles = "Admin, Teacher")]
         public ActionResult remove(CourseViewModel toRemove)
         {
             // toRemove eytt úr DB, ef eitthvað mistekst birtist error view
@@ -129,6 +135,8 @@ namespace MooshakV2.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [HttpGet]
+        [Authorize(Roles = "Admin, Teacher, Student")]
         public ActionResult details(int? id)
         {
             // Athuga hvort id sé null
@@ -138,8 +146,13 @@ namespace MooshakV2.Controllers
                 var model = service.getCourseById(id);
 
                 // Ef Course er til, birta Details view, annars sýna Error view.
-                if (model != null)
-                    return View(model);
+                if(model != null)
+                {
+                    if(User.IsInRole("Student"))
+                        return View("StudentViews/details", model);
+                    else
+                        return View("AdminTeacherViews/details", model);
+                }
             }
             return RedirectToAction("Error");
         }
@@ -148,12 +161,15 @@ namespace MooshakV2.Controllers
         /// Sýnir lista af öllum Courses í gagnagrunni.
         /// </summary>
         /// <returns></returns>
-        [Authorize(Roles = "Admin, Teacher")]
+        [Authorize(Roles = "Admin, Teacher, Student")]
         public ActionResult list()
         {
             // Fá lista af öllum Courses og birta hann.
             var model = service.getAllCourses();
-            return View(model);
+            if(User.IsInRole("Student"))
+                return View("StudentViews/list", model);
+            else
+                return View("AdminTeacherViews/list", model);
         }
 
         /// <summary>
