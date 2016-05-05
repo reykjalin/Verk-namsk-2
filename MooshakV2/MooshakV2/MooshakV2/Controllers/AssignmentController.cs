@@ -16,10 +16,7 @@ namespace MooshakV2.Controllers
             service = new AssignmentService();
         }
 
-        public ActionResult Index()
-        {
-            return RedirectToAction("List");
-        }
+        public ActionResult Index() { return RedirectToAction("List"); }
         // Create assignment
         [HttpGet]
         public ActionResult create()
