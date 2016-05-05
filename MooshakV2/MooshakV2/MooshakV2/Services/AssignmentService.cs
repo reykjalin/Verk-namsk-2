@@ -22,7 +22,7 @@ namespace MooshakV2.Services
                                   select alist).ToList();
 
             var assignmentModelList = new List<AssignmentViewModel>();
-            foreach(var assignment in assignmentList)
+            foreach (var assignment in assignmentList)
             {
                 var viewModel = new AssignmentViewModel();
                 viewModel.title = assignment.title;
@@ -62,9 +62,57 @@ namespace MooshakV2.Services
             contextDb.SaveChanges();
 
             return true;
-             
+        }
 
+        public AssignmentViewModel getAssignmentById(int? id)
+        {
+            var assignment = (from a in contextDb.assignments
+                              where a.id == id
+                              select a).FirstOrDefault();
 
+            if (assignment == null)
+                return null;
+
+            var model = new AssignmentViewModel();
+            model.title = assignment.title;
+            model.description = assignment.description;
+            model.weight = assignment.weight;
+            model.id = assignment.id;
+
+            return model;
+        }
+
+        public bool updateAssignment(AssignmentViewModel newData)
+        {
+            if (newData != null)
+            {
+                var oldAssignment = (from a in contextDb.assignments
+                                     where a.id == newData.id
+                                     select a).SingleOrDefault();
+
+                if (oldAssignment != null)
+                {
+                    oldAssignment.title = newData.title;
+                    oldAssignment.description = newData.description;
+                    oldAssignment.weight = newData.weight;
+                    oldAssignment.id = newData.id;
+                    oldAssignment.courseId = newData.courseId;
+
+                    contextDb.SaveChanges();
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public bool removeAssignment(int id)
+        {
+            contextDb.assignments.Remove((from a in contextDb.assignments
+                                          where a.id == id
+                                          select a).SingleOrDefault());
+
+            contextDb.SaveChanges();
+            return true;
         }
     }
 }

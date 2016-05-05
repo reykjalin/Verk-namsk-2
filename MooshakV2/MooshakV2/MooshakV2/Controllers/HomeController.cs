@@ -16,9 +16,7 @@ namespace MooshakV2.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
+            return RedirectToAction("List", "Assignment");
         }
 
         public ActionResult Contact()
