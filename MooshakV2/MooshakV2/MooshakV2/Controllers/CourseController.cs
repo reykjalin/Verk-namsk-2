@@ -148,6 +148,7 @@ namespace MooshakV2.Controllers
         /// Sýnir lista af öllum Courses í gagnagrunni.
         /// </summary>
         /// <returns></returns>
+        [Authorize(Roles = "Admin, Teacher")]
         public ActionResult list()
         {
             // Fá lista af öllum Courses og birta hann.
