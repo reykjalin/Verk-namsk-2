@@ -56,23 +56,66 @@ namespace MooshakV2.Controllers
             var model = service.getAllAssignments();
             return View(model);
         }
-        
+
         //Change assignment
-        public ActionResult edit()
+        [HttpGet]
+        public ActionResult edit(int? id)
         {
-            return View();
+            if (id.HasValue)
+            {
+                var model = service.getAssignmentById(id);
+
+                if (model != null)
+                    return View(model);
+            }
+            return RedirectToAction("Error");
+        }
+
+        [HttpPost]
+        public ActionResult edit(AssignmentViewModel assignment)
+        {
+            if (ModelState.IsValid)
+            {
+                if (service.updateAssignment(assignment))
+                    return RedirectToAction("List");
+            }
+
+            return View(assignment);
         }
 
         //Remove assignment
-        public ActionResult remove()
+        [HttpGet]
+        public ActionResult remove(int? id)
         {
-            return View();
+            if(id.HasValue)
+            {
+                var toRemove = service.getAssignmentById(id);
+                if (toRemove != null)
+                    return View(toRemove);
+            }
+            return RedirectToAction("Error");
+        }
+
+        [HttpPost]
+        public ActionResult remove(AssignmentViewModel toRemove)
+        {
+            if (service.removeAssignment(toRemove.id))
+                return RedirectToAction("List");
+
+            return RedirectToAction("Error");
+
         }
 
         //Get details about the given id
-        public ActionResult details(int id)
+        [HttpGet]
+        public ActionResult details(int? id)
         {
-            return View();
+            if(id.HasValue)
+            {
+                var model = service.getAssignmentById(id);
+                return View(model);
+            }
+            return RedirectToAction("Error");
         }
 
         //Get list of assignments
