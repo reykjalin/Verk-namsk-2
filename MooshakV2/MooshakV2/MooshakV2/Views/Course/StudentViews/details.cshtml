@@ -1,17 +1,41 @@
 ﻿@model MooshakV2.ViewModels.CourseDetailViewModel
 
 @{
-    ViewBag.Title = "details";
+    ViewBag.Title = "Details";
 }
 
-<h2>details</h2>
+<h2>Details</h2>
 
 <div>
-    <h4>CourseDetailViewModel</h4>
     <hr />
-    <dl class="dl-horizontal">
-    </dl>
+    <table class="table">
+        <thead>
+        <th>
+            @Model.course.title
+        </th>
+        <th></th>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.course.description</td>
+            </tr>
+            <tr>
+                <td>Assignments:</td>
+            </tr>
+
+            @foreach (var item in Model.assignmentList)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.title);
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+    <br />
+    <a href="@Url.Action(" Index")" class="btn btn-default">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        Back to List
+    </a>
 </div>
-<p>
-    @Html.ActionLink("Back to List", "Index")
-</p>
