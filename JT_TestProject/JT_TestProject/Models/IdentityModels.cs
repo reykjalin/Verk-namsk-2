@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using JT_TestProject.Models.Entities;
 
 namespace JT_TestProject.Models
 {
@@ -20,7 +21,11 @@ namespace JT_TestProject.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-        public ApplicationDbContext()
+		public DbSet<Assignment> Assignments { get; set; }
+		public DbSet<AssignmentMilestone> Milestones { get; set; }
+		public DbSet<Course> Courses { get; set; }
+
+		public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
         }

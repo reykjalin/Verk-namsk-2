@@ -5,10 +5,9 @@ using System.Web;
 
 namespace JT_TestProject.Models.Entities
 {
-	public class Assignment
+	public class Course
 	{
 		public int ID { get; set; }
-		public int CourseID { get; set; }
-		public string Title { get; set; }
+		public string Name { get; set; }
 	}
 }
