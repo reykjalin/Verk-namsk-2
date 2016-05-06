@@ -1,0 +1,43 @@
+﻿@model IEnumerable<MooshakV2.ViewModels.AssignmentViewModel>
+
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>Assignments</h2>
+
+<table class="table table-hover">
+    <tr>
+        <th>
+            Title
+        </th>
+        <th>
+            Description
+        </th>
+        <th>
+            Weight
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.weight)
+        </td>
+        <td>
+            <a href="@Url.Action("Details", new { id = item.id })" class="btn btn-default">
+                <span id="but" class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                Details
+            </a>
+        </td>
+    </tr>
+}
+
+</table>

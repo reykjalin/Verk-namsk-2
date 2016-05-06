@@ -37,7 +37,26 @@ namespace MooshakV2.Services
 
         public List<AssignmentViewModel> getAllAssignmentsInCourse(int courseId)
         {
-            return new List<AssignmentViewModel>();
+			var assignmentEntities = (from assignments in contextDb.assignments
+								  where courseId == assignments.courseId
+								  select assignments).ToList();
+
+			var assignmentList = new List<AssignmentViewModel>();
+
+			foreach (var item in assignmentEntities)
+			{
+				var assignment = new AssignmentViewModel();
+
+				assignment.title = item.title;
+				assignment.description = item.description;
+				assignment.id = item.id;
+				assignment.weight = item.weight;
+				assignment.courseId = item.courseId;
+
+				assignmentList.Add(assignment);
+			}
+
+			return assignmentList;
         }
 
         public List<AssignmentViewModel> getAssignmentInCourse(int courseId, int assignmentId)
@@ -78,6 +97,7 @@ namespace MooshakV2.Services
             model.description = assignment.description;
             model.weight = assignment.weight;
             model.id = assignment.id;
+            model.courseId = assignment.courseId;
 
             return model;
         }

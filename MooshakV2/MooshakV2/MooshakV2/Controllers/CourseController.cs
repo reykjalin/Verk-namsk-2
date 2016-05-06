@@ -11,14 +11,19 @@ namespace MooshakV2.Controllers
     public class CourseController : Controller
     {
         private CourseService service;
+		private AssignmentService assService;
 
-        public CourseController() { service = new CourseService(); }
-
-        /// <summary>
-        /// Sýnir List view-inu
-        /// </summary>
-        /// <returns></returns>
-        public ActionResult Index() { return RedirectToAction("List"); }
+        public CourseController()
+		{
+			service = new CourseService();
+			assService = new AssignmentService();
+		}
+		
+		/// <summary>
+		/// Sýnir List view-inu
+		/// </summary>
+		/// <returns></returns>
+		public ActionResult Index() { return RedirectToAction("List"); }
 
         /// <summary>
         /// Sýnir Create view-ið fyrir Course
@@ -142,16 +147,19 @@ namespace MooshakV2.Controllers
             // Athuga hvort id sé null
             if (id.HasValue)
             {
-                // Course með ID 'id' fundinn
-                var model = service.getCourseById(id);
+				CourseDetailViewModel model = new CourseDetailViewModel();
+				// Course með ID 'id' fundinn
+				model.course = service.getCourseById(id); ;
+				// Assignment í Course með ID 'id' fundinn
+				model.assignmentList = assService.getAllAssignmentsInCourse(id.Value);
 
                 // Ef Course er til, birta Details view, annars sýna Error view.
                 if(model != null)
                 {
                     if(User.IsInRole("Student"))
                         return View("StudentViews/details", model);
-                    else
-                        return View("AdminTeacherViews/details", model);
+
+                    return View("AdminTeacherViews/details", model);
                 }
             }
             return RedirectToAction("Error");
@@ -168,8 +176,8 @@ namespace MooshakV2.Controllers
             var model = service.getAllCourses();
             if(User.IsInRole("Student"))
                 return View("StudentViews/list", model);
-            else
-                return View("AdminTeacherViews/list", model);
+
+            return View("AdminTeacherViews/list", model);
         }
 
         /// <summary>
