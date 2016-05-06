@@ -50,6 +50,7 @@ namespace MooshakV2.Controllers
         [Authorize]
         public ActionResult list()
         {
+            prepareDropdown();
             var model = service.getAllAssignments();
             if(User.IsInRole("Student"))
                 return View("StudentViews/list", model);
@@ -59,16 +60,17 @@ namespace MooshakV2.Controllers
 
         [HttpGet]
         [Authorize]
-        public ActionResult listAssignmentsInCourse(int? courseId)
+        public ActionResult listAssignmentsInCourse(string id)
         {
-            if (courseId.HasValue)
-            {
-                var model = service.getAllAssignmentsInCourse(courseId.Value);
+            int courseId = Convert.ToInt32(id);
+            var model = service.getAllAssignmentsInCourse(courseId);
+            if(model != null) {
+                prepareDropdown();
                 if (User.IsInRole("Student"))
                     return View("StudentViews/list", model);
 
 
-                return View("AdminTeacherView/list", model);
+                return View("AdminTeacherViews/list", model);
             }
             return RedirectToAction("List");
         }

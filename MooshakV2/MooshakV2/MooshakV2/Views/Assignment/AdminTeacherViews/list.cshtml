@@ -12,6 +12,16 @@
         Create a New Assignment
     </a>
 </p>
+
+@using (Html.BeginForm("listAssignmentsInCourse", "Assignment", FormMethod.Get))
+{
+    <div class="col-md-10">
+        @Html.DropDownList("id", ViewData["Courselist"] as IEnumerable<SelectListItem>, new { @class = "form-control" })
+        
+        <input type="submit" value="Filter" />
+    </div>
+}
+
 <table class="table table-hover">
     <tr>
         <th>
