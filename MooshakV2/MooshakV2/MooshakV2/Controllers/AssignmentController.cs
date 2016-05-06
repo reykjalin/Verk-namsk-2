@@ -57,6 +57,22 @@ namespace MooshakV2.Controllers
             return View("AdminTeacherViews/list", model);
         }
 
+        [HttpGet]
+        [Authorize]
+        public ActionResult listAssignmentsInCourse(int? courseId)
+        {
+            if (courseId.HasValue)
+            {
+                var model = service.getAllAssignmentsInCourse(courseId.Value);
+                if (User.IsInRole("Student"))
+                    return View("StudentViews/list", model);
+
+
+                return View("AdminTeacherView/list", model);
+            }
+            return RedirectToAction("List");
+        }
+
         //Change assignment
         [HttpGet]
         [Authorize(Roles = "Admin, Teacher")]
