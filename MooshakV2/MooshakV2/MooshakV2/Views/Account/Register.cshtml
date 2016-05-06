@@ -30,9 +30,16 @@
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
+        @Html.LabelFor(m => m.ConfirmPassword, new {@class = "col-md-2 control-label"})
         <div class="col-md-10">
-            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+            @Html.PasswordFor(m => m.ConfirmPassword, new {@class = "form-control"})
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.userRole, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.userRole, ViewData["roleList"] as IEnumerable<SelectListItem>, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.userRole, "", new { @class = "text-danger" })
         </div>
     </div>
     <div class="form-group">

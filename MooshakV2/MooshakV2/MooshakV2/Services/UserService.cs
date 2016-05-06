@@ -5,6 +5,7 @@ using System.Web;
 using MooshakV2.DAL;
 using MooshakV2.ViewModels;
 using System.Web.Security;
+using System.Web.WebPages;
 using MooshakV2.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity;
@@ -90,7 +91,7 @@ namespace MooshakV2.Services
                 user.Email = newUserInfo.email;
 
                 // Get current user role
-                var role = userManager.GetRoles(user.Id).FirstOrDefault();
+                var role = userManager.GetRoles(user.Id).ToArray();
                 // If user didn't have a role, don't remove the user from his roles
                 if(role != null)
                     userManager.RemoveFromRoles(user.Id, role);
@@ -115,7 +116,21 @@ namespace MooshakV2.Services
 
         public bool deleteUser(UserViewModel toRemoveModel, ApplicationUserManager userManager)
         {
-            
+            // Get user from DB
+            var user = (from users in contextDb.aspNetUsers
+                        where users.UserName == toRemoveModel.userName
+                        select users).SingleOrDefault();
+            if(user != null)
+            {
+                // Remove user from all roles
+                if(!userManager.GetRoles(user.Id).FirstOrDefault().IsEmpty())
+                    userManager.RemoveFromRoles(user.Id, userManager.GetRoles(user.Id).ToArray());
+                // Remove user from DB
+                contextDb.aspNetUsers.Remove(user);
+                contextDb.SaveChanges();
+                return true;
+            }
+            return false;
         }
     }
 }
