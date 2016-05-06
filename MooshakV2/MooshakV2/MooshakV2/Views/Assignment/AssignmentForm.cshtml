@@ -29,6 +29,7 @@
             <div class="col-md-10">
                 @Html.EditorFor(model => model.weight, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.weight, "", new { @class = "text-danger" })
+               
             </div>
         </div>
 
@@ -39,6 +40,7 @@
             <div class="col-md-10">
                 @Html.DropDownListFor(model => model.courseId, ViewData["Courselist"] as IEnumerable<SelectListItem>, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.courseId, "", new { @class = "text-danger" })
+                
             </div>
         </div>
 

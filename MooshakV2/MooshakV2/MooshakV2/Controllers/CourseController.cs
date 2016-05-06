@@ -176,9 +176,10 @@ namespace MooshakV2.Controllers
             var model = service.getAllCourses();
             if(User.IsInRole("Student"))
                 return View("StudentViews/list", model);
-
+          
             return View("AdminTeacherViews/list", model);
         }
+
 
         /// <summary>
         /// Sýnir Error view.
