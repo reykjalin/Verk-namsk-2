@@ -8,36 +8,55 @@
 
 <div>
     <hr />
-        <table class="table">
-            <thead>
-            <th>
-                @Model.course.title
-            </th>
-            <th></th>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>@Model.course.description</td>
-                </tr>
-                <tr>
-                    <td>Assignments:</td>
-                </tr>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Model.course.title
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.course.description</td>
+            </tr>
+        </tbody>
+    </table>
 
-                @foreach (var item in Model.assignmentList)
-                {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.title);
-                    </td>
-                </tr>
-                }
-            </tbody>
-        </table>
-        <br />
-        @Html.ActionLink("Edit", "Edit", new { id = Model.course.id }, new { @class = "btn btn-default" })
-        <a href="@Url.Action("Index")" class="btn btn-default">
-            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-            Back to List
-        </a>
+    @Html.Label("assignmentTable", "Assignments", htmlAttributes: new { @class = "control-label col-md-2" })
+    <table class="table" id="assignmentTable">
+        <thead>
+            <tr>
+                <th>
+                    @Html.Label("Title", htmlAttributes: new { @class = "control-label col-md-2" })
+                </th>
+                <th>
+                    @Html.Label("Description", htmlAttributes: new { @class = "control-label col-md-2" })
+                </th>
+            </tr>
+        </thead>
+
+        <tbody>
+        @foreach (var item in Model.assignmentList)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.title)
+                </td>
+                <td>
+                    @Html.DisplayFor(m => item.description)
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+
+    <br />
+    @Html.ActionLink("Edit", "Edit", new { id = Model.course.id }, new { @class = "btn btn-default" })
+    <a href="@Url.Action("Index")" class="btn btn-default">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        Back to List
+    </a>
 </div>
+
 
