@@ -13,12 +13,12 @@
 }
 
 .login-block {
-    width: 480px;
+    width: 400px;
     padding: 20px;
     background: #fff;
     border-radius: 5px;
     border-top: 5px solid #ff656c;
-    margin-left: 320px;
+    margin-left: 380px;
 }
 
 .login-block h1 {
@@ -31,7 +31,7 @@
 }
 
 .login-block .input {
-    width: 100%;
+    width: 90%;
     height: 42px;
     box-sizing: border-box;
     border-radius: 5px;
@@ -39,37 +39,32 @@
     margin-bottom: 20px;
     font-size: 14px;
     font-family: Montserrat;
-    padding: 0 20px 0 50px;
     outline: none;
+    margin-left: 20px;
 }
 
 .login-block .input#username {
-    background: #fff url('http://i.imgur.com/u0XmBmv.png') 20px top no-repeat;
-    background-size: 16px 80px;
+    background: #fff;
+    background-size: 16px 60px;
 }
 
 .login-block .input#username:focus {
-    background: #fff url('http://i.imgur.com/u0XmBmv.png') 20px bottom no-repeat;
-    background-size: 16px 80px;
+    background: #fff;
+    background-size: 16px 60px;
 }
 
 .login-block .input#password {
-    background: #fff url('http://i.imgur.com/Qf83FTt.png') 20px top no-repeat;
-    background-size: 16px 80px;
+    background: #fff;
+    background-size: 16px 60px;
 }
 
 .login-block .input#password:focus {
-    background: #fff url('http://i.imgur.com/Qf83FTt.png') 20px bottom no-repeat;
-    background-size: 16px 80px;
+    background: #fff;
+    background-size: 16px 60px;
 }
 
 .login-block .input:active, .login-block .input:focus {
     border: 1px solid #ff656c;
-}
-
-.login-block .input:{
-    background: #fff url('http://i.imgur.com/Qf83FTt.png') 20px bottom no-repeat;
-    background-size: 16px 80px;
 }
 
 .login-block .btn {
