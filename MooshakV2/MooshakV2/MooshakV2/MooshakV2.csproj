@@ -187,6 +187,7 @@
     <Compile Include="DAL\Entities\CourseTeacher.cs" />
     <Compile Include="DAL\Entities\C__MigrationHistory.cs" />
     <Compile Include="DAL\DatabaseDataContext.cs" />
+    <Compile Include="DAL\Entities\UserDetail.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
