@@ -14,9 +14,11 @@ namespace MooshakV2.ViewModels
     {
         public int id { get; set; }
 
+        [Display(Name = "Title")]
         [Required(ErrorMessage = "You must specify a name!")]
         public string title { get; set; }
 
+        [Display(Name = "Description")]
         [Required(ErrorMessage = "You must write a description!")]
         public string description { get; set; }
     }
