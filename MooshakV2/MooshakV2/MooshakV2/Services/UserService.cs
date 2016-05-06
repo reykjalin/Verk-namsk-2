@@ -6,6 +6,7 @@ using MooshakV2.DAL;
 using MooshakV2.ViewModels;
 using System.Web.Security;
 using System.Web.WebPages;
+using Microsoft.Ajax.Utilities;
 using MooshakV2.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity;
@@ -131,6 +132,47 @@ namespace MooshakV2.Services
                 return true;
             }
             return false;
+        }
+
+        public List<UserViewModel> getAllStudents(ApplicationUserManager userManager)
+        {
+            return getUsersByRole(userManager, "Student");
+        }
+
+        public List<UserViewModel> getAllTAs(ApplicationUserManager userManager)
+        {
+            return getUsersByRole(userManager, "TA");
+        }
+
+        public List<UserViewModel> getAllTeachers(ApplicationUserManager userManager)
+        {
+            return getUsersByRole(userManager, "Teacher");
+        }
+
+        public List<UserViewModel> getAllAdmins(ApplicationUserManager userManager)
+        {
+            return getUsersByRole(userManager, "Admin");
+        }
+
+        private List<UserViewModel> getUsersByRole(ApplicationUserManager userManager, string role)
+        {
+            var users = (from u in contextDb.aspNetUsers
+                         select u).ToList();
+
+            var userList = new List<UserViewModel>();
+            foreach (var user in users)
+            {
+                if(userManager.GetRoles(user.Id).Contains(role))
+                {
+                    var model = new UserViewModel();
+                    model.userName = user.UserName;
+                    model.email = user.Email;
+                    model.roleName = userManager.GetRoles(user.Id).FirstOrDefault();
+
+                    userList.Add(model);
+                }
+            }
+            return userList;
         }
     }
 }
