@@ -16,6 +16,6 @@ namespace MooshakV2.ViewModels
         public string email { get; set; }
 
         [Required(ErrorMessage = "You must define a role for this user!")]
-        public int roleId { get; set; }
+        public string roleName { get; set; }
     }
 }
