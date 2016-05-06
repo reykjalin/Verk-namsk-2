@@ -63,6 +63,22 @@
                                 <td>
                                     @Html.DisplayFor(m => item.description)
                                 </td>
+                                <td>
+                                    <div class="btn-group btn-group-sm" role="group" aria-label="...">
+                                        <a href="@Url.Action("Edit", "Assignment", new {id = item.id})" class="btn btn-default">
+                                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                                            Edit
+                                        </a>
+                                        <a href="@Url.Action("Details", "Assignment", new {id = item.id})" class="btn btn-default">
+                                            <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                                            Details
+                                        </a>
+                                        <a href="@Url.Action("Remove", "Assignment", new {id = item.id})" class="btn btn-default">
+                                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                            Delete
+                                        </a>
+                                    </div>
+                                </td>
                             </tr>
                         }
                         </tbody>
@@ -108,9 +124,20 @@
                                     @Html.DisplayFor(modelItem => item.email)
                                 </td>
                                 <td>
-                                    @Html.ActionLink("Edit", "Edit", new {userName = item.userName}) |
-                                    @Html.ActionLink("Details", "Details", new {userName = item.userName}) |
-                                    @Html.ActionLink("Delete", "Delete", new {userName = item.userName})
+                                    <div class="btn-group btn-group-sm" role="group" aria-label="...">
+                                        <a href="@Url.Action("Edit", "User", new {id = item.userName})" class="btn btn-default">
+                                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                                            Edit
+                                        </a>
+                                        <a href="@Url.Action("Details", "User", new {id = item.userName})" class="btn btn-default">
+                                            <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                                            Details
+                                        </a>
+                                        <a href="@Url.Action("Delete", "User", new {id = item.userName})" class="btn btn-default">
+                                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                            Delete
+                                        </a>
+                                    </div>
                                 </td>
                             </tr>
                         }
@@ -157,11 +184,20 @@
                                 <td>
                                     @Html.DisplayFor(modelItem => item.email)
                                 </td>
-                                <td>
-                                    @Html.ActionLink("Edit", "Edit", new { userName = item.userName }) |
-                                    @Html.ActionLink("Details", "Details", new { userName = item.userName }) |
-                                    @Html.ActionLink("Delete", "Delete", new { userName = item.userName })
-                                </td>
+                                <div class="btn-group btn-group-sm" role="group" aria-label="...">
+                                    <a href="@Url.Action("Edit", "User", new {id = item.userName})" class="btn btn-default">
+                                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                                        Edit
+                                    </a>
+                                    <a href="@Url.Action("Details", "User", new {id = item.userName})" class="btn btn-default">
+                                        <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                                        Details
+                                    </a>
+                                    <a href="@Url.Action("Delete", "User", new {id = item.userName})" class="btn btn-default">
+                                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                        Delete
+                                    </a>
+                                </div>
                             </tr>
                         }
 
@@ -206,9 +242,20 @@
                                     @Html.DisplayFor(modelItem => item.email)
                                 </td>
                                 <td>
-                                    @Html.ActionLink("Edit", "Edit", new { userName = item.userName }) |
-                                    @Html.ActionLink("Details", "Details", new { userName = item.userName }) |
-                                    @Html.ActionLink("Delete", "Delete", new { userName = item.userName })
+                                    <div class="btn-group btn-group-sm" role="group" aria-label="...">
+                                        <a href="@Url.Action("Edit", "User", new {id = item.userName})" class="btn btn-default">
+                                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                                            Edit
+                                        </a>
+                                        <a href="@Url.Action("Details", "User", new {id = item.userName})" class="btn btn-default">
+                                            <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                                            Details
+                                        </a>
+                                        <a href="@Url.Action("Delete", "User", new {id = item.userName})" class="btn btn-default">
+                                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                            Delete
+                                        </a>
+                                    </div>
                                 </td>
                             </tr>
                         }
