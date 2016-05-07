@@ -32,7 +32,8 @@ namespace MooshakV2.Controllers
             if(!userName.IsEmpty())
             {
                 var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-                var model = service.getUserByUserName(userName, userManager);
+                var model = new UserDetailViewModel();
+                model = service.getUserByUserName(userName, userManager);
                 if(model != null)
                 {
                     prepareDropDown();
@@ -43,8 +44,9 @@ namespace MooshakV2.Controllers
         }
 
         [HttpPost]
-        public ActionResult edit(UserViewModel changedUser)
+        public ActionResult edit(UserDetailViewModel changedUser)
         {
+            prepareDropDown();
             if(ModelState.IsValid)
             {
                 var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
@@ -89,11 +91,14 @@ namespace MooshakV2.Controllers
         }
 
         [HttpPost]
-        public ActionResult delete(UserViewModel toRemove)
+        public ActionResult delete(UserDetailViewModel toRemove)
         {
-            var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            if (service.deleteUser(toRemove, userManager))
-                return RedirectToAction("List");
+            if(toRemove != null)
+            {
+                var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                if(service.deleteUser(toRemove, userManager))
+                    return RedirectToAction("List");
+            }
             return View("Error");
         }
 

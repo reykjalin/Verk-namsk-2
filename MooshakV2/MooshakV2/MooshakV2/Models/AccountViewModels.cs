@@ -73,6 +73,14 @@ namespace MooshakV2.Models
         public string userName { get; set; }
 
         [Required]
+        [Display(Name = "Name")]
+        public string name { get; set; }
+
+        [Required]
+        [Display(Name = "SSN")]
+        public string ssn { get; set; }
+
+        [Required]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }

@@ -1,4 +1,4 @@
-﻿@model MooshakV2.ViewModels.UserViewModel
+﻿@model MooshakV2.ViewModels.UserDetailViewModel
 
 
 @using (Html.BeginForm())
@@ -6,21 +6,31 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>@Model.userName</h4>
-        <hr />
+        <h4>@Model.userModel.userName</h4>
+        @Html.HiddenFor(model => model.userModel.userName)
+        @Html.HiddenFor(m => m.ssn)
+        <hr/>
         <div class="form-group">
-            @Html.LabelFor(model => model.email, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.name, htmlAttributes: new {@class = "control-label col-md-2"})
             <div class="col-md-10">
-                @Html.EditorFor(model => model.email, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.name, new {htmlAttributes = new {@class = "form-control"}})
+                @Html.ValidationMessageFor(model => model.name, "", new {@class = "text-danger"})
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.roleName, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.userModel.email, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.roleName, ViewData["roleList"] as IEnumerable<SelectListItem>, new {@class = "form-control" })
-                @Html.ValidationMessageFor(model => model.roleName, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.userModel.email, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.userModel.email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.userModel.roleName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.userModel.roleName, ViewData["roleList"] as IEnumerable<SelectListItem>, new {@class = "form-control" })
+                @Html.ValidationMessageFor(model => model.userModel.roleName, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -33,7 +43,7 @@
 }
 
 <div>
-    <a href="@Url.Action("Index", new {userName = Model.userName})"
+    <a href="@Url.Action("Index", new {userName = Model.userModel.userName})"
        class="btn btn-default"
        data-toggle="tooltip"
        data-placement="top"

@@ -1,4 +1,4 @@
-﻿@model MooshakV2.ViewModels.UserViewModel
+﻿@model MooshakV2.ViewModels.UserDetailViewModel
 
 @{
     ViewBag.Title = "delete";
@@ -8,41 +8,40 @@
 
 <h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>UserViewModel</h4>
+    <h4>UserDetailViewModel</h4>
+
+    @Html.HiddenFor(m => m.userModel.userName)
+    @Html.HiddenFor(m => m.userModel.email)
+    @Html.HiddenFor(m => m.userModel.roleName)
+    @Html.HiddenFor(m => m.userModel)
+
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.userName)
+            @Html.DisplayNameFor(model => model.name)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.userName)
+            @Html.DisplayFor(model => model.name)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.email)
+            @Html.DisplayNameFor(model => model.ssn)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.email)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.roleName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.roleName)
+            @Html.DisplayFor(model => model.ssn)
         </dd>
 
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm(new { toRemove = Model.userModel }))
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <input type="submit" value="Delete User" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index", new { }, new { @class = "btn btn-default" })
         </div>
     }
 </div>

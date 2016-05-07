@@ -9,8 +9,8 @@ namespace MooshakV2.ViewModels
 	{
 		public CourseViewModel course { get; set; }
 		public List<AssignmentViewModel> assignmentList { get; set; }
-        public List<UserViewModel> studentList { get; set; }
-        public List<UserViewModel> taList { get; set; }
-        public List<UserViewModel> teacherList { get; set; }
+        public List<UserDetailViewModel> studentList { get; set; }
+        public List<UserDetailViewModel> taList { get; set; }
+        public List<UserDetailViewModel> teacherList { get; set; }
 	}
 }
