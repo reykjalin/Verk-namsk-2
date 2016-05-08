@@ -221,6 +221,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\UserDeleteModal.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -232,6 +233,7 @@
     <Content Include="Scripts\renderTooltips.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\UserDetailModal.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -275,7 +277,6 @@
     <Content Include="Views\Assignment\AdminTeacherViews\create.cshtml" />
     <Content Include="Views\Assignment\AdminTeacherViews\list.cshtml" />
     <Content Include="Views\Assignment\AssignmentForm.cshtml" />
-    <Content Include="Views\Course\StudentViews\details.cshtml" />
     <Content Include="Views\User\userForm.cshtml" />
     <Content Include="Views\User\list.cshtml" />
     <Content Include="Views\User\edit.cshtml" />
@@ -285,10 +286,11 @@
     <Content Include="Views\Course\AdminTeacherViews\details.cshtml" />
     <Content Include="Views\Assignment\StudentViews\list.cshtml" />
     <Content Include="Views\Assignment\StudentViews\details.cshtml" />
-    <Content Include="Views\User\delete_old.cshtml" />
     <Content Include="Views\User\details.cshtml" />
-    <Content Include="Views\Course\StudentViews\list.cshtml" />
     <Content Include="Views\User\delete.cshtml" />
+    <Content Include="Views\Course\StudentViews\details.cshtml" />
+    <Content Include="Views\Course\StudentViews\list.cshtml" />
+    <Content Include="Views\User\StudentViews\details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
