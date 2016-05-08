@@ -1,3 +1,3 @@
 ﻿$(function () {
-    $('[data-toggle="tooltip"]').tooltip({ container: "body" });
+    $('[data-tooltip="true"]').tooltip({ container: "body" });
 })

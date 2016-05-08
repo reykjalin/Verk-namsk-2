@@ -1,0 +1,60 @@
+﻿@model MooshakV2.ViewModels.UserDetailViewModel
+
+@{
+    ViewBag.Title = "User Details";
+}
+
+<h2>User Details</h2>
+
+<div>
+    <h4>@Model.name</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.userModel.userName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.userModel.userName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.userModel.email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.userModel.email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ssn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ssn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.userModel.roleName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.userModel.roleName)
+        </dd>
+
+    </dl>
+</div>
+<div class="btn-group btn-group-sm" role="group" aria-label="...">
+    <a href="@Url.Action("Index", new {userName = Model.userModel.userName})" 
+       class="btn btn-default"
+       data-tooltip="true"
+       data-placement="top"
+       title="Back to list">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+    </a>
+</div>
+
+@section scripts
+{
+    @Scripts.Render("~/Scripts/renderTooltips.js")
+}
