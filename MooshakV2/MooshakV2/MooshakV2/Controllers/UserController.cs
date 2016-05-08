@@ -16,8 +16,10 @@ namespace MooshakV2.Controllers
         private UserService service;
         public UserController() { service = new UserService(); }
 
+        [HttpGet]
         public ActionResult index() { return RedirectToAction("List"); }
 
+        [HttpGet]
         public ActionResult create()
         {
             prepareDropDown();
@@ -30,7 +32,8 @@ namespace MooshakV2.Controllers
             if(!userName.IsEmpty())
             {
                 var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-                var model = service.getUserByUserName(userName, userManager);
+                var model = new UserDetailViewModel();
+                model = service.getUserByUserName(userName, userManager);
                 if(model != null)
                 {
                     prepareDropDown();
@@ -41,8 +44,9 @@ namespace MooshakV2.Controllers
         }
 
         [HttpPost]
-        public ActionResult edit(UserViewModel changedUser)
+        public ActionResult edit(UserDetailViewModel changedUser)
         {
+            prepareDropDown();
             if(ModelState.IsValid)
             {
                 var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
@@ -52,11 +56,50 @@ namespace MooshakV2.Controllers
             return View(changedUser);
         }
 
+        [HttpGet]
         public ActionResult list()
         {
             var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
             var model = service.getAllUsers(userManager);
             return View(model);
+        }
+
+        [HttpGet]
+        public ActionResult details(string userName)
+        {
+            if(!userName.IsEmpty())
+            {
+                var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                var model = service.getUserByUserName(userName, userManager);
+                if(model != null)
+                    return View(model);
+            }
+            return View("Error");
+        }
+
+        [HttpGet]
+        public ActionResult delete(string userName)
+        {
+            if(!userName.IsEmpty())
+            {
+                var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                var model = service.getUserByUserName(userName, userManager);
+                if(model != null)
+                    return View(model);
+            }
+            return View("Error");
+        }
+
+        [HttpPost]
+        public ActionResult delete(UserDetailViewModel toRemove)
+        {
+            if(toRemove != null)
+            {
+                var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                if(service.deleteUser(toRemove, userManager))
+                    return RedirectToAction("List");
+            }
+            return View("Error");
         }
 
         private void prepareDropDown()
@@ -66,7 +109,7 @@ namespace MooshakV2.Controllers
             List<SelectListItem> roleDropDown = new List<SelectListItem>();
 
             foreach (var item in roleList)
-                roleDropDown.Add(new SelectListItem { Text = item.Name, Value = item.Id });
+                roleDropDown.Add(new SelectListItem { Text = item.Name, Value = item.Name });
 
             ViewData["roleList"] = roleDropDown;
         }

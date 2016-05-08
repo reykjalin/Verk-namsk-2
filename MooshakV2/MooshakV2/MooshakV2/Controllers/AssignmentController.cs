@@ -50,11 +50,29 @@ namespace MooshakV2.Controllers
         [Authorize]
         public ActionResult list()
         {
+            prepareDropdown();
             var model = service.getAllAssignments();
             if(User.IsInRole("Student"))
                 return View("StudentViews/list", model);
 
             return View("AdminTeacherViews/list", model);
+        }
+
+        [HttpGet]
+        [Authorize]
+        public ActionResult listAssignmentsInCourse(string id)
+        {
+            int courseId = Convert.ToInt32(id);
+            var model = service.getAllAssignmentsInCourse(courseId);
+            if(model != null) {
+                prepareDropdown();
+                if (User.IsInRole("Student"))
+                    return View("StudentViews/list", model);
+
+
+                return View("AdminTeacherViews/list", model);
+            }
+            return RedirectToAction("List");
         }
 
         //Change assignment

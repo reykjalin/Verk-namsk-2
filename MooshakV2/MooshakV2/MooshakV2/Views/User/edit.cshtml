@@ -1,11 +1,16 @@
-﻿@model MooshakV2.ViewModels.UserViewModel
+﻿@model MooshakV2.ViewModels.UserDetailViewModel
 
 @{
-    ViewBag.Title = "edit";
+    ViewBag.Title = "Edit user information";
 }
 
-<h2>edit</h2>
+<h2>Edit user information</h2>
 
 @{
     Html.RenderPartial("userForm");
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/Scripts/renderTooltips.js")
 }

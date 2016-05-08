@@ -9,6 +9,10 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using MooshakV2.Models;
+using System.Collections.Generic;
+using MooshakV2.DAL;
+using MooshakV2.Services;
+using MooshakV2.ViewModels;
 
 namespace MooshakV2.Controllers
 {
@@ -139,6 +143,8 @@ namespace MooshakV2.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Register()
         {
+            // Prepare role drop-down menu
+            prepareDropDown();
             return View();
         }
 
@@ -149,14 +155,20 @@ namespace MooshakV2.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
+            prepareDropDown();
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.userName, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
+                
                 if (result.Succeeded)
                 {
+                    // Add user to role and details to DB, everything else auto-generated
+                    addNewUserToDb(model);
+                    UserManager.AddToRole(user.Id, model.userRole);
+                    // Commented this out, we don't want to sign in the new user
                     //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
@@ -170,6 +182,30 @@ namespace MooshakV2.Controllers
 
             // If we got this far, something failed, redisplay form
             return View(model);
+        }
+
+        private bool addNewUserToDb(RegisterViewModel model)
+        {
+            UserService userService = new UserService();
+            UserDetailViewModel userInfo = new UserDetailViewModel();
+            userInfo.userModel = new UserViewModel();
+            userInfo.userModel.userName = model.userName;
+            userInfo.name = model.name;
+            userInfo.ssn = model.ssn;
+            return userService.addUserDetailsToDb(userInfo);
+        }
+
+        private void prepareDropDown()
+        {
+            UserService userService = new UserService();
+            // Búa til drop-down lista með role-um fyrir edit view
+            var roleList = userService.getRoles();
+            List<SelectListItem> roleDropDown = new List<SelectListItem>();
+
+            foreach (var item in roleList)
+                roleDropDown.Add(new SelectListItem { Text = item.Name, Value = item.Name });
+
+            ViewData["roleList"] = roleDropDown;
         }
 
         //

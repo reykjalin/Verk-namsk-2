@@ -187,6 +187,7 @@
     <Compile Include="DAL\Entities\CourseTeacher.cs" />
     <Compile Include="DAL\Entities\C__MigrationHistory.cs" />
     <Compile Include="DAL\DatabaseDataContext.cs" />
+    <Compile Include="DAL\Entities\UserDetail.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -203,11 +204,16 @@
     <Compile Include="ViewModels\AssignmentViewModel.cs" />
     <Compile Include="ViewModels\CourseDetailViewModel.cs" />
     <Compile Include="ViewModels\CourseViewModel.cs" />
+    <Compile Include="ViewModels\UserDetailViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Images\backhome.jpg" />
+    <Content Include="Content\Images\hrlogo.png" />
+    <Content Include="Content\Images\hrlototrans.png" />
+    <Content Include="Content\Login.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -223,6 +229,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\renderTooltips.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
@@ -268,9 +275,7 @@
     <Content Include="Views\Assignment\AdminTeacherViews\create.cshtml" />
     <Content Include="Views\Assignment\AdminTeacherViews\list.cshtml" />
     <Content Include="Views\Assignment\AssignmentForm.cshtml" />
-    <Content Include="Views\Course\StudentViews\list.cshtml" />
     <Content Include="Views\Course\StudentViews\details.cshtml" />
-    <Content Include="Views\Course\StudentViews\list.cshtml" />
     <Content Include="Views\User\userForm.cshtml" />
     <Content Include="Views\User\list.cshtml" />
     <Content Include="Views\User\edit.cshtml" />
@@ -280,6 +285,10 @@
     <Content Include="Views\Course\AdminTeacherViews\details.cshtml" />
     <Content Include="Views\Assignment\StudentViews\list.cshtml" />
     <Content Include="Views\Assignment\StudentViews\details.cshtml" />
+    <Content Include="Views\User\delete_old.cshtml" />
+    <Content Include="Views\User\details.cshtml" />
+    <Content Include="Views\Course\StudentViews\list.cshtml" />
+    <Content Include="Views\User\delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
