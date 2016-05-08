@@ -122,7 +122,8 @@ namespace MooshakV2.Controllers
             if(id.HasValue)
             {
                 var model = service.getAssignmentById(id);
-                return View(model);
+                var course = courseService.getCourseById(model.courseId);
+
             }
             return RedirectToAction("Error");
         }
