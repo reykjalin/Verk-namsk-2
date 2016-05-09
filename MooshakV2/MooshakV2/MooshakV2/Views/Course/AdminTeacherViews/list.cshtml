@@ -6,16 +6,6 @@
 
     <h2>Courses</h2>
 
-    <p>
-        <a href="@Url.Action(" Create")"
-           class="btn btn-default"
-           data-tooltip="true"
-           data-placement="right"
-           title="Create new course">
-            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-        </a>
-
-    </p>
     <table class="table">
         <tr>
             <th>
@@ -38,7 +28,7 @@
             </td>
             <td>
                 <div class="btn-group btn-group-sm" role="group" aria-label="...">
-                    <a href="@Url.Action(" Edit", new {id=item.id})"
+                    <a href="@Url.Action("Edit", new {id=item.id})"
                        class="btn btn-default"
                        data-tooltip="true"
                        data-placement="left"
@@ -72,8 +62,26 @@
             </td>
         </tr>
         }
-
+        <tr>
+            <th>
+                <div>
+                    <a href="@Url.Action("Create")"
+                       class="btn btn-default"
+                       data-tooltip="true"
+                       data-placement="right"
+                       title="Create new course">
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                        New Course
+                    </a>
+                </div>
+            </th>
+            <td>
+            </td>
+            <td>
+            </td>
+        </tr>
     </table>
+
 
     <!-- User Detail Modal -->
     <div class="modal fade" id="courseDetails" tabindex="-1" role="dialog" aria-labelledby="courseDetailsLabel">
