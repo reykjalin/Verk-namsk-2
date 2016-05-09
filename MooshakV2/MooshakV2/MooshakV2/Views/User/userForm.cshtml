@@ -37,19 +37,16 @@
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Save" class="btn btn-default" />
+                <a href="@Url.Action("Index", new {userName = Model.userModel.userName})"
+                   class="btn btn-default"
+                   data-tooltip="true"
+                   data-placement="top"
+                   title="Back to list">
+                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                </a>
             </div>
         </div>
     </div>
 }
-
-<div>
-    <a href="@Url.Action("Index", new {userName = Model.userModel.userName})"
-       class="btn btn-default"
-       data-tooltip="true"
-       data-placement="top"
-       title="Back to list">
-        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-    </a>
-</div>
 
 
