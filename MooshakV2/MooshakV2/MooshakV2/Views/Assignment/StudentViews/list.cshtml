@@ -20,24 +20,30 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.weight)
-        </td>
-        <td>
-            <a href="@Url.Action("Details", new { id = item.id })" class="btn btn-default">
-                <span id="but" class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
-                Details
-            </a>
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.weight)
+            </td>
+            <td>
+                <a href="@Url.Action("Details", new { id = item.id })" class="btn btn-default">
+                    <span id="but" class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                    Details
+                </a>
+                <a href="@Url.Action("uploadFile")" class="btn btn-default">
+                    <span id="but" class="glyphicon glyphicon-file" aria-hidden="true"></span>
+                    Hand in
+                </a>
+            </td>
+
+        </tr>
+    }
 
 </table>
