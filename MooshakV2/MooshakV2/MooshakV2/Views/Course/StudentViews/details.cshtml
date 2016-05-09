@@ -65,13 +65,19 @@
                                 </td>
                                 <td>
                                     <div class="btn-group btn-group-sm" role="group" aria-label="...">
-                                        <a href="@Url.Action("Details", "Assignment", new {id = item.id})" 
-                                           class="btn btn-default"
-                                           data-tooltip="true"
-                                           data-placement="top"
-                                           title="Assignment details">
+                                        <button type="button"
+                                                class="btn btn-default modalDetailButton"
+                                                data-tooltip="true"
+                                                data-placement="top"
+                                                title="Assignment details"
+                                                data-toggle="modal"
+                                                data-target="#assignmentDetails"
+                                                data-title="@item.title"
+                                                data-descr="@item.description"
+                                                data-weight="@item.weight"
+                                                data-courseId="@item.courseId">
                                             <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
-                                        </a>
+                                        </button>
                                     </div>
                                 </td>
                             </tr>
@@ -85,7 +91,6 @@
 
 
         <!-- accordion Student list start -->
-
 
         <div class="panel panel-default">
             <div class="panel-heading" role="tab" id="students">
@@ -120,13 +125,21 @@
                                 </td>
                                 <td>
                                     <div class="btn-group btn-group-sm" role="group" aria-label="...">
-                                        <a href="@Url.Action("Details", "User", new {userName = item.userModel.userName})" 
-                                           class="btn btn-default"
-                                           data-tooltip="true"
-                                           data-placement="top"
-                                           title="User details">
+                                        <button type="button"
+                                                class="btn btn-default modalDetailButton"
+                                                data-tooltip="true"
+                                                data-placement="top"
+                                                title="User details"
+                                                data-toggle="modal"
+                                                data-target="#userDetails"
+                                                data-name="@item.name"
+                                                data-uname="@item.userModel.userName"
+                                                data-email="@item.userModel.email"
+                                                data-ssn="@item.ssn"
+                                                data-role="@item.userModel.roleName">
                                             <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
-                                        </a>
+                                            Details
+                                        </button>
                                     </div>
                                 </td>
                             </tr>
@@ -137,7 +150,6 @@
                 </div>
             </div>
         </div>
-
 
         <!-- accordion Student list end -->
 
@@ -174,15 +186,25 @@
                                 <td>
                                     @Html.DisplayFor(modelItem => item.userModel.email)
                                 </td>
-                                <div class="btn-group btn-group-sm" role="group" aria-label="...">
-                                    <a href="@Url.Action("Details", "User", new {userName = item.userModel.userName})"
-                                       class="btn btn-default"
-                                       data-tooltip="true"
-                                       data-placement="top"
-                                       title="User details">
-                                        <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
-                                    </a>
-                                </div>
+                                <td>
+                                    <div class="btn-group btn-group-sm" role="group" aria-label="...">
+                                        <button type="button"
+                                                class="btn btn-default modalDetailButton"
+                                                data-tooltip="true"
+                                                data-placement="top"
+                                                title="User details"
+                                                data-toggle="modal"
+                                                data-target="#userDetails"
+                                                data-name="@item.name"
+                                                data-uname="@item.userModel.userName"
+                                                data-email="@item.userModel.email"
+                                                data-ssn="@item.ssn"
+                                                data-role="@item.userModel.roleName">
+                                            <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                                            Details
+                                        </button>
+                                    </div>
+                                </td>
                             </tr>
                         }
 
@@ -228,13 +250,21 @@
                                 </td>
                                 <td>
                                     <div class="btn-group btn-group-sm" role="group" aria-label="...">
-                                        <a href="@Url.Action("Details", "User", new {userName = item.userModel.userName})"
-                                           class="btn btn-default"
-                                           data-tooltip="true"
-                                           data-placement="top"
-                                           title="User details">
+                                        <button type="button"
+                                                class="btn btn-default modalDetailButton"
+                                                data-tooltip="true"
+                                                data-placement="top"
+                                                title="User details"
+                                                data-toggle="modal"
+                                                data-target="#userDetails"
+                                                data-name="@item.name"
+                                                data-uname="@item.userModel.userName"
+                                                data-email="@item.userModel.email"
+                                                data-ssn="@item.ssn"
+                                                data-role="@item.userModel.roleName">
                                             <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
-                                        </a>
+                                            Details
+                                        </button>
                                     </div>
                                 </td>
                             </tr>
@@ -262,8 +292,80 @@
     </div>
 </div>
 
+<!-- Assignment Detail Modal -->
+<div class="modal fade" id="assignmentDetails" tabindex="-1" role="dialog" aria-labelledby="assignmentDetailsLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="assignmentTitle"></h4>
+            </div>
+            <div class="modal-body">
+                <dt>
+                    Description
+                </dt>
+                <dd id="assignmentDescr"></dd>
+                <dt>
+                    Weight
+                </dt>
+                <dd id="assignmentWeight"></dd>
+                <dt>
+                    ID
+                </dt>
+                <dd id="courseId"></dd>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- User Detail Modal -->
+<div class="modal fade" id="userDetails" tabindex="-1" role="dialog" aria-labelledby="userDetailsLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="userDetailsLabel"></h4>
+            </div>
+            <div class="modal-body">
+                <dt>
+                    User Name
+                </dt>
+                <dd id="userName"></dd>
+
+                <dt>
+                    Email
+                </dt>
+                <dd id="email"></dd>
+
+                <dt>
+                    SSN
+                </dt>
+                <dd id="ssn_detail"></dd>
+
+                <dt>
+                    Role
+                </dt>
+                <dd id="role"></dd>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 
 @section scripts
 {
     @Scripts.Render("~/Scripts/renderTooltips.js")
+    @Scripts.Render("~/Scripts/UserDetailModal.js")
+    @Scripts.Render("~/Scripts/AssignmentDetailModal.js")
 }

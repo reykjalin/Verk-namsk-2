@@ -226,7 +226,7 @@
     <Content Include="Scripts\CourseDetailModal.js" />
     <Content Include="Scripts\fb.js" />
     <Content Include="Scripts\UserDeleteModal.js" />
-    <Content Include="Scripts\StudentDetailModal.js" />
+    <Content Include="Scripts\AssignmentDetailModal.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />

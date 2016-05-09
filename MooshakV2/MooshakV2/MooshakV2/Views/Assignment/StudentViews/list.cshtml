@@ -31,10 +31,6 @@
             @Html.DisplayFor(modelItem => item.weight)
         </td>
         <td>
-            <a href="@Url.Action("Details", new { id = item.id })" class="btn btn-default">
-                <span id="but" class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
-                Details
-            </a>
             <button type="button"
                     class="btn btn-default modalDetailButton"
                     data-tooltip="true"
@@ -45,23 +41,19 @@
                     data-title="@item.title"
                     data-descr="@item.description"
                     data-weight="@item.weight"
-                    data-courseID="@item.id"
-                   >
+                    data-courseID="@item.id">
                 <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                Details
             </button>
-            <a href="@Url.Action("uploadFile")" class="btn btn-default">
-                <span id="but" class="glyphicon glyphicon-file" aria-hidden="true"></span>
-                Hand in
-            </a>
             <button type="button"
                     class="btn btn-default"
                     data-tooltip="true"
                     data-placement="top"
                     title="Assignment hand in"
                     data-toggle="modal"
-                    data-target="#handin"
-                   >
+                    data-target="#handin">
                 <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+                Hand in
             </button>
         </td>
     </tr>
@@ -139,7 +131,7 @@
 
 @section scripts
 {
-        @Scripts.Render("~/Scripts/StudentDetailModal.js")
+        @Scripts.Render("~/Scripts/AssignmentDetailModal.js")
 
 }
     
