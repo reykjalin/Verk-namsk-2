@@ -18,7 +18,8 @@
     background: #fff;
     border-radius: 5px;
     border-top: 5px solid #ff656c;
-    margin-left: 380px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .login-block h1 {
@@ -85,4 +86,9 @@
 
 .login-block .btn:hover {
     background: #ff7b81;
+}
+
+
+.modal {
+    overflow-y: auto;
 }

@@ -7,6 +7,8 @@
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/Site.css")
     @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/Scripts/fb.js")
+
 
 </head>
 <body>
@@ -24,7 +26,6 @@
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Courses", "List", "Course")</li>
                     <li>@Html.ActionLink("Assignments", "List", "Assignment")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
@@ -34,7 +35,14 @@
         @RenderBody()
         
         <footer>
-            <p>&copy; @DateTime.Now.Year - MooShak 2.0</p>
+            <div>
+                &copy; @DateTime.Now.Year - MooShak 2.0
+                <span class="fb-share-button"
+                      data-href="http://i.imgur.com/7N0HiJv.png"
+                      data-layout="icon_link"
+                      data-mobile-iframe="true">
+                </span>
+            </div>
         </footer>
     </div>
 
