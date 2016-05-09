@@ -195,7 +195,7 @@ namespace MooshakV2.Controllers
                 var path = Path.Combine(Server.MapPath("~/AllFiles"), fileName);
                 theFile.file.SaveAs(path);
             }
-            return RedirectToAction("uploadFile");
+            return RedirectToAction("list");
         }
     }
 }
