@@ -157,18 +157,6 @@ namespace MooshakV2.Controllers
             return View();
         }
 
-        //Get an assignment in a course
-        public ActionResult courseAssignment(int courseId, int assignmentId)
-        {
-            return View();
-        }
-
-        //Hand in an assignment
-        public ActionResult handInAssignment(int assignmentId, int userId, string data)
-        {
-            return View();
-        }
-
         private void prepareDropdown()
         {
             var courseList = courseService.getAllCourses();

@@ -59,16 +59,6 @@ namespace MooshakV2.Services
 			return assignmentList;
         }
 
-        public List<AssignmentViewModel> getAssignmentInCourse(int courseId, int assignmentId)
-        {
-            return new List<AssignmentViewModel>();
-        }
-
-        public bool handInAssignment(int assignmentId, int courseId, string data)
-        {
-            return true;
-        }
-
         public bool addAssignment(AssignmentViewModel newAssignmentModel)
         {
             Assignment newAssignment = new Assignment();
