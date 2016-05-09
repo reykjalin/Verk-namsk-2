@@ -22,10 +22,7 @@
             descr: $('#toDelDescr').text(),
             id: $('#deleteID').val(),
         };
-        console.log('***');
-        console.log(model.id);
-        console.log(model.title);
-        console.log(model.descr);
+
         // Call Delete [Post] using model as a parameter
         $.post("/Course/Remove", model, function (data) {
             // Update course list
