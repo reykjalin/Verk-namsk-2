@@ -86,3 +86,8 @@
 .login-block .btn:hover {
     background: #ff7b81;
 }
+
+
+.modal {
+    overflow-y: auto;
+}

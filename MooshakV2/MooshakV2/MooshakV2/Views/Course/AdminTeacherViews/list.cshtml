@@ -52,16 +52,8 @@
                        title="Course details">
                         <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
                     </a>
-                    <a href="@Url.Action("Remove", new {id = item.id})"
-                       class="btn btn-default"
-                       data-tooltip="true"
-                       data-placement="right"
-                       title="Delete course">
-                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                    </a>
                     <button type="button" class="btn btn-default btn-lg" data-toggle="modal" data-target="#myModal">
                         <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                        Delete
                     </button>
                 </div>
             </td>
@@ -113,10 +105,10 @@
 
                 <div class="form-actions no-color">
                     <input type="submit" value="Delete" class="btn btn-default" />
-                    <a href="@Url.Action(" Index")" class="btn btn-default">
-                        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                        Back to List
-                    </a>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                        Close
+                    </button>
                 </div>
                 }
             </div>
