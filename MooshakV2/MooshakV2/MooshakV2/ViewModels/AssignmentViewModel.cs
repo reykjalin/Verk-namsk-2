@@ -26,5 +26,8 @@ namespace MooshakV2.ViewModels
         public int courseId { get; set; }
 
         public List<AssignmentPartViewModel> assignmentParts { get; set; }
+    
+        [Display(Name = "File")]
+        public HttpPostedFileBase file { get; set; }
     }
 }

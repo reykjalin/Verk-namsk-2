@@ -221,7 +221,9 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\fb.js" />
     <Content Include="Scripts\UserDeleteModal.js" />
+    <Content Include="Scripts\StudentDetailModal.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -293,6 +295,7 @@
     <Content Include="Views\User\StudentViews\details.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="AllFiles\" />
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
