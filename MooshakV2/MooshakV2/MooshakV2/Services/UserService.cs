@@ -24,6 +24,8 @@ namespace MooshakV2.Services
         {
             // Get all users
             var userList = (from user in contextDb.aspNetUsers
+                            join u in contextDb.userDetails on user.UserName equals u.userName
+                            orderby u.name
                             select user).ToList();
 
             // Move from entities to view models
@@ -175,32 +177,6 @@ namespace MooshakV2.Services
             return false;
         }
 
-        //public bool deleteUser(UserViewModel toRemoveModel, ApplicationUserManager userManager)
-        //{
-        //    // Get user from DB
-        //    var user = (from users in contextDb.aspNetUsers
-        //                where users.UserName == toRemoveModel.userName
-        //                select users).SingleOrDefault();
-        //    var userDetail = (from details in contextDb.userDetails
-        //                      where details.userName == toRemoveModel.userName
-        //                      select details).SingleOrDefault();
-        //    if (user != null)
-        //    {
-        //        // Remove user from all roles
-        //        if (!userManager.GetRoles(user.Id).FirstOrDefault().IsEmpty())
-        //            userManager.RemoveFromRoles(user.Id, userManager.GetRoles(user.Id).ToArray());
-        //        // Remove user from DB
-        //        contextDb.aspNetUsers.Remove(user);
-        //        if (userDetail != null)
-        //        {
-        //            contextDb.userDetails.Remove(userDetail);
-        //        }
-        //        contextDb.SaveChanges();
-        //        return true;
-        //    }
-        //    return false;
-        //}
-
         public List<UserDetailViewModel> getAllStudents(ApplicationUserManager userManager)
         {
             return getUsersByRole(userManager, "Student");
@@ -270,6 +246,35 @@ namespace MooshakV2.Services
                 return true;
             }
             return false;
+        }
+
+        public List<UserDetailViewModel> searchForUser(string searchQuery, ApplicationUserManager userManager)
+        {
+            var userList = (from users in contextDb.aspNetUsers
+                            join u in contextDb.userDetails on users.UserName equals u.userName
+                            where users.UserName.Contains(searchQuery) ||
+                                  users.Email.Contains(searchQuery) ||
+                                  u.name.Contains(searchQuery) ||
+                                  u.ssn.Contains(searchQuery)
+                            select users).ToList();
+
+            var searchResult = new List<UserDetailViewModel>();
+            foreach(var user in userList)
+            {
+                var uDetail = (from details in contextDb.userDetails
+                               where details.userName == user.UserName
+                               select details).FirstOrDefault();
+                var userModel = new UserDetailViewModel();
+                userModel.userModel = new UserViewModel();
+                userModel.name = uDetail.name;
+                userModel.ssn = uDetail.ssn;
+                userModel.userModel.userName = user.UserName;
+                userModel.userModel.email = user.Email;
+                userModel.userModel.roleName = userManager.GetRoles(user.Id).FirstOrDefault();
+
+                searchResult.Add(userModel);
+            }
+            return searchResult;
         }
     }
 }
