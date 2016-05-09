@@ -19,36 +19,25 @@
         </th>
         <th></th>
     </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.weight)
-            </td>
-            <td>
-                <button type="button"
-                        class="btn btn-default modalDetailButton"
-                        data-tooltip="true"
-                        data-placement="top"
-                        title="Assignment details"
-                        data-toggle="modal"
-                        data-target="#assignmentDetails"
-                        data-title="@item.title"
-                        data-descr="@item.description"
-                        data-weight="@item.weight"
-                        data-courseID="@item.id">
-                    <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
-                </button>
-            </td>
-        </tr>
-    }
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.weight)
+        </td>
+        <td>
+            <a href="@Url.Action("Details", new { id = item.id })" class="btn btn-default">
+                <span id="but" class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                Details
+            </a>
+        </td>
+    </tr>
+}
 
 </table>
 

@@ -2,6 +2,7 @@
 using MooshakV2.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -177,6 +178,24 @@ namespace MooshakV2.Controllers
                 courseDropDown.Add(new SelectListItem { Text = item.title, Value = item.id.ToString() });
 
             ViewData["Courselist"] = courseDropDown;
+        }
+
+        [HttpGet]
+        public ActionResult uploadFile()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult uploadFile(AssignmentViewModel theFile)
+        {
+            if(theFile.file.ContentLength > 0)
+            {
+                var fileName = Path.GetFileName(theFile.file.FileName);
+                var path = Path.Combine(Server.MapPath("~/AllFiles"), fileName);
+                theFile.file.SaveAs(path);
+            }
+            return RedirectToAction("uploadFile");
         }
     }
 }
