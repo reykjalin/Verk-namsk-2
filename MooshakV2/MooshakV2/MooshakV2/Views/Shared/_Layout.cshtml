@@ -7,6 +7,8 @@
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/Site.css")
     @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/Scripts/fb.js")
+
 
 </head>
 <body>
@@ -33,7 +35,14 @@
         @RenderBody()
         
         <footer>
-            <p>&copy; @DateTime.Now.Year - MooShak 2.0</p>
+            <div>
+                &copy; @DateTime.Now.Year - MooShak 2.0
+                <span class="fb-share-button"
+                      data-href="http://i.imgur.com/7N0HiJv.png"
+                      data-layout="icon_link"
+                      data-mobile-iframe="true">
+                </span>
+            </div>
         </footer>
     </div>
 
