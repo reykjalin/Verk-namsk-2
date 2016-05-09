@@ -6,6 +6,17 @@
 
     <h2>Courses</h2>
 
+    <div>
+        <a href="@Url.Action("Create")"
+           class="btn btn-default"
+           data-tooltip="true"
+           data-placement="right"
+           title="Create new course">
+           <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+           New Course
+        </a>
+    </div>
+
     <table class="table">
         <tr>
             <th>
@@ -62,24 +73,6 @@
             </td>
         </tr>
         }
-        <tr>
-            <th>
-                <div>
-                    <a href="@Url.Action("Create")"
-                       class="btn btn-default"
-                       data-tooltip="true"
-                       data-placement="right"
-                       title="Create new course">
-                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                        New Course
-                    </a>
-                </div>
-            </th>
-            <td>
-            </td>
-            <td>
-            </td>
-        </tr>
     </table>
 
 
