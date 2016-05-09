@@ -10,32 +10,260 @@
     <hr />
     <table class="table">
         <thead>
-        <th>
-            @Model.course.title
-        </th>
-        <th></th>
+            <tr>
+                <th>
+                    @Model.course.title
+                </th>
+            </tr>
         </thead>
         <tbody>
             <tr>
                 <td>@Model.course.description</td>
             </tr>
-            <tr>
-                <td>Assignments:</td>
-            </tr>
-
-            @foreach (var item in Model.assignmentList)
-            {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.title);
-                </td>
-            </tr>
-            }
         </tbody>
     </table>
+
+
+
+
+
+
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+        
+        <!-- accordion Assignments start -->
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="assignments">
+                <h4 class="panel-title">
+                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseAssignments" aria-expanded="true" aria-controls="collapseAssignments">
+                        Assignments
+                    </a>
+                </h4>
+            </div>
+            <div id="collapseAssignments" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="assignment">
+                <div class="panel-body">
+                    <table class="table" id="assignmentTable">
+                        <thead>
+                        <tr>
+                            <th>
+                                @Html.Label("Title", htmlAttributes: new {@class = "control-label col-md-2"})
+                            </th>
+                            <th>
+                                @Html.Label("Description", htmlAttributes: new {@class = "control-label col-md-2"})
+                            </th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        @foreach(var item in Model.assignmentList)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.title)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(m => item.description)
+                                </td>
+                                <td>
+                                    <div class="btn-group btn-group-sm" role="group" aria-label="...">
+                                        <a href="@Url.Action("Details", "Assignment", new {id = item.id})" 
+                                           class="btn btn-default"
+                                           data-tooltip="true"
+                                           data-placement="top"
+                                           title="Assignment details">
+                                            <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- accordion Assignments end -->
+
+
+        <!-- accordion Student list start -->
+
+
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="students">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseStudents" aria-expanded="false" aria-controls="collapseStudents">
+                        Student List
+                    </a>
+                </h4>
+            </div>
+            <div id="collapseStudents" class="panel-collapse collapse" role="tabpanel" aria-labelledby="students">
+                <div class="panel-body">
+
+                    <table class="table">
+                        <tr>
+                            <th>
+                                @Html.Label("User Name", htmlAttributes: new {@class = "control-label col-md-2"})
+                            </th>
+                            <th>
+                                @Html.Label("Email", htmlAttributes: new {@class = "control-label col-md-2"})
+                            </th>
+                            <th></th>
+                        </tr>
+
+                        @foreach(var item in Model.studentList)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.userModel.userName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.userModel.email)
+                                </td>
+                                <td>
+                                    <div class="btn-group btn-group-sm" role="group" aria-label="...">
+                                        <a href="@Url.Action("Details", "User", new {userName = item.userModel.userName})" 
+                                           class="btn btn-default"
+                                           data-tooltip="true"
+                                           data-placement="top"
+                                           title="User details">
+                                            <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+
+                    </table>
+
+                </div>
+            </div>
+        </div>
+
+
+        <!-- accordion Student list end -->
+
+
+        <!-- accordion TA list start -->
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="TAs">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTAs" aria-expanded="false" aria-controls="collapseTAs">
+                        TA List
+                    </a>
+                </h4>
+            </div>
+            <div id="collapseTAs" class="panel-collapse collapse" role="tabpanel" aria-labelledby="TAs">
+                <div class="panel-body">
+
+                    <table class="table">
+                        <tr>
+                            <th>
+                                @Html.Label("User Name", htmlAttributes: new { @class = "control-label col-md-2" })
+                            </th>
+                            <th>
+                                @Html.Label("Email", htmlAttributes: new { @class = "control-label col-md-2" })
+                            </th>
+                            <th></th>
+                        </tr>
+
+                        @foreach (var item in Model.taList)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.userModel.userName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.userModel.email)
+                                </td>
+                                <div class="btn-group btn-group-sm" role="group" aria-label="...">
+                                    <a href="@Url.Action("Details", "User", new {userName = item.userModel.userName})"
+                                       class="btn btn-default"
+                                       data-tooltip="true"
+                                       data-placement="top"
+                                       title="User details">
+                                        <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                                    </a>
+                                </div>
+                            </tr>
+                        }
+
+                    </table>
+
+                </div>
+            </div>
+        </div>
+        <!-- accordion TA list end -->
+
+
+        <!-- accordion Teacher list start -->
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="Teachers">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTeachers" aria-expanded="false" aria-controls="collapseTeachers">
+                        Teacher List
+                    </a>
+                </h4>
+            </div>
+            <div id="collapseTeachers" class="panel-collapse collapse" role="tabpanel" aria-labelledby="Teachers">
+                <div class="panel-body">
+
+                    <table class="table">
+                        <tr>
+                            <th>
+                                @Html.Label("User Name", htmlAttributes: new { @class = "control-label col-md-2" })
+                            </th>
+                            <th>
+                                @Html.Label("Email", htmlAttributes: new { @class = "control-label col-md-2" })
+                            </th>
+                            <th></th>
+                        </tr>
+
+                        @foreach (var item in Model.teacherList)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.userModel.userName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.userModel.email)
+                                </td>
+                                <td>
+                                    <div class="btn-group btn-group-sm" role="group" aria-label="...">
+                                        <a href="@Url.Action("Details", "User", new {userName = item.userModel.userName})"
+                                           class="btn btn-default"
+                                           data-tooltip="true"
+                                           data-placement="top"
+                                           title="User details">
+                                            <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+
+                    </table>
+
+                </div>
+            </div>
+        </div>
+        <!-- accordion Teacher list end -->
+    </div>
+
+
     <br />
-    <a href="@Url.Action("Index")" class="btn btn-default">
-        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-        Back to List
-    </a>
+
+    <div class="btn-group btn-group" role="group" aria-label="...">
+        <a href="@Url.Action("Index", new {id = Model.course.id})"
+           class="btn btn-default"
+           data-tooltip="true"
+           data-placement="top"
+           title="Back to course list">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        </a>
+    </div>
 </div>
+
+
+@section scripts
+{
+    @Scripts.Render("~/Scripts/renderTooltips.js")
+}

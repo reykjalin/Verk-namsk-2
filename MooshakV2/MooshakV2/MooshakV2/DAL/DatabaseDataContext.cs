@@ -20,6 +20,7 @@ namespace MooshakV2.DAL
         public virtual DbSet<Assignment> assignments { get; set; }
         public virtual DbSet<AssignmentPart> assignmentParts { get; set; }
         public virtual DbSet<Course> courses { get; set; }
+        public virtual DbSet<UserDetail> userDetails { get; set; }
         public virtual DbSet<CourseStudent> courseStudents { get; set; }
         public virtual DbSet<CourseTA> courseTAs { get; set; }
         public virtual DbSet<CourseTeacher> courseTeachers { get; set; }
@@ -40,6 +41,10 @@ namespace MooshakV2.DAL
                 .HasMany(e => e.AspNetUserLogins)
                 .WithRequired(e => e.AspNetUser)
                 .HasForeignKey(e => e.UserId);
+
+            modelBuilder.Entity<AspNetUser>()
+                .HasOptional(e => e.UserDetail)
+                .WithRequired(e => e.AspNetUser);
 
             modelBuilder.Entity<Assignment>()
                 .Property(e => e.title)
@@ -71,6 +76,14 @@ namespace MooshakV2.DAL
                 .HasMany(e => e.Assignments)
                 .WithRequired(e => e.Course)
                 .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<UserDetail>()
+                .Property(e => e.name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<UserDetail>()
+                .Property(e => e.ssn)
+                .IsUnicode(false);
         }
     }
 }

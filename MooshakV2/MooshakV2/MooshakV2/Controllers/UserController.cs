@@ -10,16 +10,17 @@ using Microsoft.AspNet.Identity.Owin;
 
 namespace MooshakV2.Controllers
 {
-    [Authorize(Roles = "Admin")]
     public class UserController : Controller
     {
         private UserService service;
         public UserController() { service = new UserService(); }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public ActionResult index() { return RedirectToAction("List"); }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public ActionResult create()
         {
             prepareDropDown();
@@ -27,12 +28,14 @@ namespace MooshakV2.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public ActionResult edit(string userName)
         {
             if(!userName.IsEmpty())
             {
                 var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-                var model = service.getUserByUserName(userName, userManager);
+                var model = new UserDetailViewModel();
+                model = service.getUserByUserName(userName, userManager);
                 if(model != null)
                 {
                     prepareDropDown();
@@ -43,8 +46,10 @@ namespace MooshakV2.Controllers
         }
 
         [HttpPost]
-        public ActionResult edit(UserViewModel changedUser)
+        [Authorize(Roles = "Admin")]
+        public ActionResult edit(UserDetailViewModel changedUser)
         {
+            prepareDropDown();
             if(ModelState.IsValid)
             {
                 var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
@@ -55,6 +60,7 @@ namespace MooshakV2.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public ActionResult list()
         {
             var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
@@ -63,6 +69,7 @@ namespace MooshakV2.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public ActionResult details(string userName)
         {
             if(!userName.IsEmpty())
@@ -70,12 +77,17 @@ namespace MooshakV2.Controllers
                 var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
                 var model = service.getUserByUserName(userName, userManager);
                 if(model != null)
+                {
+                    if(User.IsInRole("Student"))
+                        return View("StudentViews/details", model);
                     return View(model);
+                }
             }
             return View("Error");
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public ActionResult delete(string userName)
         {
             if(!userName.IsEmpty())
@@ -89,11 +101,15 @@ namespace MooshakV2.Controllers
         }
 
         [HttpPost]
-        public ActionResult delete(UserViewModel toRemove)
+        [Authorize(Roles = "Admin")]
+        public ActionResult delete(UserDetailViewModel toRemove)
         {
-            var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            if (service.deleteUser(toRemove, userManager))
-                return RedirectToAction("List");
+            if(toRemove != null)
+            {
+                var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                if(service.deleteUser(toRemove, userManager))
+                    return RedirectToAction("List");
+            }
             return View("Error");
         }
 

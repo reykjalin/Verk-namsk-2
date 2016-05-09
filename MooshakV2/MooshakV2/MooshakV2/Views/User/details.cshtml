@@ -1,4 +1,4 @@
-﻿@model MooshakV2.ViewModels.UserViewModel
+﻿@model MooshakV2.ViewModels.UserDetailViewModel
 
 @{
     ViewBag.Title = "User Details";
@@ -7,51 +7,66 @@
 <h2>User Details</h2>
 
 <div>
-    <h4>@Model.userName</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.userName)
-        </dt>
+    <h4>@Model.name</h4>
+    <hr/>
+    <div class="form-horizontal">
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.userModel.userName)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.userName)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.userModel.userName)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.email)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.userModel.email)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.email)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.userModel.email)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.roleName)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.ssn)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.roleName)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.ssn)
+            </dd>
 
-    </dl>
+            <dt>
+                @Html.DisplayNameFor(model => model.userModel.roleName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.userModel.roleName)
+            </dd>
+
+        </dl>
+
+        <div class="form-group">
+            <div class="btn-group btn-group" role="group" aria-label="...">
+                <a href="@Url.Action("Index", new {userName = Model.userModel.userName})"
+                   class="btn btn-default"
+                   data-tooltip="true"
+                   data-placement="top"
+                   title="Back to list">
+                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                </a>
+
+                <a href="@Url.Action("Edit", new {userName = Model.userModel.userName})"
+                   class="btn btn-default"
+                   data-tooltip="true"
+                   data-placement="top"
+                   title="Edit user information">
+                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                </a>
+            </div>
+        </div>
+    </div>
 </div>
-<div class="btn-group btn-group-sm" role="group" aria-label="...">
-    <a href="@Url.Action("Edit", new {userName = Model.userName})" 
-       class="btn btn-default"
-       data-toggle="tooltip"
-       data-placement="top"
-       title="Edit user information">
-        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-    </a>
-    <a href="@Url.Action("Index", new {userName = Model.userName})" 
-       class="btn btn-default"
-       data-toggle="tooltip"
-       data-placement="top"
-       title="Back to list">
-        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-    </a>
-</div>
+
 
 @section scripts
 {
