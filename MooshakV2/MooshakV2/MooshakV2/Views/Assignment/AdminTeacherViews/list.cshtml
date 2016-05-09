@@ -64,20 +64,33 @@
                        title="Edit assignment information">
                         <span id="but" class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                     </a>
-                    <a href="@Url.Action("Details", new {id = item.id})"
-                       class="btn btn-default"
-                       data-tooltip="true"
-                       data-placement="top"
-                       title="Details about assignment">
-                        <span id="but" class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
-                    </a>
-                    <a href="@Url.Action("Remove", new {id = item.id})"
-                       class="btn btn-default"
-                       data-tooltip="true"
-                       data-placement="right"
-                       title="Delete assignment">
-                        <span id="but" class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                    </a>
+                    <button type="button"
+                            class="btn btn-default modalDetailButton"
+                            data-tooltip="true"
+                            data-placement="top"
+                            title="Assignment details"
+                            data-toggle="modal"
+                            data-target="#assignmentDetails"
+                            data-title="@item.title"
+                            data-descr="@item.description"
+                            data-weight="@item.weight"
+                            data-courseId="@item.courseId">
+                        <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                    </button>
+                    <button type="button"
+                            class="btn btn-default modalDeleteButton"
+                            data-tooltip="true"
+                            data-placement="right"
+                            title="Delete assignment"
+                            data-toggle="modal"
+                            data-target="#deleteAssignment"
+                            data-title="@item.title"
+                            data-descr="@item.description"
+                            data-weight="@item.weight"
+                            data-courseId="@item.courseId"
+                            data-id="@item.id">
+                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                    </button>
                 </div>
             </td>
         </tr>
@@ -85,8 +98,85 @@
 
 </table>
 
+<!-- Assignment Detail Modal -->
+<div class="modal fade" id="assignmentDetails" tabindex="-1" role="dialog" aria-labelledby="assignmentDetailsLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="assignmentTitle"></h4>
+            </div>
+            <div class="modal-body">
+                <dt>
+                    Description
+                </dt>
+                <dd id="assignmentDescr"></dd>
+                <dt>
+                    Weight
+                </dt>
+                <dd id="assignmentWeight"></dd>
+                <dt>
+                    ID
+                </dt>
+                <dd id="courseId"></dd>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Assignment Modal -->
+<div class="modal fade" id="deleteAssignment" tabindex="-1" role="dialog" aria-labelledby="deleteAssignmentLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            @using (Html.BeginForm("Delete", "Assignment", FormMethod.Post, new { @id="deleteAssignmentForm" }))
+            {
+            @Html.AntiForgeryToken();
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="assignmentDelTitle"></h4>
+            </div>
+            <div class="modal-body">
+                <dt>
+                    Description
+                </dt>
+                <dd id="assignmentDelDescr"></dd>
+                <dt>
+                    Weight
+                </dt>
+                <dd id="assignmentDelWeight"></dd>
+                <dt>
+                    Course ID
+                </dt>
+                <dd id="courseDelId"></dd>
+            </div>
+
+            <input type="hidden" id="deleteId" />
+
+            <div class="modal-footer">
+                <button class="btn btn-default" type="submit" value="Delete" id="delBut">
+                    <span class="glyphicon glyphicon-trash"></span>
+                    Delete Assignment
+                </button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                    Close
+                </button>
+            </div>
+            }
+        </div>
+    </div>
+</div>
 
 @section scripts
 {
     @Scripts.Render("~/Scripts/renderTooltips.js")
+    @Scripts.Render("~/Scripts/StudentDetailModal.js")
+    @Scripts.Render("~/Scripts/AssignmentDeleteModal.js")
 }
