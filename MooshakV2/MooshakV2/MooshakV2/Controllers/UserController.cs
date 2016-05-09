@@ -61,10 +61,14 @@ namespace MooshakV2.Controllers
 
         [HttpGet]
         [Authorize(Roles = "Admin")]
-        public ActionResult list()
+        public ActionResult list(string search)
         {
             var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            var model = service.getAllUsers(userManager);
+            var model = new List<UserDetailViewModel>();
+            if(search == null)
+                model = service.getAllUsers(userManager);
+            else
+                model = service.searchForUser(search, userManager);
             return View(model);
         }
 

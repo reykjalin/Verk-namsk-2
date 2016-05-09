@@ -6,11 +6,25 @@
 
 <h2>User List</h2>
 
-<p>
+@using (Html.BeginForm("List", "User", FormMethod.Get, new { @class= "form-inline" }))
+{
     <a href="@Url.Action("Create")" class="btn btn-default" data-tooltip="true" data-placement="right" title="Create new user">
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
     </a>
-</p>
+    <div class="pull-right">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search..." id="search" name="search"/>
+            <span class="input-group-btn">
+                <button type="submit" class="btn btn-default">
+                    <span class="glyphicon glyphicon-search"></span>
+                </button>
+            </span>
+        </div>
+    </div>
+}
+
+<br/>
+
 <table class="table">
     <tr>
         <th>
