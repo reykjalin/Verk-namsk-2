@@ -174,6 +174,7 @@
     <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="DAL\Entities\AspNetRole.cs" />
     <Compile Include="DAL\Entities\AspNetUser.cs" />
     <Compile Include="DAL\Entities\AspNetUserClaim.cs" />
@@ -195,16 +196,22 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AssignmentService.cs" />
     <Compile Include="Services\CourseService.cs" />
+    <Compile Include="Services\UserService.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\AssignmentCourseViewModel.cs" />
     <Compile Include="ViewModels\AssignmentPartViewModel.cs" />
     <Compile Include="ViewModels\AssignmentViewModel.cs" />
     <Compile Include="ViewModels\CourseDetailViewModel.cs" />
     <Compile Include="ViewModels\CourseViewModel.cs" />
+    <Compile Include="ViewModels\UserViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Images\backhome.jpg" />
+    <Content Include="Content\Images\hrlogo.png" />
+    <Content Include="Content\Images\hrlototrans.png" />
+    <Content Include="Content\Login.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -220,6 +227,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\renderTooltips.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
@@ -262,16 +270,22 @@
     <Content Include="Views\Course\AdminTeacherViews\edit.cshtml" />
     <Content Include="Views\Course\AdminTeacherViews\remove.cshtml" />
     <Content Include="Views\Course\AdminTeacherViews\list.cshtml" />
-    <Content Include="Views\Assignment\create.cshtml" />
-    <Content Include="Views\Assignment\list.cshtml" />
+    <Content Include="Views\Assignment\AdminTeacherViews\create.cshtml" />
+    <Content Include="Views\Assignment\AdminTeacherViews\list.cshtml" />
     <Content Include="Views\Assignment\AssignmentForm.cshtml" />
-    <Content Include="Views\Course\StudentViews\list.cshtml" />
     <Content Include="Views\Course\StudentViews\details.cshtml" />
-    <Content Include="Views\Course\StudentViews\list.cshtml" />
-    <Content Include="Views\Assignment\details.cshtml" />
-    <Content Include="Views\Assignment\remove.cshtml" />
-    <Content Include="Views\Assignment\edit.cshtml" />
+    <Content Include="Views\User\userForm.cshtml" />
+    <Content Include="Views\User\list.cshtml" />
+    <Content Include="Views\User\edit.cshtml" />
+    <Content Include="Views\Assignment\AdminTeacherViews\details.cshtml" />
+    <Content Include="Views\Assignment\AdminTeacherViews\remove.cshtml" />
+    <Content Include="Views\Assignment\AdminTeacherViews\edit.cshtml" />
     <Content Include="Views\Course\AdminTeacherViews\details.cshtml" />
+    <Content Include="Views\Assignment\StudentViews\list.cshtml" />
+    <Content Include="Views\Assignment\StudentViews\details.cshtml" />
+    <Content Include="Views\User\delete.cshtml" />
+    <Content Include="Views\User\details.cshtml" />
+    <Content Include="Views\Course\StudentViews\list.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

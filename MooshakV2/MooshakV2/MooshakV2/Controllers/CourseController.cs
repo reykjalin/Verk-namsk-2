@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace MooshakV2.Controllers
 {
@@ -12,11 +13,13 @@ namespace MooshakV2.Controllers
     {
         private CourseService service;
 		private AssignmentService assService;
+        private UserService userService;
 
         public CourseController()
 		{
 			service = new CourseService();
 			assService = new AssignmentService();
+            userService = new UserService();
 		}
 		
 		/// <summary>
@@ -31,7 +34,10 @@ namespace MooshakV2.Controllers
         /// <returns></returns>
         [HttpGet]
         [Authorize(Roles = "Admin, Teacher")]
-        public ActionResult create() { return View("AdminTeacherViews/create"); }
+        public ActionResult create()
+        {
+            return View("AdminTeacherViews/create", new CourseViewModel());
+        }
 
         /// <summary>
         /// Bætir Course 'newCourse' við gagnagrunn.
@@ -44,7 +50,7 @@ namespace MooshakV2.Controllers
         {
             // TODO: Er meira elegant leið til að hundsa id validation?
             // Hunsa villur sem koma til vegna invalid id, DB sér um að generate-a id
-            ModelState["id"].Errors.Clear();
+            //ModelState["id"].Errors.Clear();
             if (ModelState.IsValid)
             {
                 // Bæta newCourse við DB ef input er valid
@@ -147,19 +153,26 @@ namespace MooshakV2.Controllers
             // Athuga hvort id sé null
             if (id.HasValue)
             {
-				CourseDetailViewModel model = new CourseDetailViewModel();
+                var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                CourseDetailViewModel model = new CourseDetailViewModel();
 				// Course með ID 'id' fundinn
 				model.course = service.getCourseById(id); ;
 				// Assignment í Course með ID 'id' fundinn
 				model.assignmentList = assService.getAllAssignmentsInCourse(id.Value);
+                // Get students
+                model.studentList = userService.getAllStudents(userManager);
+                // Get TAs
+                model.taList = userService.getAllTAs(userManager);
+                // Get teachers
+                model.teacherList = userService.getAllTeachers(userManager);
 
                 // Ef Course er til, birta Details view, annars sýna Error view.
                 if(model != null)
                 {
                     if(User.IsInRole("Student"))
                         return View("StudentViews/details", model);
-                    else
-                        return View("AdminTeacherViews/details", model);
+
+                    return View("AdminTeacherViews/details", model);
                 }
             }
             return RedirectToAction("Error");
@@ -176,9 +189,10 @@ namespace MooshakV2.Controllers
             var model = service.getAllCourses();
             if(User.IsInRole("Student"))
                 return View("StudentViews/list", model);
-            else
-                return View("AdminTeacherViews/list", model);
+          
+            return View("AdminTeacherViews/list", model);
         }
+
 
         /// <summary>
         /// Sýnir Error view.

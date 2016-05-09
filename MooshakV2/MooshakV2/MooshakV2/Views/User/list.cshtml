@@ -1,0 +1,74 @@
+﻿@model IEnumerable<MooshakV2.ViewModels.UserViewModel>
+
+@{
+    ViewBag.Title = "User List";
+}
+
+<h2>User List</h2>
+
+<p>
+    <a href="@Url.Action("Create")" class="btn btn-default" data-toggle="tooltip" data-placement="right" title="Create new user">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+    </a>
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.userName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.roleName)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach(var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.userName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.roleName)
+            </td>
+            <td>
+                <div class="btn-group btn-group-sm" role="group" aria-label="...">
+                    <a href="@Url.Action("Edit", new {userName = item.userName})"
+                       class="btn btn-default"
+                       data-toggle="tooltip"
+                       data-placement="left"
+                       title="Edit user information">
+                       <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                    </a>
+                    <a href="@Url.Action("Details", new {userName = item.userName})" 
+                       class="btn btn-default"
+                       data-toggle="tooltip"
+                       data-placement="top"
+                       title="About this user">
+                        <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                    </a>
+                    <a href="@Url.Action("Delete", new {userName = item.userName})" 
+                       class="btn btn-default"
+                       data-toggle="tooltip"
+                       data-placement="right"
+                       title="Delete user">
+                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                    </a>
+                </div>
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+@section scripts
+{
+    @Scripts.Render("~/Scripts/renderTooltips.js")
+}

@@ -9,6 +9,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using MooshakV2.Models;
+using System.Collections.Generic;
+using MooshakV2.Services;
 
 namespace MooshakV2.Controllers
 {
@@ -136,16 +138,18 @@ namespace MooshakV2.Controllers
 
         //
         // GET: /Account/Register
-        [AllowAnonymous]
+        [Authorize(Roles = "Admin")]
         public ActionResult Register()
         {
+            // Prepare role drop-down menu
+            prepareDropDown();
             return View();
         }
 
         //
         // POST: /Account/Register
         [HttpPost]
-        [AllowAnonymous]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
@@ -153,9 +157,12 @@ namespace MooshakV2.Controllers
             {
                 var user = new ApplicationUser { UserName = model.userName, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
+                // Add user to role, everything else auto-generated
+                UserManager.AddToRole(user.Id, model.userRole);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+                    // Commented this out, we don't want to sign in the new user
+                    //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
@@ -163,13 +170,26 @@ namespace MooshakV2.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("List", "User");
                 }
                 AddErrors(result);
             }
 
             // If we got this far, something failed, redisplay form
             return View(model);
+        }
+
+        private void prepareDropDown()
+        {
+            UserService userService = new UserService();
+            // Búa til drop-down lista með role-um fyrir edit view
+            var roleList = userService.getRoles();
+            List<SelectListItem> roleDropDown = new List<SelectListItem>();
+
+            foreach (var item in roleList)
+                roleDropDown.Add(new SelectListItem { Text = item.Name, Value = item.Name });
+
+            ViewData["roleList"] = roleDropDown;
         }
 
         //

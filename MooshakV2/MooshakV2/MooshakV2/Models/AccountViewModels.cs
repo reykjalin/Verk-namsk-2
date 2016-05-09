@@ -69,7 +69,7 @@ namespace MooshakV2.Models
     public class RegisterViewModel
     {
         [Required]
-        [Display(Name = "UserName")]
+        [Display(Name = "User Name")]
         public string userName { get; set; }
 
         [Required]
@@ -87,6 +87,10 @@ namespace MooshakV2.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [Required]
+        [Display(Name = "User Role")]
+        public string userRole { get; set; }
     }
 
     public class ResetPasswordViewModel

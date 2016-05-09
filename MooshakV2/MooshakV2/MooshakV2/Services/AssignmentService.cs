@@ -97,6 +97,7 @@ namespace MooshakV2.Services
             model.description = assignment.description;
             model.weight = assignment.weight;
             model.id = assignment.id;
+            model.courseId = assignment.courseId;
 
             return model;
         }
