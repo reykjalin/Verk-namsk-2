@@ -134,6 +134,11 @@ namespace MooshakV2.Controllers
         [Authorize(Roles = "Admin, Teacher")]
         public ActionResult remove(CourseViewModel toRemove)
         {
+			var assList = assService.getAllAssignmentsInCourse(toRemove.id);
+			foreach(var item in assList)
+			{
+				assService.removeAssignment(item.id);
+			}
             // toRemove eytt úr DB, ef eitthvað mistekst birtist error view
             if (service.removeCourse(toRemove.id))
                 return RedirectToAction("List");
