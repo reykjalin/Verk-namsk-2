@@ -296,6 +296,7 @@
     <Content Include="Views\Course\StudentViews\details.cshtml" />
     <Content Include="Views\Course\StudentViews\list.cshtml" />
     <Content Include="Views\User\StudentViews\details.cshtml" />
+    <Content Include="Views\Assignment\compiler.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="AllFiles\" />
