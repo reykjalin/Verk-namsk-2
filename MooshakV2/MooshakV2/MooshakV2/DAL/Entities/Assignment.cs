@@ -13,6 +13,7 @@ namespace MooshakV2.DAL
         public Assignment()
         {
             AssignmentParts = new HashSet<AssignmentPart>();
+            Submissions = new HashSet<Submission>();
         }
 
         public int id { get; set; }
@@ -26,9 +27,14 @@ namespace MooshakV2.DAL
 
         public int weight { get; set; }
 
+        public DateTime? handInDate { get; set; }
+
         public virtual Course Course { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AssignmentPart> AssignmentParts { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Submission> Submissions { get; set; }
     }
 }
