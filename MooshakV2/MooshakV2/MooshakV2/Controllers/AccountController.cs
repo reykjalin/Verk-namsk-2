@@ -13,6 +13,8 @@ using System.Collections.Generic;
 using MooshakV2.DAL;
 using MooshakV2.Services;
 using MooshakV2.ViewModels;
+using System.Net;
+using System.Net.Mail;
 
 namespace MooshakV2.Controllers
 {
@@ -166,6 +168,7 @@ namespace MooshakV2.Controllers
                     // Add user to role and details to DB, everything else auto-generated
                     addNewUserToDb(model);
                     UserManager.AddToRole(user.Id, model.userRole);
+                    EmailContact(model);
                     // Commented this out, we don't want to sign in the new user
                     //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
 
@@ -459,6 +462,37 @@ namespace MooshakV2.Controllers
             base.Dispose(disposing);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public void EmailContact(RegisterViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var body = "<p>Your username is: {0}</p><p>Your password is: {1}</p><p>Please login and change your password!</p>";
+                var message = new MailMessage();
+                message.To.Add(new MailAddress(model.Email));  // replace with valid value 
+                message.From = new MailAddress("verklegt.namskeid.2.2016@gmail.com");  // replace with valid value
+                message.Subject = "Nýr aðgangur á Mooshak 2.0";
+                message.Body = string.Format(body, model.userName, model.Password);
+                message.IsBodyHtml = true;
+
+                using (var smtp = new SmtpClient())
+                {
+                    var credential = new NetworkCredential
+                    {
+                        UserName = "verklegt.namskeid.2.2016@gmail.com",  // replace with valid value
+                        Password = "AbbaAbba"  // replace with valid value
+                    };
+                    smtp.Credentials = credential;
+                    smtp.Host = "smtp.gmail.com";
+                    smtp.Port = 587; //Spurning að prófa port 25
+                    smtp.EnableSsl = true;
+                    //await smtp.SendMailAsync(message);
+                    smtp.Send(message);
+                }
+            }
+            return;
+        }
         #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
