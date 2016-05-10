@@ -6,16 +6,15 @@
 
     <h2>Courses</h2>
 
-    <div>
-        <a href="@Url.Action("Create")"
-           class="btn btn-default"
-           data-tooltip="true"
-           data-placement="right"
-           title="Create new course">
-           <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-           New Course
+
+    @using (Html.BeginForm("List", "User", FormMethod.Get, new { @class = "form-inline" }))
+    {
+        <a href="@Url.Action("Create")" class="btn btn-default" data-tooltip="true" data-placement="right" title="Create new user">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
         </a>
-    </div>
+    }
+
+    <br />
 
     <table class="table">
         <tr>
