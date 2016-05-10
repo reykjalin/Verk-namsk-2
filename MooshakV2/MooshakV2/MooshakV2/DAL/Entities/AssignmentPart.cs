@@ -9,6 +9,12 @@ namespace MooshakV2.DAL
     [Table("AssignmentPart")]
     public partial class AssignmentPart
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public AssignmentPart()
+        {
+            Submissions = new HashSet<Submission>();
+        }
+
         public int id { get; set; }
 
         public int partNr { get; set; }
@@ -21,5 +27,8 @@ namespace MooshakV2.DAL
         public int assignmentId { get; set; }
 
         public virtual Assignment Assignment { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Submission> Submissions { get; set; }
     }
 }

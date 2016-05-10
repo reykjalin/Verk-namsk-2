@@ -8,7 +8,7 @@ namespace MooshakV2.DAL
     public partial class DatabaseDataContext : DbContext
     {
         public DatabaseDataContext()
-            : base("name=DatabaseDataContext")
+            : base("name=DatabaseDataContext1")
         {
         }
 
@@ -20,10 +20,12 @@ namespace MooshakV2.DAL
         public virtual DbSet<Assignment> assignments { get; set; }
         public virtual DbSet<AssignmentPart> assignmentParts { get; set; }
         public virtual DbSet<Course> courses { get; set; }
+        public virtual DbSet<Submission> submissions { get; set; }
+        public virtual DbSet<Table> tables { get; set; }
         public virtual DbSet<UserDetail> userDetails { get; set; }
         public virtual DbSet<CourseStudent> courseStudents { get; set; }
         public virtual DbSet<CourseTA> courseTAs { get; set; }
-        public virtual DbSet<CourseTeacher> courseTeachers { get; set; }
+        public virtual DbSet<CourseTeacher> CourseTeachers { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -43,6 +45,12 @@ namespace MooshakV2.DAL
                 .HasForeignKey(e => e.UserId);
 
             modelBuilder.Entity<AspNetUser>()
+                .HasMany(e => e.Submissions)
+                .WithRequired(e => e.AspNetUser)
+                .HasForeignKey(e => e.userId)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<AspNetUser>()
                 .HasOptional(e => e.UserDetail)
                 .WithRequired(e => e.AspNetUser);
 
@@ -60,9 +68,20 @@ namespace MooshakV2.DAL
                 .HasForeignKey(e => e.partNr)
                 .WillCascadeOnDelete(false);
 
+            modelBuilder.Entity<Assignment>()
+                .HasMany(e => e.Submissions)
+                .WithRequired(e => e.Assignment)
+                .WillCascadeOnDelete(false);
+
             modelBuilder.Entity<AssignmentPart>()
                 .Property(e => e.description)
                 .IsUnicode(false);
+
+            modelBuilder.Entity<AssignmentPart>()
+                .HasMany(e => e.Submissions)
+                .WithRequired(e => e.AssignmentPart)
+                .HasForeignKey(e => e.partId)
+                .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Course>()
                 .Property(e => e.title)

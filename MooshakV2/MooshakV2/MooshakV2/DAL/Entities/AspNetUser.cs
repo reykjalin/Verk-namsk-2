@@ -13,6 +13,7 @@ namespace MooshakV2.DAL
         {
             AspNetUserClaims = new HashSet<AspNetUserClaim>();
             AspNetUserLogins = new HashSet<AspNetUserLogin>();
+            Submissions = new HashSet<Submission>();
             AspNetRoles = new HashSet<AspNetRole>();
         }
 
@@ -48,6 +49,9 @@ namespace MooshakV2.DAL
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AspNetUserLogin> AspNetUserLogins { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Submission> Submissions { get; set; }
 
         public virtual UserDetail UserDetail { get; set; }
 
