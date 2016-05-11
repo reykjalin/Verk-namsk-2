@@ -17,6 +17,7 @@ namespace MooshakV2.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin, Teacher")]
         public ActionResult create()
         {
             return View("Create");
