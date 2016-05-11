@@ -28,6 +28,8 @@ namespace MooshakV2.ViewModels
         public List<AssignmentPartViewModel> assignmentParts { get; set; }
     
         [Display(Name = "File")]
+        [Required(ErrorMessage ="You have to select file")]
+        [FileExtensions(Extensions =".cpp,.cbp,.h", ErrorMessage ="Please select a valid file type")]
         public HttpPostedFileBase file { get; set; }
     }
 }
