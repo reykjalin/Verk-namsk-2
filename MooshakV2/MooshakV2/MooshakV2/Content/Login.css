@@ -5,6 +5,15 @@
     margin-top:60px;
 }
 
+.cleanLogin, .navbar, footer
+{
+    display:none;
+}
+
+.body-content {
+    background-color: transparent;
+}
+
 .logo {
     width: 310px;
     height: 70px;

@@ -6,6 +6,16 @@
 
     <h2>Courses</h2>
 
+
+    @using (Html.BeginForm("List", "User", FormMethod.Get, new { @class = "form-inline" }))
+    {
+        <a href="@Url.Action("Create")" class="btn btn-default" data-tooltip="true" data-placement="right" title="Create new user">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+        </a>
+    }
+
+    <br />
+
     <table class="table">
         <tr>
             <th>
@@ -28,13 +38,18 @@
             </td>
             <td>
                 <div class="btn-group btn-group-sm" role="group" aria-label="...">
-                    <a href="@Url.Action("Edit", new {id=item.id})"
-                       class="btn btn-default"
-                       data-tooltip="true"
-                       data-placement="left"
-                       title="Edit course">
+                    <button type="button"
+                            class="btn btn-default modalEditButton"
+                            data-tooltip="true"
+                            data-placement="top"
+                            title="Course edit"
+                            data-toggle="modal"
+                            data-target="#courseEdit"
+                            data-title="@item.title"
+                            data-descr="@item.description"
+                            data-id="@item.id">
                         <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                    </a>
+                    </button>
                     <button type="button"
                             class="btn btn-default modalDetailButton"
                             data-tooltip="true"
@@ -62,26 +77,65 @@
             </td>
         </tr>
         }
-        <tr>
-            <th>
-                <div>
-                    <a href="@Url.Action("Create")"
-                       class="btn btn-default"
-                       data-tooltip="true"
-                       data-placement="right"
-                       title="Create new course">
-                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                        New Course
-                    </a>
-                </div>
-            </th>
-            <td>
-            </td>
-            <td>
-            </td>
-        </tr>
     </table>
 
+    <!-- Course Edit Modal -->
+    <div class="modal fade" id="courseEdit" tabindex="-1" role="dialog" aria-labelledby="courseEditLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                @using (Html.BeginForm("Edit", "Course", FormMethod.Post, new { @id="editCourseForm" }))
+                {
+                    @Html.AntiForgeryToken();
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Edit</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <dt>
+                                Title
+                            </dt>
+                            <dd>
+                                <input type="text" id="courseTitleEdit" class="form-control"/>
+                            </dd>
+                        </div>
+                        <div class="form-group">
+                            <dt>
+                                Description
+                            </dt>
+                                <dd>
+                                    <textarea id="courseDescriptionEdit" name="courseDescriptionEdit" class="form-control" rows="6"></textarea>
+                                </dd>
+                        </div>
+                        <input type="hidden" id="getId" />
+                    </div>
+                    <div class="modal-footer">
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <div class="btn-group btn-group" role="group" aria-label="...">
+                                    <button type="button" 
+                                            class="btn btn-default" 
+                                            data-dismiss="modal"
+                                            title="Cancel">
+                                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                        Cancel
+                                    </button>
+                                    <button type="submit"
+                                            class="btn btn-default"
+                                            data-tooltip="true"
+                                            data-placement="top"
+                                            title="Save">
+                                        <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+                                        Save
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
 
     <!-- Course Detail Modal -->
     <div class="modal fade" id="courseDetails" tabindex="-1" role="dialog" aria-labelledby="courseDetailsLabel">
@@ -143,8 +197,11 @@
             </div>
         </div>
     </div>
-    @section scripts
-    {
+
+
+ @section scripts
+ {
     @Scripts.Render("~/Scripts/CourseDetailModal.js")
     @Scripts.Render("~/Scripts/CourseDeleteModal.js")
-    }
+    @Scripts.Render("~/Scripts/CourseEditModal.js")
+ }
