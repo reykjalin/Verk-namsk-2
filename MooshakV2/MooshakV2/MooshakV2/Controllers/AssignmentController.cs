@@ -209,7 +209,7 @@ namespace MooshakV2.Controllers
             // In this example, this is all hardcoded, but in a
             // real life scenario, there should probably be individual
             // folders for each user/assignment/milestone.
-            var workingFolder = "C:\\Users\\Stefan\\Documents\\verklegt2\\Verk-namsk-2\\MooshakV2\\MooshakV2\\MooshakV2\\Test\\";
+            var workingFolder = "C:\\Users\\Jón\\Google Drive\\2.önn.2016\\Verk-namsk-2\\MooshakV2\\MooshakV2\\MooshakV2\\Test\\";
             var cppFileName = "Hello.cpp";
             var exeFilePath = workingFolder + "Hello.exe";
 

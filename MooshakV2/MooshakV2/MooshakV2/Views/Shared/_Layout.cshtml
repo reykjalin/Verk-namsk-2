@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - MooShak V2</title>
+    
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/Site.css")
     @Scripts.Render("~/bundles/modernizr")
@@ -13,7 +14,7 @@
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
+        <div class="container cleanLogin">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="icon-bar"></span>
@@ -38,7 +39,7 @@
         <footer>
             <div>
                 &copy; @DateTime.Now.Year - MooShak 2.0
-                <span class="fb-share-button"
+                <span class="fb-share-button pull-right"
                       data-href="http://i.imgur.com/7N0HiJv.png"
                       data-layout="icon_link"
                       data-mobile-iframe="true">

@@ -221,11 +221,13 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\AssignmentDeleteModal.js" />
+    <Content Include="Scripts\AssignmentEditModal.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\CourseDeleteModal.js" />
     <Content Include="Scripts\CourseDetailModal.js" />
+    <Content Include="Scripts\CourseEditModal.js" />
     <Content Include="Scripts\fb.js" />
     <Content Include="Scripts\UserDeleteModal.js" />
     <Content Include="Scripts\AssignmentDetailModal.js" />
@@ -303,6 +305,7 @@
   <ItemGroup>
     <Folder Include="AllFiles\" />
     <Folder Include="App_Data\" />
+    <Folder Include="Content\FileTest\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
