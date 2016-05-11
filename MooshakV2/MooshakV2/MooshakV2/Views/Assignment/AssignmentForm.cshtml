@@ -4,6 +4,7 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
+
     
     <div class="form-horizontal">
         <hr />
@@ -34,14 +35,63 @@
         </div>
 
         @Html.HiddenFor(model => model.id)
+        @Html.HiddenFor(model => model.assignmentParts.Count);
 
         <div class="form-group">
-            @Html.Label("Course", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Course", htmlAttributes: new {@class = "control-label col-md-2"})
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.courseId, ViewData["Courselist"] as IEnumerable<SelectListItem>, new { @class = "form-control" } )
-                @Html.ValidationMessageFor(model => model.courseId, "", new { @class = "text-danger" })
+                @Html.DropDownListFor(model => model.courseId, ViewData["Courselist"] as IEnumerable<SelectListItem>, new {@class = "form-control"})
+                @Html.ValidationMessageFor(model => model.courseId, "", new {@class = "text-danger"})
             </div>
         </div>
+
+        <div class="form-group">
+            <!-- tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+                @foreach(var part in Model.assignmentParts)
+                {
+                    <li role="presentation"><a href="#@part.id" aria-controls="home" role="tab" data-toogle="tab">@part.title</a></li>
+                }
+                <li role="presentation"><a href="#add" aria-controls="add" role="tab" data-toggle="tab" id="addBut">
+                    <span class="glyphicon glyphicon-plus"></span>
+                </a></li>
+            </ul>
+            <!-- tab content -->
+            <div class="tab-content">
+                @foreach(var part in Model.assignmentParts)
+                {
+                    <div role="tabpanel" class="tab-pane fade in" id="@part.id">@part.description</div>
+                }
+                <div role="tabpanel" class="tab-pane fad in active" id="add">
+                    <br/>
+                    <div class="form-group">
+                        @Html.Label("Part name", htmlAttributes: new {@class = "control-label col-md-2"})
+                        <div class="col-md-10">
+                            <input type="text" val="" class="form-control" id="partName"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Part description", htmlAttributes: new {@class = "control-label col-md-2"})
+                        <div class="col-md-10">
+                            <input type="text" val="" class="form-control" id="partDescr"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Part weight", htmlAttributes: new {@class = "control-label col-md-2"})
+                        <div class="col-md-10">
+                            <input type="number" val="" class="form-control" id="partWeight"/>
+                        </div>
+                    </div>
+
+                    <div class="pull-right">
+                        <button type="submit" class="btn btn-default" id="partBut" name="partBut">Save part</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
@@ -57,7 +107,9 @@
                             class="btn btn-default"
                             data-tooltip="true"
                             data-placement="top"
-                            title="Save">
+                            title="Save"
+                            id="assBut"
+                            name="assBut">
                         <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
                     </button>
                 </div>

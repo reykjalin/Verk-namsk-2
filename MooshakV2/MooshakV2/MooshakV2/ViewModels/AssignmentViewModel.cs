@@ -8,6 +8,8 @@ namespace MooshakV2.ViewModels
 {
     public class AssignmentViewModel
     {
+        private List<AssignmentPartViewModel> parts;
+
         [Display(Name = "Title")]
         [Required(ErrorMessage="You must specify a name!")]
         public string title { get; set; }
@@ -25,8 +27,17 @@ namespace MooshakV2.ViewModels
         [Required(ErrorMessage="You have to select course!")]
         public int courseId { get; set; }
 
-        public List<AssignmentPartViewModel> assignmentParts { get; set; }
-    
+        public List<AssignmentPartViewModel> assignmentParts
+        {
+            get
+            {
+                if(parts == null)
+                    parts = new List<AssignmentPartViewModel>();
+                return parts;
+            }
+            set { parts = value; }
+        }
+
         [Display(Name = "File")]
         public HttpPostedFileBase file { get; set; }
     }

@@ -187,6 +187,21 @@ namespace MooshakV2.Controllers
             return RedirectToAction("list");
         }
 
+
+        [HttpPost]
+        public ActionResult addPart(AssignmentViewModel model)
+        {
+            // Villucheck á model
+            if(model != null)
+            {
+                var p = new AssignmentPartViewModel();
+                model.assignmentParts.Add(p);
+                return View("AdminTeacherViews/edit", model);
+            }
+            return View("Error");
+        }
+
+
         public ActionResult Compiler()
         {
             return View("compiler");
