@@ -1,14 +1,14 @@
-﻿@model MooshakV2.DAL.Submission
+﻿@model MooshakV2.ViewModels.SubmissionViewModel
 
 @{
-    ViewBag.Title = "create";
+    ViewBag.Title = "Create";
 }
 
-<h2>create</h2>
+<h2>Create</h2>
 
 
 @using (Html.BeginForm()) 
-{
+{s
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">

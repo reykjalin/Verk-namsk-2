@@ -19,7 +19,7 @@ namespace MooshakV2.Controllers
         [HttpGet]
         public ActionResult create()
         {
-            return View("create");
+            return View("Create");
         }
     }
 }
