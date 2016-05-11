@@ -174,7 +174,6 @@
     <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\SubmissionController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="DAL\Entities\AspNetRole.cs" />
     <Compile Include="DAL\Entities\AspNetUser.cs" />
@@ -304,7 +303,7 @@
     <Content Include="Views\Course\StudentViews\list.cshtml" />
     <Content Include="Views\User\StudentViews\details.cshtml" />
     <Content Include="Views\Assignment\compiler.cshtml" />
-    <Content Include="Views\Submission\create.cshtml" />
+    <Content Include="Views\Assignment\handIn.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="AllFiles\" />

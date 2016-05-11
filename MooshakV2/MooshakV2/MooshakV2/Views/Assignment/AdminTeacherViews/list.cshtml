@@ -105,15 +105,13 @@
                         data-id="@item.id">
                     <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                 </button>
-                <button type="button"
-                        class="btn btn-default"
-                        data-tooltip="true"
-                        data-placement="top"
-                        title="Assignment hand in"
-                        data-toggle="modal"
-                        data-target="#handin">
-                    <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
-                </button>
+                <a href="@Url.Action("handIn", new { assignmentId = item.id })"
+                   class="btn btn-default"
+                   data-tooltip="true"
+                   data-placement="right"
+                   title="Hand in assignment">
+                    <span id="but" class="glyphicon glyphicon-file" aria-hidden="true"></span>
+                </a>
             </div>
         </td>
     </tr>

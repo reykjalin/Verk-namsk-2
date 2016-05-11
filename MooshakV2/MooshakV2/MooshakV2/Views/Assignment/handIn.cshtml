@@ -1,0 +1,24 @@
+﻿@model MooshakV2.ViewModels.SubmissionViewModel
+
+@{
+    ViewBag.Title = "handIn";
+}
+
+<h2>handIn</h2>
+
+
+<div ">
+    @using (Html.BeginForm("uploadFile", "Assignment", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.ValidationSummary();
+        <table>
+            <tr>
+                <td>File:</td>
+                <td><input type="file" name="file" id="file" /></td>
+                <td>&nbsp;</td>
+                <td><input type="submit" name="submit" value="Hand in" /></td>
+            </tr>
+        </table>
+    }
+
+</div>

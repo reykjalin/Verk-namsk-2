@@ -14,11 +14,13 @@ namespace MooshakV2.Controllers
     {
         private AssignmentService service;
         private CourseService courseService;
+        private SubmissionService submissionService;
              
         public AssignmentController()
         {
             service = new AssignmentService();
             courseService = new CourseService();
+            submissionService = new SubmissionService();
         }
 
         public ActionResult Index() { return RedirectToAction("List"); }
@@ -158,6 +160,23 @@ namespace MooshakV2.Controllers
             return View();
         }
 
+        [HttpGet]
+        [Authorize(Roles = "Admin, Teacher")]
+        public ActionResult handIn()
+        {
+            return View("handIn");
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin, Teacher")]
+        public ActionResult handIn(SubmissionViewModel newSubmission)
+        {
+            return View("handIn");
+        }
+
+
+
+
         private void prepareDropdown()
         {
             var courseList = courseService.getAllCourses();
@@ -176,13 +195,26 @@ namespace MooshakV2.Controllers
         }
 
         [HttpPost]
-        public ActionResult uploadFile(AssignmentViewModel theFile)
+        public ActionResult uploadFile(SubmissionViewModel submittedFile)
         {
-            if(theFile.file.ContentLength > 0)
+            if (submittedFile.file != null)
             {
-                var fileName = Path.GetFileName(theFile.file.FileName);
+                submittedFile.id = 23;
+                submittedFile.date = DateTime.Now;
+                submittedFile.userId = "4285c148-03b4-46c4-b507-1272c6ba0360";
+                submittedFile.assignmentId = 6;
+                submittedFile.partId = 6;
+                submittedFile.success = 1;
+                submittedFile.count = 1;
+                submittedFile.filename = Path.GetFileName(submittedFile.file.FileName);
+                submittedFile.mime = submittedFile.file.ContentType;
+
+                submissionService.addSubmission(submittedFile);
+
+                var fileExtension = Path.GetExtension(submittedFile.file.FileName);
+                var fileName = submittedFile.id.ToString() + fileExtension;
                 var path = Path.Combine(Server.MapPath("~/AllFiles"), fileName);
-                theFile.file.SaveAs(path);
+                submittedFile.file.SaveAs(path);
             }
             return RedirectToAction("list");
         }
