@@ -15,9 +15,9 @@ namespace MooshakV2.DAL
             AssignmentParts = new HashSet<AssignmentPart>();
             Submissions = new HashSet<Submission>();
         }
-
+        [Required]
         public int id { get; set; }
-
+        
         public int courseId { get; set; }
 
         [Required]
