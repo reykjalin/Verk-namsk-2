@@ -23,7 +23,7 @@
         // Get model information
         var model = {
             title: $('#assignmentDelTitle').text(),
-            descr: $('#assignmentDelDescr').text(),
+            description: $('#assignmentDelDescr').text(),
             weight: $('#assignmentDelWeight').text(),
             courseId: $('#courseDelId').text(),
             id: $('#deleteId').val(),
