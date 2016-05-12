@@ -184,10 +184,10 @@ namespace MooshakV2.Controllers
         {
             prepareDropdown();
             // Villucheck á model
-            if(model != null)
+            if (model != null)
             {
                 // If assignment isn't in DB, create the assignment
-                if(model.id <= 0)
+                if (model.id <= 0)
                 {
                     // TODO: Setja þetta í fall? alveg eins og í create...
                     if (true)
@@ -204,6 +204,10 @@ namespace MooshakV2.Controllers
                 var updatedModel = service.getAssignmentById(model.id);
                 // just return same model, it contains all necessary information
                 return View("AdminTeacherViews/edit", updatedModel);
+            }
+            return View("Error");
+        }
+
         public ActionResult uploadFile(FileUploadViewModel theFile)
         {
 
