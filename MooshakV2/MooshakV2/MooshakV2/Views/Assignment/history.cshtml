@@ -6,11 +6,6 @@
 
 <h2>History</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-
-
 @using (Html.BeginForm("List", "User", FormMethod.Get, new { @class = "form-inline" }))
 {
     <div class="input-group">
@@ -19,8 +14,9 @@
         </a>
 
     </div>
-
 }
+
+<br />
 
 
 <table class="table">
@@ -36,6 +32,9 @@
         </td>
         <td>
             Assignment Part
+        </td>
+        <td>
+            Success
         </td>
         <td>
             Count
@@ -61,6 +60,9 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.partId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.success)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.count)
