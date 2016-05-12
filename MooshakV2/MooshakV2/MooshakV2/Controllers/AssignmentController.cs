@@ -200,6 +200,23 @@ namespace MooshakV2.Controllers
             return RedirectToAction("list");
         }
 
+
+        [HttpPost]
+        public ActionResult addPart(AssignmentViewModel model)
+        {
+            prepareDropdown();
+            // Villucheck á model
+            if(model != null)
+            {
+                service.addPart(model.assignmentParts[0], model.id);
+                var updatedModel = service.getAssignmentById(model.id);
+                // just return same model, it contains all necessary information
+                return View("AdminTeacherViews/edit", updatedModel);
+            }
+            return View("Error");
+        }
+
+
         public ActionResult Compiler()
         {
             return View("compiler");

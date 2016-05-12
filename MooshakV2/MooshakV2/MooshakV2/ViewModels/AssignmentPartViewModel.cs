@@ -8,10 +8,10 @@ namespace MooshakV2.ViewModels
 {
     public class AssignmentPartViewModel
     {
-        private string title { get; set; }
+        public string title { get; set; }
         [Required(ErrorMessage="You must write a description!")]
-        private string description { get; set; }
-        private int weight { get; set; }
-        private int id { get; set; }
+        public string description { get; set; }
+        public int weight { get; set; }
+        public int id { get; set; }
     }
 }

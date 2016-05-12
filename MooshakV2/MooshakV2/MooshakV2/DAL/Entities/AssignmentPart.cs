@@ -26,6 +26,9 @@ namespace MooshakV2.DAL
 
         public int assignmentId { get; set; }
 
+        [Required]
+        public string title { get; set; }
+
         public virtual Assignment Assignment { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

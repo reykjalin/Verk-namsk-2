@@ -25,7 +25,7 @@ namespace MooshakV2.DAL
         public virtual DbSet<UserDetail> userDetails { get; set; }
         public virtual DbSet<CourseStudent> courseStudents { get; set; }
         public virtual DbSet<CourseTA> courseTAs { get; set; }
-        public virtual DbSet<CourseTeacher> CourseTeachers { get; set; }
+        public virtual DbSet<CourseTeacher> courseTeachers { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -65,6 +65,16 @@ namespace MooshakV2.DAL
             modelBuilder.Entity<AssignmentPart>()
                 .Property(e => e.description)
                 .IsUnicode(false);
+
+            modelBuilder.Entity<AssignmentPart>()
+                .Property(e => e.title)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<AssignmentPart>()
+                .HasMany(e => e.Submissions)
+                .WithRequired(e => e.AssignmentPart)
+                .HasForeignKey(e => e.partId)
+                .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Course>()
                 .Property(e => e.title)

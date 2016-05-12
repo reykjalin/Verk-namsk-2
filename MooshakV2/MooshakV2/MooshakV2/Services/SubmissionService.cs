@@ -29,7 +29,7 @@ namespace MooshakV2.Services
                 viewModel.success = submission.success;
                 viewModel.date = submission.date;
                 viewModel.count = submission.count;
-                viewModel.id = submission.id;
+                viewModel.id = submission.Id;
                 viewModel.assignmentId = submission.assignmentId;
                 viewModel.partId = submission.partId;
                 viewModel.userId = submission.userId;
@@ -46,7 +46,7 @@ namespace MooshakV2.Services
             newSubmission.success = newSubmissionModel.success;
             newSubmission.date = newSubmissionModel.date;
             newSubmission.count = newSubmissionModel.count;
-            newSubmission.id = newSubmissionModel.id;
+            newSubmission.Id = newSubmissionModel.id;
             newSubmission.assignmentId = newSubmissionModel.assignmentId;
             newSubmission.partId = newSubmissionModel.partId;
             newSubmission.userId = newSubmissionModel.userId;

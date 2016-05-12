@@ -79,6 +79,9 @@ namespace MooshakV2.Services
             var assignment = (from a in contextDb.assignments
                               where a.id == id
                               select a).FirstOrDefault();
+            var parts = (from ap in contextDb.assignmentParts
+                         where ap.assignmentId == id
+                         select ap).ToList();
 
             if (assignment == null)
                 return null;
@@ -89,8 +92,22 @@ namespace MooshakV2.Services
             model.weight = assignment.weight;
             model.id = assignment.id;
             model.courseId = assignment.courseId;
+            // Convert parts (List<AssignmentPart>) to list of partmodels (List<AssignmentPartViewModel>)
+            var partList = (from p in parts
+                            select partToPartViewModel(p)).ToList();
+            model.assignmentParts = partList;
 
             return model;
+        }
+
+        private AssignmentPartViewModel partToPartViewModel(AssignmentPart part)
+        {
+            var partModel = new AssignmentPartViewModel();
+            partModel.id = part.id;
+            partModel.title = part.title;
+            partModel.description = part.description;
+            partModel.weight = part.weight;
+            return partModel;
         }
 
         public bool updateAssignment(AssignmentViewModel newData)
@@ -110,10 +127,62 @@ namespace MooshakV2.Services
                     oldAssignment.courseId = newData.courseId;
 
                     contextDb.SaveChanges();
+                    foreach(var part in newData.assignmentParts)
+                    {
+                        if(!addPart(part, newData.id))
+                            return false;
+                    }
                     return true;
                 }
             }
             return false;
+        }
+
+        public bool addPart(AssignmentPartViewModel part, int assId)
+        {
+            // Check for other parts under same assignment
+            var otherParts = (from oparts in contextDb.assignmentParts
+                              where oparts.assignmentId == assId
+                              select oparts).ToList();
+            // Check for an old version of this part
+            var old = (from o in contextDb.assignmentParts
+                       where o.id == part.id
+                       select o).SingleOrDefault();
+            // Default part number is 1
+            int partNr = 1;
+
+            if (otherParts.Count > 0)
+            { 
+                // update old if found
+                if (old != null)
+                {
+                    old.title = part.title;
+                    old.description = part.description;
+                    old.weight = part.weight;
+                    contextDb.SaveChanges();
+                    return true;
+                }
+                // If old not found, that means there are other parts under this assignment => update partNr
+                partNr = (from o in contextDb.assignmentParts
+                          where o.assignmentId == assId
+                          select o.partNr).ToList().Max() + 1;
+            }
+
+            // create new part
+            var newPart = new AssignmentPart();
+            newPart.title = part.title;
+            newPart.description = part.description;
+            newPart.weight = part.weight;
+            newPart.assignmentId = assId;
+            newPart.partNr = partNr;
+
+            newPart.id = (from p in contextDb.assignmentParts
+                          select p.id).ToList().Max() + 1;
+
+            // Add part to DB and update
+            contextDb.assignmentParts.Add(newPart);
+            contextDb.SaveChanges();
+            return true;
         }
 
         public bool removeAssignment(int id)
