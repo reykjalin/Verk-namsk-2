@@ -212,14 +212,14 @@ namespace MooshakV2.Services
                 newSubmit.success = aFile.success;
                 newSubmit.count = aFile.count;
                 var id = (from i in contextDb.submissions
-                                select i.id).ToList();
+                                select i.Id).ToList();
                 if(id.Count > 0)
                 {
-                    newSubmit.id = id.Max() + 1;
+                    newSubmit.Id = id.Max() + 1;
                 }
                 else
                 {
-                    newSubmit.id = 1;
+                    newSubmit.Id = 1;
                 }
 
 
@@ -229,7 +229,7 @@ namespace MooshakV2.Services
                 newSubmit = contextDb.submissions.Add(newSubmit);
                 contextDb.SaveChanges();
 
-                var fileName = newSubmit.id.ToString();
+                var fileName = newSubmit.Id.ToString();
                 newSubmit.filename = fileName + fileExtension;
 
                 contextDb.Entry(newSubmit).State = System.Data.Entity.EntityState.Modified;
