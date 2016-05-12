@@ -16,12 +16,14 @@ namespace MooshakV2.Controllers
     {
         private AssignmentService service;
         private CourseService courseService;
+        private SubmissionService submissionService;
         private DatabaseDataContext dbContext;
 
         public AssignmentController()
         {
             service = new AssignmentService();
             courseService = new CourseService();
+            submissionService = new SubmissionService();
             dbContext = new DatabaseDataContext();
         }
 
@@ -128,6 +130,7 @@ namespace MooshakV2.Controllers
             return RedirectToAction("Error");
         }
 
+
         [HttpPost]
         [Authorize(Roles = "Admin, Teacher")]
         public ActionResult remove(AssignmentViewModel toRemove)
@@ -186,7 +189,7 @@ namespace MooshakV2.Controllers
 
             if (ModelState.IsValid)
             {
-                //service.submitFile(theFile, User.Identity.GetUserId());
+                service.submitFile(theFile, User.Identity.GetUserId());
 
                 var id = (from i in dbContext.submissions
                           orderby i.Id descending
@@ -209,7 +212,7 @@ namespace MooshakV2.Controllers
         {
             prepareDropdown();
             // Villucheck á model
-            if(model != null)
+            if (model != null)
             {
                 service.addPart(model.assignmentParts[0], model.id);
                 var updatedModel = service.getAssignmentById(model.id);
@@ -217,6 +220,15 @@ namespace MooshakV2.Controllers
                 return View("AdminTeacherViews/edit", updatedModel);
             }
             return View("Error");
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Admin, Teacher")]
+        public ActionResult history()
+        {
+            var model = submissionService.getAllSubmissions();
+
+            return View("history", model);
         }
 
 
