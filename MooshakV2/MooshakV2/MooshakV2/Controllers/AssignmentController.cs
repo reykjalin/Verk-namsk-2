@@ -219,9 +219,14 @@ namespace MooshakV2.Controllers
         [HttpPost]
         public ActionResult delPart(AssignmentViewModel model)
         {
+            prepareDropdown();
             if(model != null && model.assignmentParts != null)
             {
-                service.removePart(model);
+                if(service.removePart(model.assignmentParts[0]))
+                {
+                    var updatedModel = service.getAssignmentById(model.id);
+                    return View("AdminTeacherViews/edit", updatedModel);
+                }
             }
             return View("Error");
         }

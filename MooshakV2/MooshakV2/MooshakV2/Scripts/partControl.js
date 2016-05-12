@@ -11,6 +11,10 @@
         console.log('assBut click!');
         button = $(this);
     });
+    $('#partDelBut').on('click', function () {
+        console.log('delBut click!');
+        button = $(this);
+    });
 
 
     // Define behaviour when a tab is clicked
@@ -66,13 +70,13 @@
         }
         else if (button.attr('id') == 'partDelBut') {
             console.log('delBut');
+            data.preventDefault();
             var model = createModel();
             $.post("/Assignment/delPart", model, function() {
                 location.reload();
                 $("partStatus").text('Part deleted!');
             });
-        }
-        // Submit assignment
+        } // Submit assignment
         else if (button.attr('id') == 'assBut') {
             console.log('assBut');
             var model = createModel();
