@@ -191,12 +191,14 @@ namespace MooshakV2.Controllers
         [HttpPost]
         public ActionResult addPart(AssignmentViewModel model)
         {
+            prepareDropdown();
             // Villucheck á model
             if(model != null)
             {
-                var p = new AssignmentPartViewModel();
-                model.assignmentParts.Add(p);
-                return View("AdminTeacherViews/edit", model);
+                service.addPart(model.assignmentParts[0], model.id);
+                var updatedModel = service.getAssignmentById(model.id);
+                // just return same model, it contains all necessary information
+                return View("AdminTeacherViews/edit", updatedModel);
             }
             return View("Error");
         }

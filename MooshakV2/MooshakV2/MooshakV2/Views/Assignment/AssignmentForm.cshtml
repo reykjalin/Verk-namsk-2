@@ -12,7 +12,7 @@
         <div class="form-group">
             @Html.Label("Title", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.title, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.title, new { htmlAttributes = new { @class = "form-control", @id="assTitle"} })
                 @Html.ValidationMessageFor(model => model.title, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -20,7 +20,7 @@
         <div class="form-group">
             @Html.Label("Description ", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.TextAreaFor(model => model.description, new { @class = "form-control", @rows = "6" } )
+                @Html.TextAreaFor(model => model.description, new { @class = "form-control", @rows = "6", @id = "assDescr" } )
                 @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -28,13 +28,13 @@
         <div class="form-group">
             @Html.Label("Weight", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.weight, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.weight, new { htmlAttributes = new { @class = "form-control", @id="assWeight" } })
                 @Html.ValidationMessageFor(model => model.weight, "", new { @class = "text-danger" })
                
             </div>
         </div>
 
-        @Html.HiddenFor(model => model.id)
+        @Html.HiddenFor(model => model.id, new { @id="assId" })
         @Html.HiddenFor(model => model.assignmentParts.Count);
 
         <div class="form-group">
@@ -47,7 +47,7 @@
 
         <div class="form-group">
             <!-- tabs -->
-            <ul class="nav nav-tabs" role="tablist">
+            <ul class="nav nav-tabs" role="tablist" id="partTabs">
                 @foreach(var part in Model.assignmentParts)
                 {
                     <li role="presentation"><a href="#@part.id" aria-controls="home" role="tab" data-toogle="tab">@part.title</a></li>
@@ -57,13 +57,37 @@
                 </a></li>
             </ul>
             <!-- tab content -->
-            <div class="tab-content">
-                @foreach(var part in Model.assignmentParts)
+            <div class="tab-content" id="partList">
+                @foreach (var part in Model.assignmentParts)
                 {
-                    <div role="tabpanel" class="tab-pane fade in" id="@part.id">@part.description</div>
+                    <div role="tabpanel" class="tab-pane fade" id="@part.id">
+                        <br/>
+                        @Html.HiddenFor(p => part.id)
+                        <div class="form-group">
+                            @Html.Label("Part name", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(p => part.title, new { htmlAttributes = new { @class="form-control" }})
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.Label("Part description", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(p => part.description, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.Label("Part weight", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(p => part.weight, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+                        </div>
+                    </div>
                 }
-                <div role="tabpanel" class="tab-pane fad in active" id="add">
+                <div role="tabpanel" class="tab-pane fade in active" id="add">
                     <br/>
+                    <input type="hidden" id="partId" val=""/>
                     <div class="form-group">
                         @Html.Label("Part name", htmlAttributes: new {@class = "control-label col-md-2"})
                         <div class="col-md-10">
@@ -84,11 +108,13 @@
                             <input type="number" val="" class="form-control" id="partWeight"/>
                         </div>
                     </div>
-
+                </div>
+                <div class="col-md-5">
                     <div class="pull-right">
                         <button type="submit" class="btn btn-default" id="partBut" name="partBut">Save part</button>
                     </div>
                 </div>
+                <p class="text-danger" id="partStatus"></p>
             </div>
         </div>
 
