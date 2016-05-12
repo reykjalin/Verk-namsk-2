@@ -182,7 +182,6 @@ namespace MooshakV2.Controllers
         public ActionResult uploadFile(FileUploadViewModel theFile)
         {
 
-
             if (ModelState.IsValid)
             {
                 string serverPath = Server.MapPath("~");
@@ -192,10 +191,10 @@ namespace MooshakV2.Controllers
                     Directory.CreateDirectory(path);
                 }
                 service.submitFile(theFile, User.Identity.GetUserId());
+
                 theFile.file.SaveAs(path);
 
             }
-
 
             return RedirectToAction("list");
         }

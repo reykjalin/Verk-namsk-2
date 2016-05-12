@@ -208,7 +208,7 @@ namespace MooshakV2.Services
                 newSubmit.filename = aFile.file.FileName;
                 newSubmit.date = DateTime.Now;
                 newSubmit.userId = userId;
-                newSubmit.partId = aFile.partId;
+                newSubmit.partId = 6;
                 newSubmit.success = aFile.success;
                 newSubmit.count = aFile.count;
                 var id = (from i in contextDb.submissions
