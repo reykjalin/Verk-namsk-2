@@ -34,7 +34,7 @@ namespace MooshakV2.Controllers
         public ActionResult create()
         {
             prepareDropdown();
-            return View("AdminTeacherViews/create");
+            return View("AdminTeacherViews/create", new AssignmentViewModel());
         }
 
         [HttpPost]
@@ -107,6 +107,7 @@ namespace MooshakV2.Controllers
         [Authorize(Roles = "Admin, Teacher")]
         public ActionResult edit(AssignmentViewModel assignment)
         {
+            prepareDropdown();
             if (ModelState.IsValid)
             {
                 if (service.updateAssignment(assignment))
@@ -159,12 +160,7 @@ namespace MooshakV2.Controllers
         }
 
         public ActionResult error() { return View(); }
-
-        //Get list of assignments in a course
-        public ActionResult allCourseAssignments(int courseId)
-        {
-            return View();
-        }
+        
 
         private void prepareDropdown()
         {
@@ -184,6 +180,30 @@ namespace MooshakV2.Controllers
         }
 
         [HttpPost]
+        public ActionResult addPart(AssignmentViewModel model)
+        {
+            prepareDropdown();
+            // Villucheck á model
+            if(model != null)
+            {
+                // If assignment isn't in DB, create the assignment
+                if(model.id <= 0)
+                {
+                    // TODO: Setja þetta í fall? alveg eins og í create...
+                    if (true)
+                    {
+                        AssignmentViewModel assignment = new AssignmentViewModel();
+                        assignment.courseId = model.courseId;
+                        if (service.addAssignment(model))
+                            return RedirectToAction("List");
+                    }
+                    return View("AdminTeacherViews/create", model);
+                }
+
+                service.addPart(model.assignmentParts[0], model.id);
+                var updatedModel = service.getAssignmentById(model.id);
+                // just return same model, it contains all necessary information
+                return View("AdminTeacherViews/edit", updatedModel);
         public ActionResult uploadFile(FileUploadViewModel theFile)
         {
 
@@ -208,16 +228,16 @@ namespace MooshakV2.Controllers
 
 
         [HttpPost]
-        public ActionResult addPart(AssignmentViewModel model)
+        public ActionResult delPart(AssignmentViewModel model)
         {
             prepareDropdown();
-            // Villucheck á model
-            if (model != null)
+            if(model != null && model.assignmentParts != null)
             {
-                service.addPart(model.assignmentParts[0], model.id);
-                var updatedModel = service.getAssignmentById(model.id);
-                // just return same model, it contains all necessary information
-                return View("AdminTeacherViews/edit", updatedModel);
+                if(service.removePart(model.assignmentParts[0]))
+                {
+                    var updatedModel = service.getAssignmentById(model.id);
+                    return View("AdminTeacherViews/edit", updatedModel);
+                }
             }
             return View("Error");
         }
