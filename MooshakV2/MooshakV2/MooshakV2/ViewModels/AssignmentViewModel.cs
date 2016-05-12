@@ -31,16 +31,13 @@ namespace MooshakV2.ViewModels
         {
             get
             {
-                if(parts == null)
+                if (parts == null)
                     parts = new List<AssignmentPartViewModel>();
                 return parts;
             }
             set { parts = value; }
         }
 
-        [Display(Name = "File")]
-        [Required(ErrorMessage ="You have to select file")]
-        [FileExtensions(Extensions =".cpp,.cbp,.h", ErrorMessage ="Please select a valid file type")]
-        public HttpPostedFileBase file { get; set; }
+
     }
 }

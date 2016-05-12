@@ -1,4 +1,6 @@
-﻿using MooshakV2.Services;
+﻿using Microsoft.AspNet.Identity;
+using MooshakV2.DAL;
+using MooshakV2.Services;
 using MooshakV2.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -14,11 +16,13 @@ namespace MooshakV2.Controllers
     {
         private AssignmentService service;
         private CourseService courseService;
-             
+        private DatabaseDataContext dbContext;
+
         public AssignmentController()
         {
             service = new AssignmentService();
             courseService = new CourseService();
+            dbContext = new DatabaseDataContext();
         }
 
         public ActionResult Index() { return RedirectToAction("List"); }
@@ -54,7 +58,7 @@ namespace MooshakV2.Controllers
         {
             prepareDropdown();
             var model = service.getAllAssignments();
-            if(User.IsInRole("Student"))
+            if (User.IsInRole("Student"))
                 return View("StudentViews/list", model);
 
             return View("AdminTeacherViews/list", model);
@@ -66,7 +70,8 @@ namespace MooshakV2.Controllers
         {
             int courseId = Convert.ToInt32(id);
             var model = service.getAllAssignmentsInCourse(courseId);
-            if(model != null) {
+            if (model != null)
+            {
                 prepareDropdown();
                 if (User.IsInRole("Student"))
                     return View("StudentViews/list", model);
@@ -91,7 +96,7 @@ namespace MooshakV2.Controllers
                     prepareDropdown();
                     return View("AdminTeacherViews/edit", model);
                 }
-            
+
             }
             return RedirectToAction("Error");
         }
@@ -114,7 +119,7 @@ namespace MooshakV2.Controllers
         [Authorize(Roles = "Admin, Teacher")]
         public ActionResult remove(int? id)
         {
-            if(id.HasValue)
+            if (id.HasValue)
             {
                 var toRemove = service.getAssignmentById(id);
                 if (toRemove != null)
@@ -139,10 +144,10 @@ namespace MooshakV2.Controllers
         [Authorize]
         public ActionResult details(int? id)
         {
-            if(id.HasValue)
+            if (id.HasValue)
             {
                 var model = service.getAssignmentById(id);
-                if(User.IsInRole("Student"))
+                if (User.IsInRole("Student"))
                     return View("StudentViews/details", model);
 
                 return View("AdminTeacherViews/details", model);
@@ -176,14 +181,25 @@ namespace MooshakV2.Controllers
         }
 
         [HttpPost]
-        public ActionResult uploadFile(AssignmentViewModel theFile)
+        public ActionResult uploadFile(FileUploadViewModel theFile)
         {
-            if(theFile.file.ContentLength > 0)
+
+            if (ModelState.IsValid)
             {
-                var fileName = Path.GetFileName(theFile.file.FileName);
+                //service.submitFile(theFile, User.Identity.GetUserId());
+
+                var id = (from i in dbContext.submissions
+                          orderby i.Id descending
+                          select i.Id).FirstOrDefault();
+                var fileExtension = Path.GetExtension(theFile.file.FileName);
+                var fileName = id.ToString() + fileExtension;
+
                 var path = Path.Combine(Server.MapPath("~/AllFiles"), fileName);
+
                 theFile.file.SaveAs(path);
+
             }
+
             return RedirectToAction("list");
         }
 

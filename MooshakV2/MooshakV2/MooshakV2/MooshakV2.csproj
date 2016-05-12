@@ -208,6 +208,7 @@
     <Compile Include="ViewModels\AssignmentViewModel.cs" />
     <Compile Include="ViewModels\CourseDetailViewModel.cs" />
     <Compile Include="ViewModels\CourseViewModel.cs" />
+    <Compile Include="ViewModels\FileUploadViewModel.cs" />
     <Compile Include="ViewModels\SubmissionViewModel.cs" />
     <Compile Include="ViewModels\UserDetailViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
