@@ -126,7 +126,7 @@ namespace MooshakV2.Services
             return true;
         }
 
-        public void submitFile(AssignmentViewModel aFile)
+        public void submitFile(FileUploadViewModel aFile, string userId)
         {
             if (aFile != null)
             {
@@ -134,8 +134,28 @@ namespace MooshakV2.Services
                 var fileContentType = aFile.file.ContentType;
 
                 Submission newSubmit = new Submission();
-                newSubmit.assignmentId = aFile.id;
+                newSubmit.assignmentId = aFile.assignmentId.Value;
                 newSubmit.mime = fileContentType;
+                newSubmit.filename = aFile.file.FileName;
+                newSubmit.date = DateTime.Now;
+                newSubmit.userId = userId;
+                newSubmit.partId = aFile.partId;
+                newSubmit.success = aFile.success;
+                newSubmit.count = aFile.count;
+                var id = (from i in contextDb.submissions
+                                select i.id).ToList();
+                if(id.Count > 0)
+                {
+                    newSubmit.id = id.Max() + 1;
+                }
+                else
+                {
+                    newSubmit.id = 1;
+                }
+
+
+                                
+
 
                 newSubmit = contextDb.submissions.Add(newSubmit);
                 contextDb.SaveChanges();
@@ -145,7 +165,7 @@ namespace MooshakV2.Services
 
                 contextDb.Entry(newSubmit).State = System.Data.Entity.EntityState.Modified;
                 contextDb.SaveChanges();
-            }   
+            }
         }
     }
 }

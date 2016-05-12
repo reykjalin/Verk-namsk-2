@@ -41,17 +41,18 @@
                     data-title="@item.title"
                     data-descr="@item.description"
                     data-weight="@item.weight"
-                    data-courseID="@item.id">
+                    data-courseID="@item.courseId">
                 <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
                 Details
             </button>
             <button type="button"
-                    class="btn btn-default"
+                    class="btn btn-default modalSubmitButton" 
                     data-tooltip="true"
                     data-placement="top"
                     title="Assignment hand in"
                     data-toggle="modal"
-                    data-target="#handin">
+                    data-target="#handin"
+                    data-assignmentID="@item.id">
                 <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
                 Hand in
             </button>
@@ -104,7 +105,7 @@
             <div class="modal-body">
                @using (Html.BeginForm("uploadFile", "Assignment", FormMethod.Post, new { enctype = "multipart/form-data" }))
                {
-
+                   <input type="hidden" name="assignmentId" id="uploadId" />
                 @Html.ValidationSummary();
                 <table>
                     <tr>

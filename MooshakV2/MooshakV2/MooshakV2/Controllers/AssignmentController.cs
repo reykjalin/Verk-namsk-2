@@ -1,4 +1,5 @@
-﻿using MooshakV2.Services;
+﻿using Microsoft.AspNet.Identity;
+using MooshakV2.Services;
 using MooshakV2.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -178,16 +179,21 @@ namespace MooshakV2.Controllers
         }
 
         [HttpPost]
-        public ActionResult uploadFile(AssignmentViewModel theFile)
+        public ActionResult uploadFile(FileUploadViewModel theFile)
         {
-            
+
 
             if (ModelState.IsValid)
             {
-                var path = Path.Combine(Server.MapPath("~\\AllFiles\\"));
-                service.submitFile(theFile);
+                string serverPath = Server.MapPath("~");
+                string path = serverPath + "\\AllFiles\\";
+                if (!Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path);
+                }
+                service.submitFile(theFile, User.Identity.GetUserId());
                 theFile.file.SaveAs(path);
-                
+
             }
 
 
