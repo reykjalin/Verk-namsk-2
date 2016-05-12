@@ -211,6 +211,7 @@ namespace MooshakV2.Services
                 newSubmit.partId = 6;
                 newSubmit.success = aFile.success;
                 newSubmit.count = aFile.count;
+
                 var id = (from i in contextDb.submissions
                                 select i.Id).ToList();
                 if(id.Count > 0)
@@ -223,14 +224,8 @@ namespace MooshakV2.Services
                 }
 
 
-                                
-
-
                 newSubmit = contextDb.submissions.Add(newSubmit);
                 contextDb.SaveChanges();
-
-                var fileName = newSubmit.Id.ToString();
-                newSubmit.filename = fileName + fileExtension;
 
                 contextDb.Entry(newSubmit).State = System.Data.Entity.EntityState.Modified;
                 contextDb.SaveChanges();

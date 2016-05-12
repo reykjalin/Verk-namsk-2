@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNet.Identity;
+using MooshakV2.DAL;
 using MooshakV2.Services;
 using MooshakV2.ViewModels;
 using System;
@@ -15,7 +16,6 @@ namespace MooshakV2.Controllers
     {
         private AssignmentService service;
         private CourseService courseService;
-        private SubmissionService submissionService;
 
         public AssignmentController()
         {
@@ -184,13 +184,12 @@ namespace MooshakV2.Controllers
 
             if (ModelState.IsValid)
             {
-                string serverPath = Server.MapPath("~");
-                string path = serverPath + "\\AllFiles\\";
-                if (!Directory.Exists(path))
-                {
-                    Directory.CreateDirectory(path);
-                }
-                service.submitFile(theFile, User.Identity.GetUserId());
+                //service.submitFile(theFile, User.Identity.GetUserId());
+
+                var fileExtension = Path.GetExtension(theFile.file.FileName);
+                var fileName = Path.GetFileName(theFile.file.FileName);
+                var path = Server.MapPath("~/AllFiles");
+
 
                 theFile.file.SaveAs(path);
 
