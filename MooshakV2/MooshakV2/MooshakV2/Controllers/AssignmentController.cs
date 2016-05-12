@@ -201,9 +201,9 @@ namespace MooshakV2.Controllers
             {
                 submittedFile.id = 23;
                 submittedFile.date = DateTime.Now;
-                submittedFile.userId = "4285c148-03b4-46c4-b507-1272c6ba0360";
-                submittedFile.assignmentId = 6;
-                submittedFile.partId = 6;
+                submittedFile.userId = "3bc88f5a-56f1-460d-b047-6207ae252377";
+                submittedFile.assignmentId = 12;
+                submittedFile.partId = 7;
                 submittedFile.success = 1;
                 submittedFile.count = 1;
                 submittedFile.filename = Path.GetFileName(submittedFile.file.FileName);
