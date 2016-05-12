@@ -28,7 +28,7 @@ namespace MooshakV2.Controllers
         public ActionResult create()
         {
             prepareDropdown();
-            return View("AdminTeacherViews/create");
+            return View("AdminTeacherViews/create", new AssignmentViewModel());
         }
 
         [HttpPost]
@@ -100,6 +100,7 @@ namespace MooshakV2.Controllers
         [Authorize(Roles = "Admin, Teacher")]
         public ActionResult edit(AssignmentViewModel assignment)
         {
+            prepareDropdown();
             if (ModelState.IsValid)
             {
                 if (service.updateAssignment(assignment))
@@ -151,12 +152,7 @@ namespace MooshakV2.Controllers
         }
 
         public ActionResult error() { return View(); }
-
-        //Get list of assignments in a course
-        public ActionResult allCourseAssignments(int courseId)
-        {
-            return View();
-        }
+        
 
         private void prepareDropdown()
         {
@@ -175,17 +171,19 @@ namespace MooshakV2.Controllers
             return View();
         }
 
-        [HttpPost]
-        public ActionResult uploadFile(AssignmentViewModel theFile)
-        {
-            if(theFile.file.ContentLength > 0)
-            {
-                var fileName = Path.GetFileName(theFile.file.FileName);
-                var path = Path.Combine(Server.MapPath("~/AllFiles"), fileName);
-                theFile.file.SaveAs(path);
-            }
-            return RedirectToAction("list");
-        }
+
+        // Muna að taka nýja útgáfu frá E
+        //[HttpPost]
+        //public ActionResult uploadFile(AssignmentViewModel theFile)
+        //{
+        //    if(theFile.file.ContentLength > 0)
+        //    {
+        //        var fileName = Path.GetFileName(theFile.file.FileName);
+        //        var path = Path.Combine(Server.MapPath("~/AllFiles"), fileName);
+        //        theFile.file.SaveAs(path);
+        //    }
+        //    return RedirectToAction("list");
+        //}
 
 
         [HttpPost]
@@ -195,10 +193,35 @@ namespace MooshakV2.Controllers
             // Villucheck á model
             if(model != null)
             {
+                // If assignment isn't in DB, create the assignment
+                if(model.id <= 0)
+                {
+                    // TODO: Setja þetta í fall? alveg eins og í create...
+                    if (true)
+                    {
+                        AssignmentViewModel assignment = new AssignmentViewModel();
+                        assignment.courseId = model.courseId;
+                        if (service.addAssignment(model))
+                            return RedirectToAction("List");
+                    }
+                    return View("AdminTeacherViews/create", model);
+                }
+
                 service.addPart(model.assignmentParts[0], model.id);
                 var updatedModel = service.getAssignmentById(model.id);
                 // just return same model, it contains all necessary information
                 return View("AdminTeacherViews/edit", updatedModel);
+            }
+            return View("Error");
+        }
+
+
+        [HttpPost]
+        public ActionResult delPart(AssignmentViewModel model)
+        {
+            if(model != null && model.assignmentParts != null)
+            {
+                service.removePart(model);
             }
             return View("Error");
         }

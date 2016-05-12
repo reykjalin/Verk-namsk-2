@@ -69,8 +69,26 @@ namespace MooshakV2.Services
 
             contextDb.assignments.Add(newAssignment);
             contextDb.SaveChanges();
+            /*
+             * Get assignment id, MASSIVE ASSUMPTION: no assignments have the same 
+             * title/descr/weight/courseId, otherwise this will fail
+             */
+            var assId = (from a in contextDb.assignments
+                         where a.title == newAssignment.title &&
+                               a.description == newAssignment.description &&
+                               a.weight == newAssignment.weight &&
+                               a.courseId == newAssignment.courseId
+                         select a.id).Single();
+            foreach(var part in newAssignmentModel.assignmentParts)
+                addPart(part, assId);
 
             return true;
+        }
+
+        public bool removePart(AssignmentViewModel toDel)
+        {
+            // TODO: implement
+            return false;
         }
 
         public AssignmentViewModel getAssignmentById(int? id)

@@ -38,9 +38,10 @@ namespace MooshakV2.ViewModels
             set { parts = value; }
         }
 
-        [Display(Name = "File")]
-        [Required(ErrorMessage ="You have to select file")]
-        [FileExtensions(Extensions =".cpp,.cbp,.h", ErrorMessage ="Please select a valid file type")]
-        public HttpPostedFileBase file { get; set; }
+        // Á ekki að vera skv. E
+        //[Display(Name = "File")]
+        //[Required(ErrorMessage ="You have to select file")]
+        //[FileExtensions(Extensions =".cpp,.cbp,.h", ErrorMessage ="Please select a valid file type")]
+        //public HttpPostedFileBase file { get; set; }
     }
 }
