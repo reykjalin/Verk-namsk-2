@@ -9,7 +9,7 @@ namespace MooshakV2.DAL
     [Table("Submission")]
     public partial class Submission
     {
-        public int id { get; set; }
+        public int Id { get; set; }
 
         public DateTime date { get; set; }
 
@@ -31,5 +31,10 @@ namespace MooshakV2.DAL
 
         public int count { get; set; }
 
+        public virtual AspNetUser AspNetUser { get; set; }
+
+        public virtual Assignment Assignment { get; set; }
+
+        public virtual AssignmentPart AssignmentPart { get; set; }
     }
 }
