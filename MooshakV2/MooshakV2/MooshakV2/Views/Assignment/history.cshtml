@@ -1,53 +1,60 @@
 ﻿@model IEnumerable<MooshakV2.ViewModels.SubmissionViewModel>
 
 @{
-    ViewBag.Title = "history";
+    ViewBag.Title = "History";
 }
 
-<h2>history</h2>
+<h2>History</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+
+
+@using (Html.BeginForm("List", "User", FormMethod.Get, new { @class = "form-inline" }))
+{
+    <div class="input-group">
+        <a href="@Url.Action("List")" class="btn btn-default" data-tooltip="true" data-placement="right" title="Go back to Assignments">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        </a>
+
+    </div>
+
+}
+
+
 <table class="table">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.success)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.date)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.count)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.assignmentId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.partId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.userId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.filename)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.mime)
-        </th>
-        <th></th>
+        <td>
+            ID
+        </td>
+        <td>
+            Course
+        </td>
+        <td>
+            Assignment
+        </td>
+        <td>
+            Assignment Part
+        </td>
+        <td>
+            Count
+        </td>
+        <td>
+            Date
+        </td>
+        <td>
+            File Name
+        </td>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.success)
+            @Html.DisplayFor(modelItem => item.id)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.date)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.count)
+            Siddi
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.assignmentId)
@@ -56,20 +63,21 @@
             @Html.DisplayFor(modelItem => item.partId)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.userId)
+            @Html.DisplayFor(modelItem => item.count)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.date)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.filename)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.mime)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.id })
         </td>
     </tr>
 }
 
 </table>
+
+
+@section scripts
+{
+    @Scripts.Render("~/Scripts/renderTooltips.js")
+}
