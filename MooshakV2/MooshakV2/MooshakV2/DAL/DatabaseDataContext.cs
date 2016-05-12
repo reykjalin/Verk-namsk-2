@@ -45,12 +45,6 @@ namespace MooshakV2.DAL
                 .HasForeignKey(e => e.UserId);
 
             modelBuilder.Entity<AspNetUser>()
-                .HasMany(e => e.Submissions)
-                .WithRequired(e => e.AspNetUser)
-                .HasForeignKey(e => e.userId)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<AspNetUser>()
                 .HasOptional(e => e.UserDetail)
                 .WithRequired(e => e.AspNetUser);
 
@@ -65,11 +59,7 @@ namespace MooshakV2.DAL
             modelBuilder.Entity<Assignment>()
                 .HasMany(e => e.AssignmentParts)
                 .WithRequired(e => e.Assignment)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<Assignment>()
-                .HasMany(e => e.Submissions)
-                .WithRequired(e => e.Assignment)
+                .HasForeignKey(e => e.partNr)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<AssignmentPart>()
