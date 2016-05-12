@@ -16,11 +16,13 @@ namespace MooshakV2.Controllers
     {
         private AssignmentService service;
         private CourseService courseService;
+        private DatabaseDataContext dbContext;
 
         public AssignmentController()
         {
             service = new AssignmentService();
             courseService = new CourseService();
+            dbContext = new DatabaseDataContext();
         }
 
         public ActionResult Index() { return RedirectToAction("List"); }
@@ -186,10 +188,13 @@ namespace MooshakV2.Controllers
             {
                 //service.submitFile(theFile, User.Identity.GetUserId());
 
+                var id = (from i in dbContext.submissions
+                          orderby i.Id descending
+                          select i.Id).FirstOrDefault();
                 var fileExtension = Path.GetExtension(theFile.file.FileName);
-                var fileName = Path.GetFileName(theFile.file.FileName);
-                var path = Server.MapPath("~/AllFiles");
+                var fileName = id.ToString() + fileExtension;
 
+                var path = Path.Combine(Server.MapPath("~/AllFiles"), fileName);
 
                 theFile.file.SaveAs(path);
 
