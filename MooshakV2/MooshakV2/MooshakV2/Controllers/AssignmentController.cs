@@ -16,12 +16,14 @@ namespace MooshakV2.Controllers
     {
         private AssignmentService service;
         private CourseService courseService;
+        private SubmissionService submissionService;
         private DatabaseDataContext dbContext;
 
         public AssignmentController()
         {
             service = new AssignmentService();
             courseService = new CourseService();
+            submissionService = new SubmissionService();
             dbContext = new DatabaseDataContext();
         }
 
@@ -32,7 +34,7 @@ namespace MooshakV2.Controllers
         public ActionResult create()
         {
             prepareDropdown();
-            return View("AdminTeacherViews/create");
+            return View("AdminTeacherViews/create", new AssignmentViewModel());
         }
 
         [HttpPost]
@@ -105,6 +107,7 @@ namespace MooshakV2.Controllers
         [Authorize(Roles = "Admin, Teacher")]
         public ActionResult edit(AssignmentViewModel assignment)
         {
+            prepareDropdown();
             if (ModelState.IsValid)
             {
                 if (service.updateAssignment(assignment))
@@ -127,6 +130,7 @@ namespace MooshakV2.Controllers
             }
             return RedirectToAction("Error");
         }
+
 
         [HttpPost]
         [Authorize(Roles = "Admin, Teacher")]
@@ -156,12 +160,7 @@ namespace MooshakV2.Controllers
         }
 
         public ActionResult error() { return View(); }
-
-        //Get list of assignments in a course
-        public ActionResult allCourseAssignments(int courseId)
-        {
-            return View();
-        }
+        
 
         private void prepareDropdown()
         {
@@ -181,12 +180,40 @@ namespace MooshakV2.Controllers
         }
 
         [HttpPost]
+        public ActionResult addPart(AssignmentViewModel model)
+        {
+            prepareDropdown();
+            // Villucheck á model
+            if (model != null)
+            {
+                // If assignment isn't in DB, create the assignment
+                if (model.id <= 0)
+                {
+                    // TODO: Setja þetta í fall? alveg eins og í create...
+                    if (true)
+                    {
+                        AssignmentViewModel assignment = new AssignmentViewModel();
+                        assignment.courseId = model.courseId;
+                        if (service.addAssignment(model))
+                            return RedirectToAction("List");
+                    }
+                    return View("AdminTeacherViews/create", model);
+                }
+
+                service.addPart(model.assignmentParts[0], model.id);
+                var updatedModel = service.getAssignmentById(model.id);
+                // just return same model, it contains all necessary information
+                return View("AdminTeacherViews/edit", updatedModel);
+            }
+            return View("Error");
+        }
+
         public ActionResult uploadFile(FileUploadViewModel theFile)
         {
 
             if (ModelState.IsValid)
             {
-                //service.submitFile(theFile, User.Identity.GetUserId());
+                service.submitFile(theFile, User.Identity.GetUserId());
 
                 var id = (from i in dbContext.submissions
                           orderby i.Id descending
@@ -205,18 +232,27 @@ namespace MooshakV2.Controllers
 
 
         [HttpPost]
-        public ActionResult addPart(AssignmentViewModel model)
+        public ActionResult delPart(AssignmentViewModel model)
         {
             prepareDropdown();
-            // Villucheck á model
-            if(model != null)
+            if(model != null && model.assignmentParts != null)
             {
-                service.addPart(model.assignmentParts[0], model.id);
-                var updatedModel = service.getAssignmentById(model.id);
-                // just return same model, it contains all necessary information
-                return View("AdminTeacherViews/edit", updatedModel);
+                if(service.removePart(model.assignmentParts[0]))
+                {
+                    var updatedModel = service.getAssignmentById(model.id);
+                    return View("AdminTeacherViews/edit", updatedModel);
+                }
             }
             return View("Error");
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Admin, Teacher")]
+        public ActionResult history()
+        {
+            var model = submissionService.getAllSubmissions();
+
+            return View("history", model);
         }
 
 

@@ -70,8 +70,35 @@ namespace MooshakV2.Services
 
             contextDb.assignments.Add(newAssignment);
             contextDb.SaveChanges();
+            /*
+             * Get assignment id, MASSIVE ASSUMPTION: no assignments have the same 
+             * title/descr/weight/courseId, otherwise this will fail
+             */
+            var assId = (from a in contextDb.assignments
+                         where a.title == newAssignment.title &&
+                               a.description == newAssignment.description &&
+                               a.weight == newAssignment.weight &&
+                               a.courseId == newAssignment.courseId
+                         select a.id).Single();
+            foreach(var part in newAssignmentModel.assignmentParts)
+                addPart(part, assId);
 
             return true;
+        }
+
+        public bool removePart(AssignmentPartViewModel toDelModel)
+        {
+            // TODO: implement
+            var toDel = (from p in contextDb.assignmentParts
+                         where p.id == toDelModel.id
+                         select p).SingleOrDefault();
+            if(toDel != null)
+            {
+                contextDb.assignmentParts.Remove(toDel);
+                contextDb.SaveChanges();
+                return true;
+            }
+            return false;
         }
 
         public AssignmentViewModel getAssignmentById(int? id)
@@ -187,12 +214,30 @@ namespace MooshakV2.Services
 
         public bool removeAssignment(int id)
         {
-            contextDb.assignments.Remove((from a in contextDb.assignments
-                                          where a.id == id
-                                          select a).SingleOrDefault());
-
-            contextDb.SaveChanges();
-            return true;
+            // Find assignment to delete
+            var toDel = (from a in contextDb.assignments
+                         where a.id == id
+                         select a).SingleOrDefault();
+            // Check for null
+            if(toDel != null)
+            {
+                // Get assignment parts
+                var parts = (from p in contextDb.assignmentParts
+                             where p.assignmentId == toDel.id
+                             select p).ToList();
+                // Delete all parts
+                foreach(var part in parts)
+                {
+                    // Return false if removing part fails
+                    if(!removePart(partToPartViewModel(part)))
+                        return false;
+                }
+                // Remove assignment
+                contextDb.assignments.Remove(toDel);
+                contextDb.SaveChanges();
+                return true;
+            }
+            return false;
         }
 
         public void submitFile(FileUploadViewModel aFile, string userId)
