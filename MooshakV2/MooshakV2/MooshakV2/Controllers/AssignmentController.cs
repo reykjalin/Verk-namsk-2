@@ -173,6 +173,17 @@ namespace MooshakV2.Controllers
             return RedirectToAction("Error");
         }
 
+        [HttpGet]
+        public ActionResult userHistory()
+        {
+            var userId = User.Identity.GetUserId();
+
+            var model = submissionService.getAllHistoryViewModelsByID(userId);
+
+            return View("userHistory", model);
+        }
+
+
         public ActionResult error() { return View(); }
         
 
