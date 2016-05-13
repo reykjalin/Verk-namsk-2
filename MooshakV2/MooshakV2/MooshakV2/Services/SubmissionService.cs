@@ -85,6 +85,53 @@ namespace MooshakV2.Services
             return historyModelList;
         }
 
+        public List<HistoryViewModel> getAllHistoryViewModelsByID(string userId)
+        {
+            var submissionList = (from alist in contextDb.submissions
+                                  where alist.userId == userId
+                                  select alist).ToList();
+
+            var historyModelList = new List<HistoryViewModel>();
+
+            foreach (var item in submissionList)
+            {
+                var history = new HistoryViewModel();
+
+                history.id = item.Id;
+                history.userName = (from users in contextDb.aspNetUsers
+                                      where item.userId == users.Id
+                                      select users.UserName).FirstOrDefault();
+
+                var courseId = (from ass in contextDb.assignments
+                                where item.assignmentId == ass.id
+                                select ass.courseId).FirstOrDefault();
+
+                history.course = (from courses in contextDb.courses
+                                    where courseId == courses.id
+                                    select courses.title).FirstOrDefault();
+
+                history.assignment = (from ass in contextDb.assignments
+                                        where item.assignmentId == ass.id
+                                        select ass.title).FirstOrDefault();
+
+                history.assignmentPart = (from assPart in contextDb.assignmentParts
+                                            where item.partId == assPart.id
+                                            select assPart.title).FirstOrDefault();
+
+                history.success = item.success;
+                history.count = item.count;
+                history.filename = item.filename;
+                history.date = item.date;
+
+                history.assignmentId = item.assignmentId;
+
+                historyModelList.Add(history);
+            }
+
+            return historyModelList;
+        }
+
+
         public List<SubmissionViewModel> getAllSubmissionsFromAssignment(int assignmentId)
         {
             var submissionEntities = (from subs in contextDb.submissions
