@@ -10,7 +10,6 @@ namespace MooshakV2.ViewModels
     {
         [Display(Name = "File")]
         [Required(ErrorMessage = "You have to select file")]
-        ////[FileExtensions(Extensions = "cpp", ErrorMessage = "Please select a valid file type")]
         public HttpPostedFileBase file { get; set; }
 
         public int? assignmentId { get; set; }
