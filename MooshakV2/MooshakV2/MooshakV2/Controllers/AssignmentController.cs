@@ -213,18 +213,20 @@ namespace MooshakV2.Controllers
 
             if (ModelState.IsValid)
             {
-                service.submitFile(theFile, User.Identity.GetUserId());
-
                 var id = (from i in dbContext.submissions
                           orderby i.Id descending
                           select i.Id).FirstOrDefault();
                 var fileExtension = Path.GetExtension(theFile.file.FileName);
+                if(fileExtension != ".cpp")
+                {
+                    return View("Error");
+                }
                 var fileName = id.ToString() + fileExtension;
 
                 var path = Path.Combine(Server.MapPath("~/AllFiles"), fileName);
-
                 theFile.file.SaveAs(path);
 
+                service.submitFile(theFile, User.Identity.GetUserId());
             }
 
             return RedirectToAction("list");
