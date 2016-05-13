@@ -29,6 +29,7 @@ namespace MooshakV2.Services
                 viewModel.title = assignment.title;
                 viewModel.description = assignment.description;
                 viewModel.weight = assignment.weight;
+				viewModel.date = assignment.handInDate;
                 viewModel.id = assignment.id;
                 viewModel.courseId = assignment.courseId;
                 assignmentModelList.Add(viewModel);
