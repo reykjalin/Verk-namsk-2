@@ -8,7 +8,7 @@ namespace MooshakV2.DAL
     public partial class DatabaseDataContext : DbContext
     {
         public DatabaseDataContext()
-            : base("name=DatabaseDataContext")
+            : base("name=DatabaseDataContext1")
         {
         }
 
@@ -57,9 +57,21 @@ namespace MooshakV2.DAL
                 .IsUnicode(false);
 
             modelBuilder.Entity<Assignment>()
+                .Property(e => e.input)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Assignment>()
+                .Property(e => e.output)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Assignment>()
                 .HasMany(e => e.AssignmentParts)
                 .WithRequired(e => e.Assignment)
-                .HasForeignKey(e => e.partNr)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Assignment>()
+                .HasMany(e => e.Submissions)
+                .WithRequired(e => e.Assignment)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<AssignmentPart>()

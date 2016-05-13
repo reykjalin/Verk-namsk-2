@@ -12,7 +12,7 @@ namespace MooshakV2.DAL
         [Key]
         [Column(Order = 0)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int userId { get; set; }
+        public string userId { get; set; }
 
         [Key]
         [Column(Order = 1)]

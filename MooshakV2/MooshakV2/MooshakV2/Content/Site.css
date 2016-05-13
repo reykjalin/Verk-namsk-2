@@ -45,7 +45,7 @@ td {
     max-width: 350px;
 }
 
-#search
+#search, #query
 {
     float: right;
     display:inline;

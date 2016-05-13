@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MooshakV2.ViewModels.SubmissionViewModel>
+﻿@model IEnumerable<MooshakV2.ViewModels.HistoryViewModel>
 
 @{
     ViewBag.Title = "History";
@@ -6,15 +6,13 @@
 
 <h2>History</h2>
 
-@using (Html.BeginForm("List", "User", FormMethod.Get, new { @class = "form-inline" }))
-{
-    <div class="input-group">
+<div class="row">
+    <div class="col-md-8">
         <a href="@Url.Action("List")" class="btn btn-default" data-tooltip="true" data-placement="right" title="Go back to Assignments">
             <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
         </a>
-
     </div>
-}
+</div>
 
 <br />
 
@@ -23,6 +21,9 @@
     <tr>
         <td>
             ID
+        </td>
+        <td>
+            User
         </td>
         <td>
             Course
@@ -40,10 +41,10 @@
             Count
         </td>
         <td>
-            Date
+            File Name
         </td>
         <td>
-            File Name
+            Date
         </td>
     </tr>
 
@@ -53,13 +54,16 @@
             @Html.DisplayFor(modelItem => item.id)
         </td>
         <td>
-            Siddi
+            @Html.DisplayFor(modelItem => item.userName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.assignmentId)
+            @Html.DisplayFor(modelItem => item.course)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.partId)
+            @Html.DisplayFor(modelItem => item.assignment)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.assignmentPart)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.success)
@@ -68,10 +72,10 @@
             @Html.DisplayFor(modelItem => item.count)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.date)
+            @Html.DisplayFor(modelItem => item.filename)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.filename)
+            @Html.DisplayFor(modelItem => item.date)
         </td>
     </tr>
 }

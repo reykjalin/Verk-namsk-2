@@ -76,12 +76,26 @@ namespace MooshakV2.Controllers
             {
                 prepareDropdown();
                 if (User.IsInRole("Student"))
+                {
                     return View("StudentViews/list", model);
-
-
+                }
                 return View("AdminTeacherViews/list", model);
             }
             return RedirectToAction("List");
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Admin, Teacher")]
+        public ActionResult showSubmissionsFromAssignment(string id)
+        {
+            int courseId = Convert.ToInt32(id);
+            var model = submissionService.getAllSubmissionsFromAssignment(courseId);
+            if (model != null)
+            {
+                prepareAssignmentDropdown();
+                return View("history", model);
+            }
+            return View("history");
         }
 
         //Change assignment
@@ -168,9 +182,24 @@ namespace MooshakV2.Controllers
             List<SelectListItem> courseDropDown = new List<SelectListItem>();
 
             foreach (var item in courseList)
+            {
                 courseDropDown.Add(new SelectListItem { Text = item.title, Value = item.id.ToString() });
+            }
 
             ViewData["Courselist"] = courseDropDown;
+        }
+
+        private void prepareAssignmentDropdown()
+        {
+            var assignmentList = service.getAllAssignments();
+            List<SelectListItem> assignmentDropDown = new List<SelectListItem>();
+
+            foreach (var item in assignmentList)
+            {
+                assignmentDropDown.Add(new SelectListItem { Text = item.title, Value = item.id.ToString() });
+            }
+
+            ViewData["Assignmentlist"] = assignmentDropDown;
         }
 
         [HttpGet]
@@ -252,7 +281,8 @@ namespace MooshakV2.Controllers
         [Authorize(Roles = "Admin, Teacher")]
         public ActionResult history()
         {
-            var model = submissionService.getAllSubmissions();
+            prepareAssignmentDropdown();
+            var model = submissionService.getAllHistoryViewModels();
 
             return View("history", model);
         }
@@ -280,7 +310,7 @@ namespace MooshakV2.Controllers
             // In this example, this is all hardcoded, but in a
             // real life scenario, there should probably be individual
             // folders for each user/assignment/milestone.
-            var workingFolder = "C:\\Users\\Jón\\Google Drive\\2.önn.2016\\Verk-namsk-2\\MooshakV2\\MooshakV2\\MooshakV2\\Test\\";
+            var workingFolder = "C:\\Temp\\Mooshak2Code\\";
             var cppFileName = "Hello.cpp";
             var exeFilePath = workingFolder + "Hello.exe";
 
