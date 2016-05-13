@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MooshakV2.ViewModels.SubmissionViewModel>
+﻿@model IEnumerable<MooshakV2.ViewModels.HistoryViewModel>
 
 @{
     ViewBag.Title = "History";
@@ -31,6 +31,9 @@
             ID
         </td>
         <td>
+            User
+        </td>
+        <td>
             Course
         </td>
         <td>
@@ -46,10 +49,10 @@
             Count
         </td>
         <td>
-            Date
+            File Name
         </td>
         <td>
-            File Name
+            Date
         </td>
     </tr>
 
@@ -59,13 +62,16 @@
             @Html.DisplayFor(modelItem => item.id)
         </td>
         <td>
-            Siddi
+            @Html.DisplayFor(modelItem => item.userName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.assignmentId)
+            @Html.DisplayFor(modelItem => item.course)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.partId)
+            @Html.DisplayFor(modelItem => item.assignment)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.assignmentPart)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.success)
@@ -74,10 +80,10 @@
             @Html.DisplayFor(modelItem => item.count)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.date)
+            @Html.DisplayFor(modelItem => item.filename)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.filename)
+            @Html.DisplayFor(modelItem => item.date)
         </td>
     </tr>
 }

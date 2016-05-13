@@ -280,7 +280,7 @@ namespace MooshakV2.Controllers
         public ActionResult history()
         {
             prepareAssignmentDropdown();
-            var model = submissionService.getAllSubmissions();
+            var model = submissionService.getAllHistoryViewModels();
 
             return View("history", model);
         }

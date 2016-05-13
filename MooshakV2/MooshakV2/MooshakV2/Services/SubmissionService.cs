@@ -16,6 +16,7 @@ namespace MooshakV2.Services
         public SubmissionService()
         {
             contextDb = new DatabaseDataContext();
+
         }
 
         public List<SubmissionViewModel> getAllSubmissions()
@@ -38,6 +39,49 @@ namespace MooshakV2.Services
                 submissionModelList.Add(viewModel);
             }
             return submissionModelList;
+        }
+
+        public List<HistoryViewModel> getAllHistoryViewModels()
+        {
+            var submissionList = (from alist in contextDb.submissions
+                                  select alist).ToList();
+            var historyModelList = new List<HistoryViewModel>();
+
+            foreach (var submission in submissionList)
+            {
+                var viewModel = new HistoryViewModel();
+                viewModel.id = submission.Id;
+                viewModel.userName = (from users in contextDb.aspNetUsers
+                                      where submission.userId == users.Id
+                                      select users.UserName).FirstOrDefault();
+
+                var courseId = (from ass in contextDb.assignments
+                                where submission.assignmentId == ass.id
+                                select ass.courseId).FirstOrDefault();
+
+                viewModel.course = (from courses in contextDb.courses
+                                    where courseId == courses.id
+                                    select courses.title).FirstOrDefault();
+
+                viewModel.assignment = (from ass in contextDb.assignments
+                                        where submission.assignmentId == ass.id
+                                        select ass.title).FirstOrDefault();
+
+                viewModel.assignmentPart = (from assPart in contextDb.assignmentParts
+                                            where submission.partId == assPart.id
+                                            select assPart.title).FirstOrDefault();
+
+                viewModel.success = submission.success;
+                viewModel.count = submission.count;
+                viewModel.filename = submission.filename;
+                viewModel.date = submission.date;
+                
+               
+                historyModelList.Add(viewModel);
+            }
+
+
+            return historyModelList;
         }
 
         public List<SubmissionViewModel> getAllSubmissionsFromAssignment(int assignmentId)
