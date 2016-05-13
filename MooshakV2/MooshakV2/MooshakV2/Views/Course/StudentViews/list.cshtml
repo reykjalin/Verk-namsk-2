@@ -1,10 +1,13 @@
 ﻿@model IEnumerable<MooshakV2.ViewModels.CourseDetailViewModel>
 
 @{
-    ViewBag.Title = "List";
+ViewBag.Title = "List";
 }
 
 <h2>Courses</h2>
+
+
+<br />
 
 <table class="table">
     <thead>
@@ -19,24 +22,29 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model) {
+        @foreach(var item in Model)
+        {
         <tr>
-            <td>
+            <td data-Name="@item.course.title">
                 @Html.DisplayFor(modelItem => item.course.title)
             </td>
-            <td>
+            <td class="data-Descr">
                 @Html.DisplayFor(modelItem => item.course.description)
             </td>
             <td>
                 <div class="btn-group btn-group-sm" role="group" aria-label="...">
-                    <a href="@Url.Action("Details", new {id=item.course.id})"
-                       class="btn btn-default"
-                       data-tooltip="true"
-                       data-placement="top"
-                       title="Course details">
+                    <button type="button"
+                            class="btn btn-default modalDetailButton"
+                            data-tooltip="true"
+                            data-placement="top"
+                            title="Course details"
+                            data-toggle="modal"
+                            data-target="#courseDetails"
+                            data-title="@item.course.title"
+                            data-descr="@item.course.description"
+                            data-id="@item.course.id">
                         <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
-                        Details
-                    </a>
+                    </button>
                 </div>
             </td>
         </tr>
@@ -44,8 +52,153 @@
     </tbody>
 </table>
 
+<!-- Course Detail Modal -->
+<div class="modal fade" id="courseDetails" tabindex="-1" role="dialog" aria-labelledby="courseDetailsLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="courseTitle"></h4>
+            </div>
+            <div class="modal-body">
+                <dt>
+                    Description
+                </dt>
+                <dd id="courseDescription"></dd>
+            </div>
 
-@section scripts
-{
+            @foreach (var m in Model)
+            {
+                <div id="@m.course.id">
+                    <div class="panel-group" id="@string.Format("accordion{0}", @m.course.id)" role="tablist" aria-multiselectable="true">
+
+                        <!-- accordion Assignments start -->
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="assignments">
+                                <h4 class="panel-title">
+                                    <a role="button" data-toggle="collapse" data-parent="@string.Format("#accordion{0}", @m.course.id)" href="@string.Format("#collapseAssignments{0}", m.course.id)" aria-expanded="true" aria-controls="@string.Format("collapseAssignments{0}", m.course.id)">
+                                        Assignments
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="@string.Format("collapseAssignments{0}", m.course.id)" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="assignment">
+                                <div class="panel-body">
+
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    @Html.Label("Title", htmlAttributes: new { @class = "control-label col-md-2" })
+                                                </th>
+                                                <th>
+                                                    @Html.Label("Description", htmlAttributes: new { @class = "control-label col-md-2" })
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        @foreach (var ass in m.assignmentList)
+                                        {
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => ass.title)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => ass.description)
+                                                    </td>
+                                                    <td>
+                                                        <div class="btn-group btn-group-sm" role="group" aria-label="...">
+                                                            <a href="@Url.Action("Details", "Assignment", new {id = ass.id})"
+                                                               class="btn btn-default"
+                                                               data-tooltip="true"
+                                                               data-placement="top"
+                                                               title="Assignment details">
+                                                                <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                                                            </a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        }
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- accordion Assignments end -->
+                        <!-- accordion Student list start -->
+
+
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="students">
+                                <h4 class="panel-title">
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="@string.Format("#accordion{0}", @m.course.id)" href="@string.Format("#collapseStudents{0}", @m.course.id)" aria-expanded="false" aria-controls="@string.Format("collapseStudents{0}", @m.course.id)">
+                                        Student List
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id=@string.Format("collapseStudents{0}", @m.course.id) class="panel-collapse collapse" role="tabpanel" aria-labelledby="students">
+                                <div class="panel-body">
+
+
+                                    <table class="table">
+                                        <tr>
+                                            <th>
+                                                @Html.Label("User Name", htmlAttributes: new { @class = "control-label col-md-2" })
+                                            </th>
+                                            <th>
+                                                @Html.Label("Email", htmlAttributes: new { @class = "control-label col-md-2" })
+                                            </th>
+                                            <th></th>
+                                        </tr>
+                                        @foreach (var student in m.studentList)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => student.userModel.userName)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => student.userModel.email)
+                                                </td>
+                                                <td>
+                                                    <div class="btn-group btn-group-sm" role="group" aria-label="...">
+                                                        <a href="@Url.Action("Details", "User", new {userName = student.userModel.userName})"
+                                                           class="btn btn-default"
+                                                           data-tooltip="true"
+                                                           data-placement="top"
+                                                           title="User details">
+                                                            <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- accordion Student list end -->
+                    </div>
+                </div>
+            }
+
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+ @section scripts
+ {
+    @Scripts.Render("~/Scripts/CourseDetailModal.js")
+    @Scripts.Render("~/Scripts/CourseDeleteModal.js")
+    @Scripts.Render("~/Scripts/CourseEditModal.js")
     @Scripts.Render("~/Scripts/renderTooltips.js")
-}
+ }

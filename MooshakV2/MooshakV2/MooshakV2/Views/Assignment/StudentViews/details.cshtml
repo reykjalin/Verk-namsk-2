@@ -10,7 +10,7 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            Title
+            @Html.DisplayNameFor(m => m.title)
         </dt>
 
         <dd>
@@ -18,7 +18,7 @@
         </dd>
 
         <dt>
-            Description
+            @Html.DisplayNameFor(m => m.description)
         </dt>
 
         <dd>
@@ -26,15 +26,15 @@
         </dd>
 
         <dt>
-            Weight
+            @Html.DisplayNameFor(m => m.weight)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.weight)%
+            @Html.DisplayFor(model => model.weight)
         </dd>
 
         <dt>
-            Course
+            @Html.DisplayNameFor(m => m.courseId)
         </dt>
 
         <dd>
@@ -44,12 +44,15 @@
         <dt>
 
         </dt>
-        <dd>
-            <br />
-            <a href="@Url.Action("Index")" class="btn btn-default">
-                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                Back to List
-            </a>
-        </dd>
     </dl>
+</div>
+
+<div class="btn-group btn-group-sm" role="group" aria-label="...">
+    <a href="@Url.Action("Index", new { id = Model.id })"
+       class="btn btn-default"
+       data-tooltip="true"
+       data-placement="top"
+       title="Back to list">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+    </a>
 </div>

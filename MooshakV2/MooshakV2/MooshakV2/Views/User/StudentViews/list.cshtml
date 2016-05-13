@@ -1,0 +1,132 @@
+﻿@model IEnumerable<MooshakV2.ViewModels.UserDetailViewModel>
+
+@{
+    ViewBag.Title = "User List";
+}
+
+<h2>User List</h2>
+
+@using (Html.BeginForm("List", "User", FormMethod.Get, new { @class= "form-inline" }))
+{
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search..." id="search" name="search"/>
+            <span class="input-group-btn">
+                <button type="submit" class="btn btn-default">
+                    <span class="glyphicon glyphicon-search"></span>
+                </button>
+            </span>
+        </div>
+    
+}
+
+<br/>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(m => m.name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.userModel.userName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.userModel.email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.userModel.roleName)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(m => item.name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.userModel.userName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.userModel.email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.userModel.roleName)
+            </td>
+            <td>
+                <div class="btn-group btn-group-sm" role="group" aria-label="...">
+                    <button type="button"
+                            class="btn btn-default modalDetailButton"
+                            data-tooltip="true"
+                            data-placement="top"
+                            title="User details"
+                            data-toggle="modal"
+                            data-target="#userDetails"
+                            data-name="@item.name"
+                            data-uname="@item.userModel.userName"
+                            data-email="@item.userModel.email"
+                            data-ssn="@item.ssn"
+                            data-role="@item.userModel.roleName">
+                        <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                    </button>
+                </div>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+
+
+
+<!-- User Detail Modal -->
+<div class="modal fade" id="userDetails" tabindex="-1" role="dialog" aria-labelledby="userDetailsLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="userDetailsLabel"></h4>
+            </div>
+            <div class="modal-body">
+                <dt>
+                    User Name
+                </dt>
+                <dd id="userName"></dd>
+
+                <dt>
+                    Email
+                </dt>
+                <dd id="email"></dd>
+
+                <dt>
+                    SSN
+                </dt>
+                <dd id="ssn_detail"></dd>
+
+                <dt>
+                    Role
+                </dt>
+                <dd id="role"></dd>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+@section scripts
+{
+    @Scripts.Render("~/Scripts/renderTooltips.js")
+    @Scripts.Render("~/Scripts/UserDeleteModal.js")
+    @Scripts.Render("~/Scripts/UserDetailModal.js")
+    @Scripts.Render("~/Scripts/noScrollBar.js")
+}
+
