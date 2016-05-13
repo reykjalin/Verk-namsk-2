@@ -7,8 +7,10 @@ using system.Data.Entity;
 using MooshakV2.Models;
 using MooshakV2.Models.entities;
 
+
 namespace MooshakV2.Tests
 {
+    InMemoryDbSet _db = new InMemoryDbSet();
     class MockDataContext : DatabaseDataContext
     {
         /// <summary>
@@ -20,7 +22,7 @@ namespace MooshakV2.Tests
             Connections = new InMemoryDbSet<Connection>();
         }
 
-        public IDbSet<Connection> FriendConnections { get; set; }
+        public IDbSet<Connection> Connections { get; set; }
         // TODO: bætið við fleiri færslum hér
         // eftir því sem þeim fjölgar í AppDataContext klasanum ykkar!
 
