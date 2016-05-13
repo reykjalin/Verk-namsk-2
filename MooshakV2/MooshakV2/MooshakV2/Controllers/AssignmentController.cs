@@ -248,7 +248,7 @@ namespace MooshakV2.Controllers
                 var fileExtension = Path.GetExtension(theFile.file.FileName);
                 if(fileExtension != ".cpp")
                 {
-                    return View("Error");
+                    return RedirectToAction("list");
                 }
                 var fileName = id.ToString() + fileExtension;
 

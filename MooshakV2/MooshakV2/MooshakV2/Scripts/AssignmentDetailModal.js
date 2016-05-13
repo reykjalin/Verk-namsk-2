@@ -25,10 +25,10 @@ $("button.modalSubmitButton").on('click', function () {
 });
 
 
-//$("#handinButton").click(function () {
-//    var fileName = $("#file").val();
-//    if (fileName.lastIndexOf("cpp") === fileName.length - 3)
-//        alert("The file " + fileName + " whas successfully handed in");
-//    else
-//        alert("The file " + fileName + " is not a valid file to hand in,\n Please choose a valid file name");
-//})
+$("#handinButton").click(function () {
+    var fileName = $("#file").val();
+    if (fileName.lastIndexOf("cpp") === fileName.length - 3)
+        alert("The file " + fileName + " whas successfully handed in");
+    else
+        alert("The file " + fileName + " is not a valid file type,\n Please choose a valid file");
+})
