@@ -1,17 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using system.Data.Entity;
+﻿using System.Data.Entity;
 using MooshakV2.Models;
-using MooshakV2.Models.entities;
 
-
-namespace MooshakV2.Tests
+namespace SozialWeb.Tests
 {
-    InMemoryDbSet _db = new InMemoryDbSet();
-    class MockDataContext : DatabaseDataContext
+    class MockDataContext : IAppDataContext
     {
         /// <summary>
         /// Sets up the fake database.
@@ -19,10 +11,10 @@ namespace MooshakV2.Tests
         public MockDataContext()
         {
             // We're setting our DbSets to be InMemoryDbSets rather than using SQL Server.
-            Connections = new InMemoryDbSet<Connection>();
+            FriendConnections = new InMemoryDbSet<FriendConnection>();
         }
 
-        public IDbSet<Connection> Connections { get; set; }
+        public IDbSet<FriendConnection> FriendConnections { get; set; }
         // TODO: bætið við fleiri færslum hér
         // eftir því sem þeim fjölgar í AppDataContext klasanum ykkar!
 
@@ -33,6 +25,7 @@ namespace MooshakV2.Tests
 
             return changes;
         }
+
         public void Dispose()
         {
             // Do nothing!

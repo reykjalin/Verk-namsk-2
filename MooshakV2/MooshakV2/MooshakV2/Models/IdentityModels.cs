@@ -18,8 +18,22 @@ namespace MooshakV2.Models
         }
     }
 
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    public interface IAppDataContext
     {
+        IDbSet<FriendConnection> FriendConnections { get; set;  }
+        /// <summary>
+        /// svona liek meirar heeer
+        /// </summary>
+        /// <returns></returns>
+        int SaveChanges();
+    }
+
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IAppDataContext
+    {
+        public IDbSet<FriendConnection> FriendConnections { get; set; }
+        /// <summary>
+        /// asdasd meira
+        /// </summary>
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
