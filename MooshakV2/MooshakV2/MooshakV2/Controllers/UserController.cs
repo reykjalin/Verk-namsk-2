@@ -13,12 +13,24 @@ namespace MooshakV2.Controllers
     public class UserController : Controller
     {
         private UserService service;
+
+        /// <summary>
+        /// Constructor, initializes the user service object.
+        /// </summary>
         public UserController() { service = new UserService(); }
 
+        /// <summary>
+        /// Redirects to the List view, making the list view the default course view
+        /// </summary>
+        /// <returns>List view</returns>
         [HttpGet]
         [Authorize(Roles = "Admin")]
         public ActionResult index() { return RedirectToAction("List"); }
 
+        /// <summary>
+        /// Show the create view, GET
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Authorize(Roles = "Admin")]
         public ActionResult create()
@@ -27,14 +39,21 @@ namespace MooshakV2.Controllers
             return RedirectToAction("Register", "Account");
         }
 
+        /// <summary>
+        /// Show the edit view, GET
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
         [HttpGet]
         [Authorize(Roles = "Admin")]
         public ActionResult edit(string userName)
         {
             if(!userName.IsEmpty())
             {
+                // userManager used to get user role information
                 var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
                 var model = new UserDetailViewModel();
+                // Get user info
                 model = service.getUserByUserName(userName, userManager);
                 if(model != null)
                 {
@@ -45,6 +64,11 @@ namespace MooshakV2.Controllers
             return View("Error");
         }
 
+        /// <summary>
+        /// Edit POST method. Shows the edit view with errors if editing fails
+        /// </summary>
+        /// <param name="changedUser"></param>
+        /// <returns></returns>
         [HttpPost]
         [Authorize(Roles = "Admin")]
         public ActionResult edit(UserDetailViewModel changedUser)
@@ -59,12 +83,18 @@ namespace MooshakV2.Controllers
             return View(changedUser);
         }
 
+        /// <summary>
+        /// Returns the list view, GET
+        /// </summary>
+        /// <param name="search"></param>
+        /// <returns></returns>
         [HttpGet]
         [Authorize(Roles = "Admin")]
         public ActionResult list(string search)
         {
             var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
             var model = new List<UserDetailViewModel>();
+            // Decide what user list to show depending on what the search query is
             if(search == null)
                 model = service.getAllUsers(userManager);
             else
@@ -72,6 +102,11 @@ namespace MooshakV2.Controllers
             return View(model);
         }
 
+        /// <summary>
+        /// Returns the details view, GET. Now obselete after adding modal windows
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
         [HttpGet]
         [Authorize]
         public ActionResult details(string userName)
@@ -79,6 +114,7 @@ namespace MooshakV2.Controllers
             if(!userName.IsEmpty())
             {
                 var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                // Get user info
                 var model = service.getUserByUserName(userName, userManager);
                 if(model != null)
                 {
@@ -90,6 +126,11 @@ namespace MooshakV2.Controllers
             return View("Error");
         }
 
+        /// <summary>
+        /// Shows the delete view, GET. Shows a confirmation window before deleting a course.
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
         [HttpGet]
         [Authorize(Roles = "Admin")]
         public ActionResult delete(string userName)
@@ -97,6 +138,7 @@ namespace MooshakV2.Controllers
             if(!userName.IsEmpty())
             {
                 var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                // Get user info
                 var model = service.getUserByUserName(userName, userManager);
                 if(model != null)
                     return View(model);
@@ -104,6 +146,11 @@ namespace MooshakV2.Controllers
             return View("Error");
         }
 
+        /// <summary>
+        /// Delete course, POST. Shows error view if it fails
+        /// </summary>
+        /// <param name="toRemove"></param>
+        /// <returns></returns>
         [HttpPost]
         [Authorize(Roles = "Admin")]
         public ActionResult delete(UserDetailViewModel toRemove)
@@ -117,9 +164,12 @@ namespace MooshakV2.Controllers
             return View("Error");
         }
 
+        /// <summary>
+        /// Prepares drop down ViewData for views.
+        /// </summary>
         private void prepareDropDown()
         {
-            // Búa til drop-down lista með role-um fyrir edit view
+            // Get drop down data with role info for edit and create views
             var roleList = service.getRoles();
             List<SelectListItem> roleDropDown = new List<SelectListItem>();
 

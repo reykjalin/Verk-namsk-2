@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MooshakV2.ViewModels.CourseViewModel>
+﻿@model IEnumerable<MooshakV2.ViewModels.CourseDetailViewModel>
 
 @{
     ViewBag.Title = "List";
@@ -7,39 +7,41 @@
 <h2>Courses</h2>
 
 <table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(m => m.title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(m => m.description)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.description)
-        </td>
-        <td>
-            <div class="btn-group btn-group-sm" role="group" aria-label="...">
-                <a href="@Url.Action("Details", new {id = item.id})" 
-                   class="btn btn-default"
-                   data-tooltip="true"
-                   data-placement="top"
-                   title="Course details">
-                    <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
-                    Details
-                </a>
-            </div>
-        </td>
-    </tr>
-}
-
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(m => m.course.title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(m => m.course.description)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.course.title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.course.description)
+            </td>
+            <td>
+                <div class="btn-group btn-group-sm" role="group" aria-label="...">
+                    <a href="@Url.Action("Details", new {id=item.course.id})"
+                       class="btn btn-default"
+                       data-tooltip="true"
+                       data-placement="top"
+                       title="Course details">
+                        <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                        Details
+                    </a>
+                </div>
+            </td>
+        </tr>
+        }
+    </tbody>
 </table>
 
 

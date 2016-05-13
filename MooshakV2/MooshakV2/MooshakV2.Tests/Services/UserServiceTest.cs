@@ -1,8 +1,9 @@
-﻿/*using System;
+﻿using System;
+using System.Web;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MooshakV2.Services;
 using MooshakV2.Tests;
-using MooshakV2.Models.entities;
+using MooshakV2.Models;
 
 namespace MooshakV2.Tests.Services
 {
@@ -13,7 +14,7 @@ namespace MooshakV2.Tests.Services
         [TestInitialize]
         public void Initialize()
         {
-            var mockDb = new MockDataContext
+            var mockDb = new MockDataContext();
             _service = new UserService();
 
         }
@@ -25,7 +26,8 @@ namespace MooshakV2.Tests.Services
             var service = new UserService();
 
             //Act:
-            var result = _service.getAllUsers(user);
+            //var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            //var result = _service.getAllUsers(userManager);
 
             //Assert:
             Assert.IsNotNull(user);
