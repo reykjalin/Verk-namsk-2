@@ -6,15 +6,21 @@
 
 <h2>History</h2>
 
-@using (Html.BeginForm("List", "User", FormMethod.Get, new { @class = "form-inline" }))
-{
-    <div class="input-group">
+<div class="row">
+    <div class="col-md-8">
         <a href="@Url.Action("List")" class="btn btn-default" data-tooltip="true" data-placement="right" title="Go back to Assignments">
             <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
         </a>
-
     </div>
-}
+    <div class="col-md-4 right">
+        @using (Html.BeginForm("showSubmissionsFromAssignment", "Assignment", FormMethod.Get, new { @class = "form-inline" }))
+        {
+            @Html.DropDownList("id", ViewData["Assignmentlist"] as IEnumerable<SelectListItem>
+            , new { @class = "form-control" })
+            <input type="submit" value="Filter" class="btn btn-default" />
+        }
+    </div>
+</div>
 
 <br />
 

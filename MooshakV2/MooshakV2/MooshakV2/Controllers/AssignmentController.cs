@@ -76,12 +76,26 @@ namespace MooshakV2.Controllers
             {
                 prepareDropdown();
                 if (User.IsInRole("Student"))
+                {
                     return View("StudentViews/list", model);
-
-
+                }
                 return View("AdminTeacherViews/list", model);
             }
             return RedirectToAction("List");
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Admin, Teacher")]
+        public ActionResult showSubmissionsFromAssignment(string id)
+        {
+            int courseId = Convert.ToInt32(id);
+            var model = submissionService.getAllSubmissionsFromAssignment(courseId);
+            if (model != null)
+            {
+                prepareAssignmentDropdown();
+                return View("history", model);
+            }
+            return View("history");
         }
 
         //Change assignment
@@ -168,9 +182,24 @@ namespace MooshakV2.Controllers
             List<SelectListItem> courseDropDown = new List<SelectListItem>();
 
             foreach (var item in courseList)
+            {
                 courseDropDown.Add(new SelectListItem { Text = item.title, Value = item.id.ToString() });
+            }
 
             ViewData["Courselist"] = courseDropDown;
+        }
+
+        private void prepareAssignmentDropdown()
+        {
+            var assignmentList = service.getAllAssignments();
+            List<SelectListItem> assignmentDropDown = new List<SelectListItem>();
+
+            foreach (var item in assignmentList)
+            {
+                assignmentDropDown.Add(new SelectListItem { Text = item.title, Value = item.id.ToString() });
+            }
+
+            ViewData["Assignmentlist"] = assignmentDropDown;
         }
 
         [HttpGet]
@@ -250,6 +279,7 @@ namespace MooshakV2.Controllers
         [Authorize(Roles = "Admin, Teacher")]
         public ActionResult history()
         {
+            prepareAssignmentDropdown();
             var model = submissionService.getAllSubmissions();
 
             return View("history", model);

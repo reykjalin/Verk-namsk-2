@@ -39,7 +39,37 @@ namespace MooshakV2.Services
             }
             return submissionModelList;
         }
-        
+
+        public List<SubmissionViewModel> getAllSubmissionsFromAssignment(int assignmentId)
+        {
+            var submissionEntities = (from subs in contextDb.submissions
+                                      where assignmentId == subs.assignmentId
+                                      select subs).ToList();
+
+            var submissionList = new List<SubmissionViewModel>();
+            
+            foreach (var item in submissionEntities)
+            {
+                var submission = new SubmissionViewModel();
+
+                submission.assignmentId = item.assignmentId;
+                submission.count = item.count;
+                submission.date = item.date;
+                submission.filename = item.filename;
+                submission.id = item.Id;
+                submission.mime = item.mime;
+                submission.partId = item.partId;
+                submission.success = item.success;
+                submission.userId = item.userId;
+
+                submissionList.Add(submission);
+
+            }
+
+            return submissionList;
+        }
+
+
         public bool addSubmission(SubmissionViewModel newSubmissionModel)
         {
             Submission newSubmission = new Submission();
