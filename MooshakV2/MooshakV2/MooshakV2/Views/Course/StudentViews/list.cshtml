@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MooshakV2.ViewModels.CourseViewModel>
+﻿@model IEnumerable<MooshakV2.ViewModels.CourseDetailViewModel>
 
 @{
     ViewBag.Title = "List";
@@ -10,10 +10,10 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(m => m.title)
+                @Html.DisplayNameFor(m => m.course.title)
             </th>
             <th>
-                @Html.DisplayNameFor(m => m.description)
+                @Html.DisplayNameFor(m => m.course.description)
             </th>
             <th></th>
         </tr>
@@ -22,14 +22,14 @@
         @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.title)
+                @Html.DisplayFor(modelItem => item.course.title)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.description)
+                @Html.DisplayFor(modelItem => item.course.description)
             </td>
             <td>
                 <div class="btn-group btn-group-sm" role="group" aria-label="...">
-                    <a href="@Url.Action(" Details", new {id=item.id})"
+                    <a href="@Url.Action("Details", new {id=item.course.id})"
                        class="btn btn-default"
                        data-tooltip="true"
                        data-placement="top"

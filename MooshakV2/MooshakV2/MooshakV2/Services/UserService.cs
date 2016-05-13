@@ -106,25 +106,38 @@ namespace MooshakV2.Services
         public List<UserDetailViewModel> getUsersInCourse(int courseId, ApplicationUserManager userManager)
         {
             var userEntityList = (from u in contextDb.aspNetUsers
-                                  join s in contextDb.courseStudents on u.UserName equals s.userId
+                                  join s in contextDb.courseStudents on u.Id equals s.userId
                                   where s.courseId == courseId 
                                   select u).ToList();
-            var userDetialEntityList = (from u in contextDb.userDetails
+            var userDetailEntityList = (from u in contextDb.userDetails
                                         join s in contextDb.courseStudents on u.userId equals s.userId
                                         where s.courseId == courseId
                                         select u).ToList();
+            // Something went wrong if lists aren't the same size
+            if(userEntityList.Count != userDetailEntityList.Count)
+                return null;
             // Breyta entity listum í einn UserDetailViewModel lista
             var userList = new List<UserDetailViewModel>();
-            foreach(var user in userEntityList)
+            for(int i = 0; i < userEntityList.Count; i++)
             {
                 // Breyta í viewmodel og bæta við lista
                 var newUser = new UserDetailViewModel();
-                // ...
-                // ...
+                newUser.name = userDetailEntityList[i].name;
+                newUser.ssn = userDetailEntityList[i].ssn;
+                newUser.userModel = userEntityToModel(userEntityList[i], userManager);
                 userList.Add(newUser);
             }
 
             return userList;
+        }
+
+        private UserViewModel userEntityToModel(AspNetUser user, ApplicationUserManager userManager)
+        {
+            var model = new UserViewModel();
+            model.userName = user.UserName;
+            model.email = user.Email;
+            model.roleName = userManager.GetRoles(user.Id).SingleOrDefault();
+            return model;
         }
 
         public bool changeUser(UserDetailViewModel newUserInfo, ApplicationUserManager userManager)
