@@ -1,4 +1,4 @@
-﻿@model MooshakV2.ViewModels.CourseViewModel
+﻿@model MooshakV2.ViewModels.CourseDetailViewModel
 
 
 @using (Html.BeginForm())
@@ -8,21 +8,21 @@
     <div class="form-horizontal">
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.id)
+        @Html.HiddenFor(model => model.course.id)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.title, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.course.title, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.title, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.title, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.course.title, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.course.title, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.description, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.course.description, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.TextAreaFor(model => model.description, new { @class = "form-control", @rows = "6"})
-                @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
+                @Html.TextAreaFor(model => model.course.description, new { @class = "form-control", @rows = "6"})
+                @Html.ValidationMessageFor(model => model.course.description, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -49,3 +49,77 @@
         </div>
     </div>
 }
+
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+    Launch demo modal
+</button>
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Add Students</h4>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("Edit", "Course", FormMethod.Get, new { @id="userSearch" }))
+                {
+                    <div class="input-group">
+                        @Html.Label("Find user", htmlAttributes: new { @class = "control-label col-md-3" })
+                        <input type="text" class="form-control" placeholder="Search..." id="query" name="query" />
+                        <span class="input-group-btn">
+                            <button type="submit" class="btn btn-default">
+                                <span class="glyphicon glyphicon-search"></span>
+                            </button>
+                        </span>
+                    </div>
+                }
+                <br/>
+                <div>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>@Html.Label("Name")</th>
+                            <th>@Html.Label("User Name")</th>
+                            <th>@Html.Label("Email")</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @using (Html.BeginForm("addUser", "Course", FormMethod.Post, htmlAttributes: new { @id="addUser" }))
+                        {
+                            foreach(var student in Model.studentList)
+                            {
+                                 <tr>
+                                     <td>@student.name</td>
+                                     <td>@student.userModel.userName</td>
+                                     <td><a href="mailto:@student.userModel.email">@student.userModel.email</a></td>
+                                     <td><button type="submit"
+                                                 class="btn btn-default"
+                                                 data-uname="@student.userModel.userName"
+                                                 data-email="@student.userModel.email"
+                                                 data-role="@student.userModel.roleName">
+                                         <span class="glyphicon glyphicon-plus"></span>
+                                     </button></td>
+                                 </tr>
+                             }
+                            <input type="hidden" id="userName" val=""/>
+                            <input type="hidden" id="email" val=""/>
+                            <input type="hidden" id="roleName" val=""/>
+                        }
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>

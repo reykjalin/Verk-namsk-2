@@ -30,7 +30,6 @@ namespace MooshakV2.DAL
         public int success { get; set; }
 
         public int count { get; set; }
-        //public virtual AspNetUser AspNetUser { get; set; }
 
         public virtual Assignment Assignment { get; set; }
 

@@ -45,7 +45,7 @@ td {
     max-width: 350px;
 }
 
-#search
+#search, #query
 {
     float: right;
     display:inline;
@@ -57,3 +57,11 @@ td {
 {
     display:inline;
 }
+
+#file
+{
+    border: 1px solid #ccc;
+    
+    cursor: pointer;
+}
+

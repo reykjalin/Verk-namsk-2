@@ -103,6 +103,30 @@ namespace MooshakV2.Services
             return null;
         }
 
+        public List<UserDetailViewModel> getUsersInCourse(int courseId, ApplicationUserManager userManager)
+        {
+            var userEntityList = (from u in contextDb.aspNetUsers
+                                  join s in contextDb.courseStudents on u.UserName equals s.userId
+                                  where s.courseId == courseId 
+                                  select u).ToList();
+            var userDetialEntityList = (from u in contextDb.userDetails
+                                        join s in contextDb.courseStudents on u.userId equals s.userId
+                                        where s.courseId == courseId
+                                        select u).ToList();
+            // Breyta entity listum í einn UserDetailViewModel lista
+            var userList = new List<UserDetailViewModel>();
+            foreach(var user in userEntityList)
+            {
+                // Breyta í viewmodel og bæta við lista
+                var newUser = new UserDetailViewModel();
+                // ...
+                // ...
+                userList.Add(newUser);
+            }
+
+            return userList;
+        }
+
         public bool changeUser(UserDetailViewModel newUserInfo, ApplicationUserManager userManager)
         {
             // TODO: Maybe change to use userId. Add userId to UserViewModel
