@@ -27,6 +27,18 @@ namespace MooshakV2.ViewModels
         [Required(ErrorMessage="You have to select course!")]
         public int courseId { get; set; }
 
+        [Display(Name = "Input")]
+        [Required(ErrorMessage = "There must be an input!")]
+        public string input { get; set; }
+
+        [Display(Name = "Output")]
+        [Required(ErrorMessage = "There must be an output!")]
+        public string output { get; set; }
+
+        [Display(Name = "Date and Time")]
+        [Required(ErrorMessage = "There must be a final submission date and time")]
+        public DateTime? date { get; set; }
+
         public List<AssignmentPartViewModel> assignmentParts
         {
             get

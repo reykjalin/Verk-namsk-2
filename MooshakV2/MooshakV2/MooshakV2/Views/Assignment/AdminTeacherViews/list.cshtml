@@ -88,7 +88,7 @@
                     <button type="button"
                             class="btn btn-default modalDeleteButton"
                             data-tooltip="true"
-                            data-placement="right"
+                            data-placement="top"
                             title="Delete assignment"
                             data-toggle="modal"
                             data-target="#deleteAssignment"
@@ -102,7 +102,7 @@
                     <button type="button"
                             class="btn btn-default"
                             data-tooltip="true"
-                            data-placement="top"
+                            data-placement="right"
                             title="Assignment hand in"
                             data-toggle="modal"
                             data-target="#handin">
@@ -209,19 +209,26 @@
                         <td>File:</td>
                         <td><input type="file" name="file" id="file" /></td>
                     </tr>
+                    <tr><td>&nbsp;</td></tr>
                     <tr>
                         <td>&nbsp;</td>
-                        <td><input type="submit" name="submit" value="Hand in" /></td>
+                        <td>
+                            <button type="submit" name="submit" value="Hand in" class="btn btn-success">
+                                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                                Hand in
+                            </button>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">
+                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                Close
+                            </button>
+                        </td>
                     </tr>
                 </table>
                }
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">
-                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                    Close
-                </button>
+                
             </div>
         </div>
     </div>
