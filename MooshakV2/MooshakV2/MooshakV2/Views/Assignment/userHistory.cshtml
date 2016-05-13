@@ -48,37 +48,38 @@
         </td>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.id)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.userName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.course)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.assignment)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.assignmentPart)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.success)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.count)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.filename)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.date)
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.userName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.course)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.assignment)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.assignmentPart)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.success)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.count)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.filename)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.date)
+            </td>
+        </tr>
+    }
 
 </table>
 

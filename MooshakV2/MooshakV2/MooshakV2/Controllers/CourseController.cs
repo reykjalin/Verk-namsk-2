@@ -204,8 +204,23 @@ namespace MooshakV2.Controllers
         [Authorize(Roles = "Admin, Teacher, Student")]
         public ActionResult list()
         {
+            var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
             // Fá lista af öllum Courses og birta hann.
-            var model = service.getAllCourses();
+            var model = new List<CourseDetailViewModel>();
+            var courses = service.getAllCourses();
+            foreach(var course in courses)
+            {
+                var courseDetail = new CourseDetailViewModel();
+                courseDetail.course = course;
+                courseDetail.studentList = userService.getUsersInCourse(course.id, userManager);
+                courseDetail.assignmentList = assService.getAllAssignmentsInCourse(course.id);
+                if(courseDetail.studentList == null)
+                    courseDetail.studentList = new List<UserDetailViewModel>();
+                if(courseDetail.assignmentList == null)
+                    courseDetail.assignmentList = new List<AssignmentViewModel>();
+
+                model.Add(courseDetail);
+            }
             if(User.IsInRole("Student"))
                 return View("StudentViews/list", model);
           

@@ -78,6 +78,7 @@
             });
         } // Submit assignment
         else if (button.attr('id') == 'assBut') {
+            data.preventDefault();
             console.log('assBut');
             var model = createModel();
             console.log(model);
