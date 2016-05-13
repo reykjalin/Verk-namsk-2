@@ -67,6 +67,9 @@ namespace MooshakV2.Services
             newAssignment.description = newAssignmentModel.description;
             newAssignment.weight = newAssignmentModel.weight;
             newAssignment.courseId = newAssignmentModel.courseId;
+            newAssignment.input = newAssignmentModel.input;
+            newAssignment.output = newAssignmentModel.output;
+            newAssignment.handInDate = newAssignmentModel.date;
 
             contextDb.assignments.Add(newAssignment);
             contextDb.SaveChanges();
@@ -119,6 +122,10 @@ namespace MooshakV2.Services
             model.weight = assignment.weight;
             model.id = assignment.id;
             model.courseId = assignment.courseId;
+            model.input = assignment.input;
+            model.output = assignment.output;
+            model.date = assignment.handInDate;
+
             // Convert parts (List<AssignmentPart>) to list of partmodels (List<AssignmentPartViewModel>)
             var partList = (from p in parts
                             select partToPartViewModel(p)).ToList();
@@ -152,6 +159,9 @@ namespace MooshakV2.Services
                     oldAssignment.weight = newData.weight;
                     oldAssignment.id = newData.id;
                     oldAssignment.courseId = newData.courseId;
+                    oldAssignment.input = newData.input;
+                    oldAssignment.output = newData.output;
+                    oldAssignment.handInDate = newData.date;
 
                     contextDb.SaveChanges();
                     foreach(var part in newData.assignmentParts)
