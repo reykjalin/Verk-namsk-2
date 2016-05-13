@@ -75,7 +75,8 @@ namespace MooshakV2.Services
                 viewModel.count = submission.count;
                 viewModel.filename = submission.filename;
                 viewModel.date = submission.date;
-                
+
+                viewModel.assignmentId = submission.assignmentId;
                
                 historyModelList.Add(viewModel);
             }

@@ -18,6 +18,8 @@ namespace MooshakV2.ViewModels
 
         public string assignmentPart { get; set; }
 
+        public int assignmentId { get; set; }
+
         public int success { get; set; }
 
         public int count { get; set; }

@@ -12,14 +12,6 @@
             <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
         </a>
     </div>
-    <div class="col-md-4 right">
-        @using (Html.BeginForm("showSubmissionsFromAssignment", "Assignment", FormMethod.Get, new { @class = "form-inline" }))
-        {
-            @Html.DropDownList("id", ViewData["Assignmentlist"] as IEnumerable<SelectListItem>
-            , new { @class = "form-control" })
-            <input type="submit" value="Filter" class="btn btn-default" />
-        }
-    </div>
 </div>
 
 <br />
