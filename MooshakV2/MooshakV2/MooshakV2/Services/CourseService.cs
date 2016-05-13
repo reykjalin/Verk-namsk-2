@@ -134,5 +134,25 @@ namespace MooshakV2.Services
             contextDb.SaveChanges();
             return true;
         }
+
+        public bool addUserToCourse(int courseId, UserViewModel user, ApplicationUserManager userManager)
+        {
+            var userEntity = (from u in contextDb.aspNetUsers
+                              where u.UserName == user.userName
+                              select u).SingleOrDefault();
+            var course = (from c in contextDb.courses
+                          where c.id == courseId
+                          select c).SingleOrDefault();
+            if(userEntity != null && course != null)
+            {
+                CourseStudent student = new CourseStudent();
+                student.courseId = courseId;
+                student.userId = userEntity.Id;
+                contextDb.courseStudents.Add(student);
+                contextDb.SaveChanges();
+                return true;
+            }
+            return false;
+        }
     }
 }

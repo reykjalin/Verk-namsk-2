@@ -36,7 +36,12 @@ namespace MooshakV2.Controllers
         [Authorize(Roles = "Admin, Teacher")]
         public ActionResult create()
         {
-            return View("AdminTeacherViews/create", new CourseViewModel());
+            var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            var model = new CourseDetailViewModel();
+            model.studentList = userService.getAllStudents(userManager);
+            model.taList = userService.getAllTAs(userManager);
+            model.teacherList = userService.getAllTeachers(userManager);
+            return View("AdminTeacherViews/create", model);
         }
 
         /// <summary>
@@ -46,15 +51,15 @@ namespace MooshakV2.Controllers
         /// <returns></returns>
         [HttpPost]
         [Authorize(Roles = "Admin, Teacher")]
-        public ActionResult create(CourseViewModel newCourse)
+        public ActionResult create(CourseDetailViewModel newCourse)
         {
             // TODO: Er meira elegant leið til að hundsa id validation?
             // Hunsa villur sem koma til vegna invalid id, DB sér um að generate-a id
-            //ModelState["id"].Errors.Clear();
+            ModelState["course.id"].Errors.Clear();
             if (ModelState.IsValid)
             {
                 // Bæta newCourse við DB ef input er valid
-                if (service.addCourse(newCourse))
+                if (service.addCourse(newCourse.course))
                     return RedirectToAction("List");
             }
             // Ef input er invalid, sýna sama view með villuskilaboðum
@@ -68,13 +73,22 @@ namespace MooshakV2.Controllers
         /// <returns></returns>
         [HttpGet]
         [Authorize(Roles = "Admin, Teacher")]
-        public ActionResult edit(int? id)
+        public ActionResult edit(int? id, string query)
         {
             // Athuga hvort id sé null
             if (id.HasValue)
             {
-                // Sækja Course með ID 'id'
-                var model = service.getCourseById(id);
+                var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                var model = new CourseDetailViewModel();
+                model.course = service.getCourseById(id);
+                model.assignmentList = assService.getAllAssignmentsInCourse(id.Value);
+                model.taList = userService.getAllTAs(userManager);
+                model.teacherList = userService.getAllTeachers(userManager);
+
+                if (query == null)
+                    model.studentList = userService.getAllStudents(userManager);
+                else
+                    model.studentList = userService.searchForUser(query, userManager);
 
                 // Ef Course er til, senda model á View, annars error
                 if (model != null)
@@ -86,21 +100,21 @@ namespace MooshakV2.Controllers
         /// <summary>
         /// Breytir Course í gagnagrunni með sama ID og 'course' með uppfærðum gögnum úr 'course'
         /// </summary>
-        /// <param name="course"></param>
+        /// <param name="toEdit"></param>
         /// <returns></returns>
         [HttpPost]
         [Authorize(Roles = "Admin, Teacher")]
-        public ActionResult edit(CourseViewModel course)
+        public ActionResult edit(CourseDetailViewModel toEdit)
         {
             // Athuga hvort input sé valid
             if (ModelState.IsValid)
             {
                 // Uppfæra upplýsingar í course
-                if (service.updateCourse(course))
+                if (service.updateCourse(toEdit.course))
                     return RedirectToAction("List");
             }
             // Ef input ekki valid, sýna view aftur
-            return View("AdminTeacherViews/edit", course);
+            return View("AdminTeacherViews/edit", toEdit);
         }
 
         /// <summary>
@@ -196,6 +210,18 @@ namespace MooshakV2.Controllers
                 return View("StudentViews/list", model);
           
             return View("AdminTeacherViews/list", model);
+        }
+
+        [HttpPost]
+        public ActionResult addUser(int courseId, UserViewModel model)
+        {
+            var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            if(courseId > 0 && model != null)
+            {
+                if(service.addUserToCourse(courseId, model, userManager))
+                    return RedirectToAction("Edit", courseId);
+            }
+            return View("Error");
         }
 
 
