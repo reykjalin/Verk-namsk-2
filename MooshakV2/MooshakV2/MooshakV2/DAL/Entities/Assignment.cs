@@ -29,6 +29,10 @@ namespace MooshakV2.DAL
 
         public DateTime? handInDate { get; set; }
 
+        public string input { get; set; }
+
+        public string output { get; set; }
+
         public virtual Course Course { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
