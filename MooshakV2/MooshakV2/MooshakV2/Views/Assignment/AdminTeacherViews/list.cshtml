@@ -100,13 +100,15 @@
                         <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                     </button>
                     <button type="button"
-                            class="btn btn-default"
+                            class="btn btn-default modalSubmitButton"
                             data-tooltip="true"
-                            data-placement="right"
+                            data-placement="top"
                             title="Assignment hand in"
                             data-toggle="modal"
-                            data-target="#handin">
+                            data-target="#handin"
+                            data-assignmentID="@item.id">
                         <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+                        Hand in
                     </button>
                 </div>
             </td>
@@ -197,12 +199,12 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" >Hand in</h4>
+                <h4 class="modal-title">Hand in</h4>
             </div>
             <div class="modal-body">
-               @using (Html.BeginForm("uploadFile", "Assignment", FormMethod.Post, new { enctype = "multipart/form-data" }))
-               {
-
+                @using (Html.BeginForm("uploadFile", "Assignment", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                <input type="hidden" name="assignmentId" id="uploadId" />
                 @Html.ValidationSummary();
                 <table>
                     <tr>
@@ -213,7 +215,7 @@
                     <tr>
                         <td>&nbsp;</td>
                         <td>
-                            <button type="submit" name="submit" value="Hand in" class="btn btn-success">
+                            <button type="submit" name="submit" id="handinButton" value="Hand in" class="btn btn-success">
                                 <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                                 Hand in
                             </button>
@@ -224,15 +226,15 @@
                         </td>
                     </tr>
                 </table>
-               }
+                }
 
             </div>
             <div class="modal-footer">
-                
             </div>
         </div>
     </div>
 </div>
+
 
 @section scripts
 {
