@@ -7,65 +7,68 @@
 <h2>Assignments</h2>
 
 <table class="table table-hover">
-    <tr>
-        <th>
-            Title
-        </th>
-        <th>
-            Description
-        </th>
-        <th>
-            Weight
-        </th>
-        <th>
-            Deadline
-        </th>
-        <th></th>
-    </tr>
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.weight)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.date)
-        </td>
-        <td>
-            <button type="button"
-                    class="btn btn-default modalDetailButton"
-                    data-tooltip="true"
-                    data-placement="top"
-                    title="Assignment details"
-                    data-toggle="modal"
-                    data-target="#assignmentDetails"
-                    data-title="@item.title"
-                    data-descr="@item.description"
-                    data-weight="@item.weight"
-                    data-courseID="@item.courseId">
-                <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
-                Details
-            </button>
-            <button type="button"
-                    class="btn btn-default modalSubmitButton" 
-                    data-tooltip="true"
-                    data-placement="top"
-                    title="Assignment hand in"
-                    data-toggle="modal"
-                    data-target="#handin"
-                    data-assignmentID="@item.id">
-                <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
-                Hand in
-            </button>
-        </td>
-    </tr>
-}
-
+    <thead>
+        <tr>
+            <th>
+                Title
+            </th>
+            <th>
+                Description
+            </th>
+            <th>
+                Weight
+            </th>
+            <th>
+                Deadline
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.weight)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.date)
+            </td>
+            <td>
+                <button type="button"
+                        class="btn btn-default modalDetailButton"
+                        data-tooltip="true"
+                        data-placement="top"
+                        title="Assignment details"
+                        data-toggle="modal"
+                        data-target="#assignmentDetails"
+                        data-title="@item.title"
+                        data-descr="@item.description"
+                        data-weight="@item.weight"
+                        data-courseID="@item.courseId">
+                    <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                    Details
+                </button>
+                <button type="button"
+                        class="btn btn-default modalSubmitButton"
+                        data-tooltip="true"
+                        data-placement="top"
+                        title="Assignment hand in"
+                        data-toggle="modal"
+                        data-target="#handin"
+                        data-assignmentID="@item.id">
+                    <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+                    Hand in
+                </button>
+            </td>
+        </tr>
+        }
+    </tbody>
 </table>
 
 <!-- User Detail Modal -->

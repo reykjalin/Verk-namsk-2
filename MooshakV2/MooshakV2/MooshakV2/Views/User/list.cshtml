@@ -26,24 +26,26 @@
 <br/>
 
 <table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(m => m.name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.userModel.userName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.userModel.email)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.userModel.roleName)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach(var item in Model)
-    {
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(m => m.name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.userModel.userName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.userModel.email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.userModel.roleName)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var item in Model)
+        {
         <tr>
             <td>
                 @Html.DisplayFor(m => item.name)
@@ -59,7 +61,7 @@
             </td>
             <td>
                 <div class="btn-group btn-group-sm" role="group" aria-label="...">
-                    <a href="@Url.Action("Edit", new {userName = item.userModel.userName})"
+                    <a href="@Url.Action(" Edit", new {userName=item.userModel.userName})"
                        class="btn btn-default"
                        data-tooltip="true"
                        data-placement="left"
@@ -97,8 +99,8 @@
                 </div>
             </td>
         </tr>
-    }
-
+        }
+    </tbody>
 </table>
 
 
