@@ -3,6 +3,7 @@ using MooshakV2.Models;
 using MooshakV2.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 
@@ -37,26 +38,26 @@ namespace MooshakV2.Services
 
         public List<AssignmentViewModel> getAllAssignmentsInCourse(int courseId)
         {
-			var assignmentEntities = (from assignments in contextDb.assignments
-								  where courseId == assignments.courseId
-								  select assignments).ToList();
+            var assignmentEntities = (from assignments in contextDb.assignments
+                                      where courseId == assignments.courseId
+                                      select assignments).ToList();
 
-			var assignmentList = new List<AssignmentViewModel>();
+            var assignmentList = new List<AssignmentViewModel>();
 
-			foreach (var item in assignmentEntities)
-			{
-				var assignment = new AssignmentViewModel();
+            foreach (var item in assignmentEntities)
+            {
+                var assignment = new AssignmentViewModel();
 
-				assignment.title = item.title;
-				assignment.description = item.description;
-				assignment.id = item.id;
-				assignment.weight = item.weight;
-				assignment.courseId = item.courseId;
+                assignment.title = item.title;
+                assignment.description = item.description;
+                assignment.id = item.id;
+                assignment.weight = item.weight;
+                assignment.courseId = item.courseId;
 
-				assignmentList.Add(assignment);
-			}
+                assignmentList.Add(assignment);
+            }
 
-			return assignmentList;
+            return assignmentList;
         }
 
         public bool addAssignment(AssignmentViewModel newAssignmentModel)
@@ -66,6 +67,9 @@ namespace MooshakV2.Services
             newAssignment.description = newAssignmentModel.description;
             newAssignment.weight = newAssignmentModel.weight;
             newAssignment.courseId = newAssignmentModel.courseId;
+            newAssignment.input = newAssignmentModel.input;
+            newAssignment.output = newAssignmentModel.output;
+            newAssignment.handInDate = newAssignmentModel.date;
 
             contextDb.assignments.Add(newAssignment);
             contextDb.SaveChanges();
@@ -118,6 +122,10 @@ namespace MooshakV2.Services
             model.weight = assignment.weight;
             model.id = assignment.id;
             model.courseId = assignment.courseId;
+            model.input = assignment.input;
+            model.output = assignment.output;
+            model.date = assignment.handInDate;
+
             // Convert parts (List<AssignmentPart>) to list of partmodels (List<AssignmentPartViewModel>)
             var partList = (from p in parts
                             select partToPartViewModel(p)).ToList();
@@ -151,6 +159,9 @@ namespace MooshakV2.Services
                     oldAssignment.weight = newData.weight;
                     oldAssignment.id = newData.id;
                     oldAssignment.courseId = newData.courseId;
+                    oldAssignment.input = newData.input;
+                    oldAssignment.output = newData.output;
+                    oldAssignment.handInDate = newData.date;
 
                     contextDb.SaveChanges();
                     foreach(var part in newData.assignmentParts)
@@ -237,6 +248,43 @@ namespace MooshakV2.Services
                 return true;
             }
             return false;
+        }
+
+        public void submitFile(FileUploadViewModel aFile, string userId)
+        {
+            if (aFile != null)
+            {
+                var fileExtension = Path.GetExtension(aFile.file.FileName);
+                var fileContentType = aFile.file.ContentType;
+
+                Submission newSubmit = new Submission();
+                newSubmit.assignmentId = aFile.assignmentId.Value;
+                newSubmit.mime = fileContentType;
+                newSubmit.filename = aFile.file.FileName;
+                newSubmit.date = DateTime.Now;
+                newSubmit.userId = userId;
+                newSubmit.partId = 6;
+                newSubmit.success = aFile.success;
+                newSubmit.count = aFile.count;
+
+                var id = (from i in contextDb.submissions
+                                select i.Id).ToList();
+                if(id.Count > 0)
+                {
+                    newSubmit.Id = id.Max() + 1;
+                }
+                else
+                {
+                    newSubmit.Id = 1;
+                }
+
+
+                newSubmit = contextDb.submissions.Add(newSubmit);
+                contextDb.SaveChanges();
+
+                contextDb.Entry(newSubmit).State = System.Data.Entity.EntityState.Modified;
+                contextDb.SaveChanges();
+            }
         }
     }
 }

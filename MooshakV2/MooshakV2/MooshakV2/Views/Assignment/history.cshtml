@@ -1,0 +1,85 @@
+﻿@model IEnumerable<MooshakV2.ViewModels.SubmissionViewModel>
+
+@{
+    ViewBag.Title = "History";
+}
+
+<h2>History</h2>
+
+@using (Html.BeginForm("List", "User", FormMethod.Get, new { @class = "form-inline" }))
+{
+    <div class="input-group">
+        <a href="@Url.Action("List")" class="btn btn-default" data-tooltip="true" data-placement="right" title="Go back to Assignments">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        </a>
+
+    </div>
+}
+
+<br />
+
+
+<table class="table">
+    <tr>
+        <td>
+            ID
+        </td>
+        <td>
+            Course
+        </td>
+        <td>
+            Assignment
+        </td>
+        <td>
+            Assignment Part
+        </td>
+        <td>
+            Success
+        </td>
+        <td>
+            Count
+        </td>
+        <td>
+            Date
+        </td>
+        <td>
+            File Name
+        </td>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.id)
+        </td>
+        <td>
+            Siddi
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.assignmentId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.partId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.success)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.count)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.date)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.filename)
+        </td>
+    </tr>
+}
+
+</table>
+
+
+@section scripts
+{
+    @Scripts.Render("~/Scripts/renderTooltips.js")
+}

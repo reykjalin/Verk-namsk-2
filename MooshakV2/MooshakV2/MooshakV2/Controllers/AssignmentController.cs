@@ -1,4 +1,6 @@
-﻿using MooshakV2.Services;
+﻿using Microsoft.AspNet.Identity;
+using MooshakV2.DAL;
+using MooshakV2.Services;
 using MooshakV2.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -14,11 +16,15 @@ namespace MooshakV2.Controllers
     {
         private AssignmentService service;
         private CourseService courseService;
-             
+        private SubmissionService submissionService;
+        private DatabaseDataContext dbContext;
+
         public AssignmentController()
         {
             service = new AssignmentService();
             courseService = new CourseService();
+            submissionService = new SubmissionService();
+            dbContext = new DatabaseDataContext();
         }
 
         public ActionResult Index() { return RedirectToAction("List"); }
@@ -54,7 +60,7 @@ namespace MooshakV2.Controllers
         {
             prepareDropdown();
             var model = service.getAllAssignments();
-            if(User.IsInRole("Student"))
+            if (User.IsInRole("Student"))
                 return View("StudentViews/list", model);
 
             return View("AdminTeacherViews/list", model);
@@ -66,7 +72,8 @@ namespace MooshakV2.Controllers
         {
             int courseId = Convert.ToInt32(id);
             var model = service.getAllAssignmentsInCourse(courseId);
-            if(model != null) {
+            if (model != null)
+            {
                 prepareDropdown();
                 if (User.IsInRole("Student"))
                     return View("StudentViews/list", model);
@@ -91,7 +98,7 @@ namespace MooshakV2.Controllers
                     prepareDropdown();
                     return View("AdminTeacherViews/edit", model);
                 }
-            
+
             }
             return RedirectToAction("Error");
         }
@@ -115,7 +122,7 @@ namespace MooshakV2.Controllers
         [Authorize(Roles = "Admin, Teacher")]
         public ActionResult remove(int? id)
         {
-            if(id.HasValue)
+            if (id.HasValue)
             {
                 var toRemove = service.getAssignmentById(id);
                 if (toRemove != null)
@@ -123,6 +130,7 @@ namespace MooshakV2.Controllers
             }
             return RedirectToAction("Error");
         }
+
 
         [HttpPost]
         [Authorize(Roles = "Admin, Teacher")]
@@ -140,10 +148,10 @@ namespace MooshakV2.Controllers
         [Authorize]
         public ActionResult details(int? id)
         {
-            if(id.HasValue)
+            if (id.HasValue)
             {
                 var model = service.getAssignmentById(id);
-                if(User.IsInRole("Student"))
+                if (User.IsInRole("Student"))
                     return View("StudentViews/details", model);
 
                 return View("AdminTeacherViews/details", model);
@@ -171,30 +179,15 @@ namespace MooshakV2.Controllers
             return View();
         }
 
-
-        // Muna að taka nýja útgáfu frá E
-        //[HttpPost]
-        //public ActionResult uploadFile(AssignmentViewModel theFile)
-        //{
-        //    if(theFile.file.ContentLength > 0)
-        //    {
-        //        var fileName = Path.GetFileName(theFile.file.FileName);
-        //        var path = Path.Combine(Server.MapPath("~/AllFiles"), fileName);
-        //        theFile.file.SaveAs(path);
-        //    }
-        //    return RedirectToAction("list");
-        //}
-
-
         [HttpPost]
         public ActionResult addPart(AssignmentViewModel model)
         {
             prepareDropdown();
             // Villucheck á model
-            if(model != null)
+            if (model != null)
             {
                 // If assignment isn't in DB, create the assignment
-                if(model.id <= 0)
+                if (model.id <= 0)
                 {
                     // TODO: Setja þetta í fall? alveg eins og í create...
                     if (true)
@@ -215,6 +208,28 @@ namespace MooshakV2.Controllers
             return View("Error");
         }
 
+        public ActionResult uploadFile(FileUploadViewModel theFile)
+        {
+
+            if (ModelState.IsValid)
+            {
+                service.submitFile(theFile, User.Identity.GetUserId());
+
+                var id = (from i in dbContext.submissions
+                          orderby i.Id descending
+                          select i.Id).FirstOrDefault();
+                var fileExtension = Path.GetExtension(theFile.file.FileName);
+                var fileName = id.ToString() + fileExtension;
+
+                var path = Path.Combine(Server.MapPath("~/AllFiles"), fileName);
+
+                theFile.file.SaveAs(path);
+
+            }
+
+            return RedirectToAction("list");
+        }
+
 
         [HttpPost]
         public ActionResult delPart(AssignmentViewModel model)
@@ -229,6 +244,15 @@ namespace MooshakV2.Controllers
                 }
             }
             return View("Error");
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Admin, Teacher")]
+        public ActionResult history()
+        {
+            var model = submissionService.getAllSubmissions();
+
+            return View("history", model);
         }
 
 
@@ -254,7 +278,7 @@ namespace MooshakV2.Controllers
             // In this example, this is all hardcoded, but in a
             // real life scenario, there should probably be individual
             // folders for each user/assignment/milestone.
-            var workingFolder = "C:\\Users\\Jón\\Google Drive\\2.önn.2016\\Verk-namsk-2\\MooshakV2\\MooshakV2\\MooshakV2\\Test\\";
+            var workingFolder = "C:\\Temp\\Mooshak2Code\\";
             var cppFileName = "Hello.cpp";
             var exeFilePath = workingFolder + "Hello.exe";
 

@@ -12,9 +12,16 @@
                 <a href="@Url.Action("Create")"
                    class="btn btn-default"
                    data-tooltip="true"
-                   data-placement="right"
-                   title="Create new assignment">
+                   data-placement="top"
+                   title="Create a new assignment">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                </a>
+                <a href="@Url.Action("History")"
+                   class="btn btn-default"
+                   data-tooltip="true"
+                   data-placement="right"
+                   title="History of submissions">
+                    <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>
                 </a>
             </div>
         </div>
@@ -202,19 +209,26 @@
                         <td>File:</td>
                         <td><input type="file" name="file" id="file" /></td>
                     </tr>
+                    <tr><td>&nbsp;</td></tr>
                     <tr>
                         <td>&nbsp;</td>
-                        <td><input type="submit" name="submit" value="Hand in" /></td>
+                        <td>
+                            <button type="submit" name="submit" value="Hand in" class="btn btn-success">
+                                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                                Hand in
+                            </button>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">
+                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                Close
+                            </button>
+                        </td>
                     </tr>
                 </table>
                }
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">
-                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                    Close
-                </button>
+                
             </div>
         </div>
     </div>
