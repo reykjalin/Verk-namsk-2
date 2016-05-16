@@ -1,68 +1,104 @@
 ﻿@model IEnumerable<MooshakV2.ViewModels.AssignmentViewModel>
 
-@{
-    ViewBag.Title = "List";
-}
+    @{
+    ViewBag.Title = "Assignment List";
+    }
 
-<h2>Assignments</h2>
+    <h2>Assignments</h2>
 
-<table class="table table-hover">
-    <tr>
-        <th>
-            Title
-        </th>
-        <th>
-            Description
-        </th>
-        <th>
-            Weight
-        </th>
-        <th></th>
-    </tr>
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.weight)
-        </td>
-        <td>
-            <button type="button"
-                    class="btn btn-default modalDetailButton"
-                    data-tooltip="true"
-                    data-placement="top"
-                    title="Assignment details"
-                    data-toggle="modal"
-                    data-target="#assignmentDetails"
-                    data-title="@item.title"
-                    data-descr="@item.description"
-                    data-weight="@item.weight"
-                    data-courseID="@item.courseId">
-                <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
-                Details
-            </button>
-            <button type="button"
-                    class="btn btn-default modalSubmitButton" 
-                    data-tooltip="true"
-                    data-placement="top"
-                    title="Assignment hand in"
-                    data-toggle="modal"
-                    data-target="#handin"
-                    data-assignmentID="@item.id">
-                <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
-                Hand in
-            </button>
-        </td>
-    </tr>
-}
+    <div class="row">
+        <div class="col-md-8">
+            <div class="btn-group btn-group-sm" role="group" aria-label="...">
+                <a href="@Url.Action("History")"
+                   class="btn btn-default"
+                   data-tooltip="true"
+                   data-placement="right"
+                   title="History of submissions">
+                    <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>
+                </a>
+            </div>
+        </div>
+        <div class="col-md-4 right">
+            @using (Html.BeginForm("listAssignmentsInCourse", "Assignment", FormMethod.Get, new {@class = "form-inline"}))
+            {
+            @Html.DropDownList("id", ViewData["Courselist"] as IEnumerable<SelectListItem>
+                , new {@class = "form-control"})
+                <input type="submit" value="Filter" class="btn btn-default" />
+                }
+        </div>
+    </div>
 
-</table>
+    <br />
 
-<!-- User Detail Modal -->
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>
+                    Title
+                </th>
+                <th>
+                    Description
+                </th>
+                <th>
+                    Weight
+                </th>
+                <th>
+                    Deadline
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach(var item in Model)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.weight)%
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.date)
+                </td>
+                <td class="right">
+                    <div class="btn-group btn-group-sm" role="group" aria-label="...">
+                        <button type="button"
+                                class="btn btn-default modalDetailButton"
+                                data-tooltip="true"
+                                data-placement="top"
+                                title="Assignment details"
+                                data-toggle="modal"
+                                data-target="#assignmentDetails"
+                                data-title="@item.title"
+                                data-descr="@item.description"
+                                data-weight="@item.weight"
+                                data-courseId="@item.courseId">
+                            <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                        </button>
+                        <button type="button"
+                                class="btn btn-default modalSubmitButton"
+                                data-tooltip="true"
+                                data-placement="top"
+                                title="Assignment hand in"
+                                data-toggle="modal"
+                                data-target="#handin"
+                                data-assignmentID="@item.id">
+                            <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+                            Hand in
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+
+<!-- Assignment Detail Modal -->
 <div class="modal fade" id="assignmentDetails" tabindex="-1" role="dialog" aria-labelledby="assignmentDetailsLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -82,7 +118,7 @@
                 <dt>
                     ID
                 </dt>
-                <dd id="assignmentID"></dd>
+                <dd id="courseId"></dd>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-dismiss="modal">
@@ -94,23 +130,24 @@
     </div>
 </div>
 
+
 <!--  Hand in Modal -->
 <div class="modal fade" id="handin" tabindex="-1" role="dialog" aria-labelledby="assignmentDetailsLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" >Hand in</h4>
+                <h4 class="modal-title">Hand in</h4>
             </div>
             <div class="modal-body">
-               @using (Html.BeginForm("uploadFile", "Assignment", FormMethod.Post, new { enctype = "multipart/form-data" }))
-               {
-                   <input type="hidden" name="assignmentId" id="uploadId" />
+                @using (Html.BeginForm("uploadFile", "Assignment", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                <input type="hidden" name="assignmentId" id="uploadId" />
                 @Html.ValidationSummary();
                 <table>
                     <tr>
                         <td>File:</td>
-                        <td><input type="file" name="file" id="file"/></td>
+                        <td><input type="file" name="file" id="file" /></td>
                     </tr>
                     <tr><td>&nbsp;</td></tr>
                     <tr>
@@ -127,7 +164,7 @@
                         </td>
                     </tr>
                 </table>
-               }
+                }
 
             </div>
             <div class="modal-footer">
@@ -136,9 +173,11 @@
     </div>
 </div>
 
+
 @section scripts
 {
-        @Scripts.Render("~/Scripts/AssignmentDetailModal.js")
-
+    @Scripts.Render("~/Scripts/renderTooltips.js")
+    @Scripts.Render("~/Scripts/AssignmentDetailModal.js")
+    @Scripts.Render("~/Scripts/AssignmentDeleteModal.js")
+    @Scripts.Render("~/Scripts/AssignmentEditModal.js")
 }
-    

@@ -3,8 +3,10 @@ using MooshakV2.Models;
 using MooshakV2.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Web;
 
 namespace MooshakV2.Services
@@ -29,6 +31,7 @@ namespace MooshakV2.Services
                 viewModel.title = assignment.title;
                 viewModel.description = assignment.description;
                 viewModel.weight = assignment.weight;
+				viewModel.date = assignment.handInDate;
                 viewModel.id = assignment.id;
                 viewModel.courseId = assignment.courseId;
                 assignmentModelList.Add(viewModel);
@@ -264,7 +267,7 @@ namespace MooshakV2.Services
                 newSubmit.date = DateTime.Now;
                 newSubmit.userId = userId;
                 newSubmit.partId = 6;
-                newSubmit.success = aFile.success;
+                newSubmit.success = 0;
                 newSubmit.count = aFile.count;
 
                 var id = (from i in contextDb.submissions
@@ -285,6 +288,102 @@ namespace MooshakV2.Services
                 contextDb.Entry(newSubmit).State = System.Data.Entity.EntityState.Modified;
                 contextDb.SaveChanges();
             }
+        }
+
+        public string getInput(FileUploadViewModel upload)
+        {
+            var input = (from i in contextDb.assignments
+                         where i.id == upload.assignmentId
+                         select i.input).SingleOrDefault();
+
+            return input;
+
+        }
+
+        public string getOutput(FileUploadViewModel upload)
+        {
+            var expectedOutput = (from i in contextDb.assignments
+                                  where i.id == upload.assignmentId
+                                  select i.output).SingleOrDefault();
+
+            return expectedOutput;
+        }
+
+        //Did not manage to get the compiler to work properly, we first tried to implement it in AssignmentService.cs and then after same failed tries we
+        //tried to implement it in AssignmentController.cs but we were to short on time.
+        //This is the soon to be Compiler.
+        public int checkSuccess(FileUploadViewModel upload)
+        {
+
+            var path = Path.GetDirectoryName("~/AllFiles/");
+            var workingFolder = path + "\\Temp\\";
+            var fileName = upload.file.FileName;
+            var noExtension = Path.GetFileNameWithoutExtension(fileName);
+            var exeFilePath = workingFolder + noExtension + ".exe";
+
+            var compilerFolder = "C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\VC\\bin\\";
+
+            Process compiler = new Process();
+            compiler.StartInfo.FileName = "cmd.exe";
+            compiler.StartInfo.WorkingDirectory = workingFolder;
+            compiler.StartInfo.RedirectStandardInput = true;
+            compiler.StartInfo.RedirectStandardOutput = true;
+            compiler.StartInfo.UseShellExecute = false;
+
+            compiler.Start();
+            compiler.StandardInput.WriteLine("\"" + compilerFolder + "vcvars32.bat" + "\"");
+            compiler.StandardInput.WriteLine("cl.exe /nologo /EHsc " + fileName);
+            compiler.StandardInput.WriteLine("exit");
+            string output = compiler.StandardOutput.ReadToEnd();
+            compiler.WaitForExit();
+            compiler.Close();
+
+            var input = (from i in contextDb.assignments
+                         where i.id == upload.assignmentId
+                         select i.input).SingleOrDefault();
+
+            var expectedOutput = (from i in contextDb.assignments
+                                  where i.id == upload.assignmentId
+                                  select i.output).SingleOrDefault();
+            
+
+            if (System.IO.File.Exists(exeFilePath))
+            {
+                var processInfoExe = new ProcessStartInfo(exeFilePath, "");
+                processInfoExe.UseShellExecute = false;
+                processInfoExe.RedirectStandardOutput = true;
+                processInfoExe.RedirectStandardError = true;
+                processInfoExe.CreateNoWindow = true;
+                using (var processExe = new Process())
+                {
+                    processExe.StartInfo = processInfoExe;
+                    processExe.Start();
+                    processExe.StandardInput.WriteLine(input);
+                    processExe.StandardInput.Close();
+
+                    // We then read the output of the program:
+                    var lines = new List<string>();
+                    while (!processExe.StandardOutput.EndOfStream)
+                    {
+                        lines.Add(processExe.StandardOutput.ReadLine());
+                    }
+
+                    StringBuilder builder = new StringBuilder();
+                    foreach (string line in lines) // Loop through all strings
+                    {
+                        builder.Append(line); // Append string to StringBuilder
+                    }
+                    string result = builder.ToString(); // Get string from StringBuilder
+
+                    if (result == expectedOutput)
+                    {
+                        return 1;
+                    }
+
+                }
+            }
+
+            return 0;
         }
     }
 }

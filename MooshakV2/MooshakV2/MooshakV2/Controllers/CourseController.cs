@@ -23,13 +23,13 @@ namespace MooshakV2.Controllers
 		}
 		
 		/// <summary>
-		/// Sýnir List view-inu
+        /// Shows the listview
 		/// </summary>
 		/// <returns></returns>
 		public ActionResult Index() { return RedirectToAction("List"); }
 
         /// <summary>
-        /// Sýnir Create view-ið fyrir Course
+        /// Shows Create view for Course
         /// </summary>
         /// <returns></returns>
         [HttpGet]
@@ -45,7 +45,7 @@ namespace MooshakV2.Controllers
         }
 
         /// <summary>
-        /// Bætir Course 'newCourse' við gagnagrunn.
+        /// adds Course 'newCourse' to the database.
         /// </summary>
         /// <param name="newCourse"></param>
         /// <returns></returns>
@@ -53,29 +53,29 @@ namespace MooshakV2.Controllers
         [Authorize(Roles = "Admin, Teacher")]
         public ActionResult create(CourseDetailViewModel newCourse)
         {
-            // TODO: Er meira elegant leið til að hundsa id validation?
-            // Hunsa villur sem koma til vegna invalid id, DB sér um að generate-a id
+            
+            // Ignores errors that are from invalid id, DB makes sure to generate an id
             ModelState["course.id"].Errors.Clear();
             if (ModelState.IsValid)
             {
-                // Bæta newCourse við DB ef input er valid
+                // adds newCourse to the database if the input is valid.
                 if (service.addCourse(newCourse.course))
                     return RedirectToAction("List");
             }
-            // Ef input er invalid, sýna sama view með villuskilaboðum
+            // If input is invalid, show the same view with error the message 
             return View("AdminTeacherViews/create", newCourse);
         }
 
 
         /// <summary>
-        /// Breyta Course með ID 'id'. Sýnir Edit View-ið.
+        /// Change Course with ID 'id'. shows the Edith view
         /// </summary>
         /// <returns></returns>
         [HttpGet]
         [Authorize(Roles = "Admin, Teacher")]
         public ActionResult edit(int? id, string query)
         {
-            // Athuga hvort id sé null
+            // Checks whether id is NULL
             if (id.HasValue)
             {
                 var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
@@ -90,7 +90,7 @@ namespace MooshakV2.Controllers
                 else
                     model.studentList = userService.searchForUser(query, userManager);
 
-                // Ef Course er til, senda model á View, annars error
+                // If Course exist , send model to view, else error
                 if (model != null)
                     return View("AdminTeacherViews/edit", model);
             }
@@ -98,7 +98,7 @@ namespace MooshakV2.Controllers
         }
 
         /// <summary>
-        /// Breytir Course í gagnagrunni með sama ID og 'course' með uppfærðum gögnum úr 'course'
+        /// changes Course in DB with the same ID and the 'Course' with updated data from 'Course'
         /// </summary>
         /// <param name="toEdit"></param>
         /// <returns></returns>
@@ -106,20 +106,20 @@ namespace MooshakV2.Controllers
         [Authorize(Roles = "Admin, Teacher")]
         public ActionResult edit(CourseDetailViewModel toEdit)
         {
-            // Athuga hvort input sé valid
+            // Checks if input is valid
             if (ModelState.IsValid)
             {
-                // Uppfæra upplýsingar í course
+                // updates information in course
                 if (service.updateCourse(toEdit.course))
                     return RedirectToAction("List");
             }
-            // Ef input ekki valid, sýna view aftur
+            // If input is not valid, show view again
             return View("AdminTeacherViews/edit", toEdit);
         }
 
         /// <summary>
-        /// Síða sem biður um staðfestingu á því hvort eigi að eyða Course með ID 'id'.
-        /// Fer á error síðu ef Course er ekki til, eða 'id' er null.
+        /// site thats askes for the conformation about whether is should delete Course with ID 'id'.
+        /// goes to error site if course is not available, or id is null.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -127,13 +127,13 @@ namespace MooshakV2.Controllers
         [Authorize(Roles = "Admin, Teacher")]
         public ActionResult remove(int? id)
         {
-            // Athuga hvort id sé null
+            // checks whether id is null
             if (id.HasValue)
             {
-                // Finna Course sem á að eyða
+                // finds Course to delete
                 var toRemove = service.getCourseById(id);
 
-                // Ef Course er til birta staðfestingar view, annars error.
+                // if Course exist so conformation view, other wise error.
                 if (toRemove != null)
                     return View("AdminTeacherViews/remove", toRemove);
             }
@@ -141,7 +141,7 @@ namespace MooshakV2.Controllers
         }
 
         /// <summary>
-        /// Eyðir Course með ID 'toRemove.id' úr gagnagrunni.
+        /// delets course with ID 'toRemove.id' from database
         /// </summary>
         /// <returns></returns>
         [HttpPost]
@@ -153,7 +153,7 @@ namespace MooshakV2.Controllers
 			{
 				assService.removeAssignment(item.id);
 			}
-            // toRemove eytt úr DB, ef eitthvað mistekst birtist error view
+            // toRemove delete from DB, if something goes wrong error message will be shown
             if (service.removeCourse(toRemove.id))
                 return RedirectToAction("List");
 
@@ -204,8 +204,23 @@ namespace MooshakV2.Controllers
         [Authorize(Roles = "Admin, Teacher, Student")]
         public ActionResult list()
         {
+            var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
             // Fá lista af öllum Courses og birta hann.
-            var model = service.getAllCourses();
+            var model = new List<CourseDetailViewModel>();
+            var courses = service.getAllCourses();
+            foreach(var course in courses)
+            {
+                var courseDetail = new CourseDetailViewModel();
+                courseDetail.course = course;
+                courseDetail.studentList = userService.getUsersInCourse(course.id, userManager);
+                courseDetail.assignmentList = assService.getAllAssignmentsInCourse(course.id);
+                if(courseDetail.studentList == null)
+                    courseDetail.studentList = new List<UserDetailViewModel>();
+                if(courseDetail.assignmentList == null)
+                    courseDetail.assignmentList = new List<AssignmentViewModel>();
+
+                model.Add(courseDetail);
+            }
             if(User.IsInRole("Student"))
                 return View("StudentViews/list", model);
           
