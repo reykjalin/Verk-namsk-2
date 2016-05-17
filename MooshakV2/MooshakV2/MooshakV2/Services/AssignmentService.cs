@@ -33,6 +33,8 @@ namespace MooshakV2.Services
                 viewModel.weight = assignment.weight;
 				viewModel.date = assignment.handInDate;
                 viewModel.id = assignment.id;
+                viewModel.input = assignment.input;
+                viewModel.output = assignment.output;
                 viewModel.courseId = assignment.courseId;
                 assignmentModelList.Add(viewModel);
             }
@@ -56,6 +58,9 @@ namespace MooshakV2.Services
                 assignment.id = item.id;
                 assignment.weight = item.weight;
                 assignment.courseId = item.courseId;
+                assignment.date = item.handInDate;
+                assignment.input = item.input;
+                assignment.output = item.output;
 
                 assignmentList.Add(assignment);
             }
@@ -107,6 +112,21 @@ namespace MooshakV2.Services
             return false;
         }
 
+        public bool removeSubmission(SubmissionViewModel toDelModel)
+        {
+            // TODO: implement
+            var toDel = (from s in contextDb.submissions
+                         where s.Id == toDelModel.id
+                         select s).SingleOrDefault();
+            if (toDel != null)
+            {
+                contextDb.submissions.Remove(toDel);
+                contextDb.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
         public AssignmentViewModel getAssignmentById(int? id)
         {
             var assignment = (from a in contextDb.assignments
@@ -145,6 +165,21 @@ namespace MooshakV2.Services
             partModel.description = part.description;
             partModel.weight = part.weight;
             return partModel;
+        }
+
+        private SubmissionViewModel partToSubmissionViewModel(Submission sub)
+        {
+            var subModel = new SubmissionViewModel();
+            subModel.success = sub.success;
+            subModel.date = sub.date;
+            subModel.count = sub.count;
+            subModel.id = sub.Id;
+            subModel.assignmentId = sub.assignmentId;
+            subModel.partId = sub.partId;
+            subModel.userId = sub.userId;
+            subModel.filename = sub.filename;
+            subModel.mime = sub.mime;
+            return subModel;
         }
 
         public bool updateAssignment(AssignmentViewModel newData)
@@ -245,6 +280,20 @@ namespace MooshakV2.Services
                     if(!removePart(partToPartViewModel(part)))
                         return false;
                 }
+
+                // Get submissions
+                var submissions = (from s in contextDb.submissions
+                                   where s.assignmentId == toDel.id
+                                   select s).ToList();
+                // Delete all submissions
+                foreach (var sub in submissions)
+                {
+
+                    //Return false if removing submission fails
+                    if (!removeSubmission(partToSubmissionViewModel(sub)))
+                        return false;
+                }
+
                 // Remove assignment
                 contextDb.assignments.Remove(toDel);
                 contextDb.SaveChanges();
@@ -266,7 +315,7 @@ namespace MooshakV2.Services
                 newSubmit.filename = aFile.file.FileName;
                 newSubmit.date = DateTime.Now;
                 newSubmit.userId = userId;
-                newSubmit.partId = 6;
+                newSubmit.partId = 1;
                 newSubmit.success = 0;
                 newSubmit.count = aFile.count;
 
@@ -312,7 +361,7 @@ namespace MooshakV2.Services
         //Did not manage to get the compiler to work properly, we first tried to implement it in AssignmentService.cs and then after same failed tries we
         //tried to implement it in AssignmentController.cs but we were to short on time.
         //This is the soon to be Compiler.
-        public int checkSuccess(FileUploadViewModel upload)
+        /*public int checkSuccess(FileUploadViewModel upload)
         {
 
             var path = Path.GetDirectoryName("~/AllFiles/");
@@ -384,6 +433,6 @@ namespace MooshakV2.Services
             }
 
             return 0;
-        }
+        }*/
     }
 }
