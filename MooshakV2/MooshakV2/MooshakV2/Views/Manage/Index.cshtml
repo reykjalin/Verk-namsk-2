@@ -1,11 +1,22 @@
 ﻿@model MooshakV2.Models.IndexViewModel
 @{
-    ViewBag.Title = "Manage";
+    ViewBag.Title = "Settings";
 }
 
 <h2>@ViewBag.Title.</h2>
 
 <p class="text-success">@ViewBag.StatusMessage</p>
+
+
+<div class="btn-group btn-group-sm" role="group" aria-label="...">
+    <a href="@Url.Action("userHistory", "Assignment")"
+       class="btn btn-default"
+       data-tooltip="true"
+       data-placement="right"
+       title="View your history.">
+        <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>
+    </a>
+</div>
 <div>
     <h4>Change your account settings</h4>
     <hr />
@@ -85,3 +96,7 @@
         </dd>
     </dl>
 </div>
+
+@section scripts{ 
+    @Scripts.Render("~/Scripts/renderTooltips.js")
+}
