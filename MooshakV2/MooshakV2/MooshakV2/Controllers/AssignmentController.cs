@@ -437,7 +437,7 @@ namespace MooshakV2.Controllers
             return View("history", model);
         }
 
-        [HttpPost]
+        /*[HttpPost]
         public void checkSuccess(FileUploadViewModel upload)
         {
 
@@ -505,6 +505,6 @@ namespace MooshakV2.Controllers
             }
 
             return;
-        }
+        }*/
     }
 }

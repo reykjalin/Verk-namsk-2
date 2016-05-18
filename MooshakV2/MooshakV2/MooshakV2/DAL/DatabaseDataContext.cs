@@ -8,7 +8,7 @@ namespace MooshakV2.DAL
     public partial class DatabaseDataContext : DbContext
     {
         public DatabaseDataContext()
-            : base("name=DatabaseDataContext1")
+            : base("name=DatabaseDataContext")
         {
         }
 
